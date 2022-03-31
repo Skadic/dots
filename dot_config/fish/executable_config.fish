@@ -11,7 +11,8 @@ alias refreshbg="bash ~/Pictures/bg/setbg"
 alias lls="exa"
 alias showkoy="nohup viewnior /home/skadic/pictures/koy.png &"
 alias vimcheat="mupdf /home/skadic/.cmd_resources/vimcheatsheet.pdf"
-alias config="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+#alias config="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias nixconf="sudo nvim /etc/nixos/configuration.nix"
 
 alias dockerclean="docker system prune -a -f"
 
