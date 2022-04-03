@@ -181,7 +181,7 @@ local ccls_opts = {
   {"jacoborus/tender.vim"},
   {"ayu-theme/ayu-vim"},
   {"junegunn/rainbow_parentheses.vim"},
-  {"mfussenegger/nvim-dap"},
+--  {"mfussenegger/nvim-dap"},
   {"folke/tokyonight.nvim"},
   {"catppuccin/nvim"},
   {"rebelot/kanagawa.nvim"},

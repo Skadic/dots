@@ -12,7 +12,7 @@ set $rofi_menu rofi -show drun #~/.config/rofi/bin/launcher_colorful
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 5
+default_border pixel 2
 #default_border none 
 default_floating_border normal
 
@@ -42,6 +42,7 @@ bindsym $mod+Shift+q kill
 set $menu --no-startup-id rofi -show drun #bash ~/.config/rofi/bin/launcher_colorful
 #bindsym $mod+d exec --no-startup-id dmenu_recency
 bindsym $mod+d exec $menu
+bindsym $mod+Shift+d exec bash /home/skadic/Stuff/Rofistuff/power.sh
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -111,8 +112,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+h split h;exec notify-send 'Tile horizontally'
+bindsym $mod+v split v;exec notify-send 'Tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -437,7 +438,7 @@ mode "$mode_gaps_outer" {
 exec --no-startup-id /home/skadic/.profile
 
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh --docky
-exec_always --no-startup-id polybar -c=$HOME/.config/polybar/config.ini default
+exec_always --no-startup-id polybar -r -c=$HOME/.config/polybar/config.ini default
 
 exec --no-startup-id sleep 1; picom -bf --experimental-backends
 # Review the lines below and append to ~/.config/i3/config
@@ -494,6 +495,7 @@ for_window [class="(?i)*nextcloud*"] floating disable
 for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px
 no_focus [class="plasmashell" window_type="notification"] 
 
-exec_always feh --bg-fill ~/Pictures/bg/astronaut.png
+exec feh --bg-fill ~/Pictures/bg/dark-cat.png
 exec --no-startup-id fcitx5
 
+exec --no-startup-id conky -c /home/skadic/.conkyrc
