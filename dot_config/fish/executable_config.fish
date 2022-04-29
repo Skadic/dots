@@ -8,7 +8,7 @@ alias pacinst="sudo pacman -S"
 alias pacuninst="sudo pacman -Rs"
 alias pacsysupgrade="sudo pacman -Syyu"
 alias refreshbg="bash ~/Pictures/bg/setbg"
-alias lls="exa"
+alias lls="exa --icons"
 alias showkoy="nohup viewnior /home/skadic/pictures/koy.png &"
 alias vimcheat="mupdf /home/skadic/.cmd_resources/vimcheatsheet.pdf"
 #alias config="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
@@ -21,7 +21,9 @@ export PATH="/home/skadic/.local/bin/:$PATH"
 export PATH="$HOME/.dotbare:$PATH"
 export PATH="/$PATH"
 
-export QT_QPA_PLATFORMTHEME="qt5ct"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+export QT_QPA_PLATFORMTHEME="gtk2"
 
 export LUNARVIM_CONFIG_DIR="/home/skadic/.config/lvim/"
 
