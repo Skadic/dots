@@ -437,8 +437,7 @@ mode "$mode_gaps_outer" {
 
 exec --no-startup-id /home/skadic/.profile
 
-#exec_always --no-startup-id $HOME/.config/polybar/launch.sh --docky
-exec_always --no-startup-id polybar -r -c=$HOME/.config/polybar/config.ini default
+#exec_always --no-startup-id polybar -r -c=$HOME/.config/polybar/config.ini default
 
 exec --no-startup-id sleep 1; picom -bf --experimental-backends
 # Review the lines below and append to ~/.config/i3/config
