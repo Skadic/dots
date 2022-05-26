@@ -47,6 +47,8 @@ return packer.startup(function(use)
 
 	-- Colorschemes
 	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("projekt0n/github-nvim-theme")
+	use "dracula/vim"
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -82,22 +84,37 @@ return packer.startup(function(use)
 		run = ":TSUpdate",
 	})
 	use("p00f/nvim-ts-rainbow")
-	use("nvim-treesitter/playground")
 
-	-- Misc
+	-- Visual Funsies
+	use 'feline-nvim/feline.nvim'
+	use "glepnir/dashboard-nvim"
+	use({
+		"CosmicNvim/cosmic-ui",
+		requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		config = function()
+			require("cosmic-ui").setup()
+		end,
+	})
 	use("kyazdani42/nvim-web-devicons")
 	use({
-		"glepnir/galaxyline.nvim",
-		branch = "main",
-		-- your statusline
-		config = function()
-			require("skadic.lines.evilline")
-		end,
-		-- some optional icons
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		"akinsho/bufferline.nvim",
+		tag = "v2.*",
+		requires = "kyazdani42/nvim-web-devicons",
 	})
-	use("nvim-telescope/telescope.nvim")
-	use("nvim-telescope/telescope-media-files.nvim")
+
+	-- Extra Functionality
+	use("lewis6991/gitsigns.nvim")
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+		},
+		tag = "nightly", -- optional, updated every week. (see issue #1193)
+	})
+	use({
+		"akinsho/toggleterm.nvim",
+		tag = "v1.*",
+	})
 	use({
 		"folke/which-key.nvim",
 		config = function()
@@ -109,34 +126,26 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
+		"kkoomen/vim-doge",
+		config = function()
+			vim.api.nvim_exec("doge#install()")
+		end,
+	})
+
+	-- Telescope
+	use("nvim-telescope/telescope.nvim")
+	use("nvim-telescope/telescope-media-files.nvim")
+
+	-- Misc
+	use({
 		"windwp/nvim-autopairs", -- Auto-close parentheses
 		config = function()
 			require("nvim-autopairs").setup({})
 		end,
 	})
-	use({
-		"lewis6991/gitsigns.nvim",
-	})
-	use({
-		"kyazdani42/nvim-tree.lua",
-		requires = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icon
-		},
-		tag = "nightly", -- optional, updated every week. (see issue #1193)
-	})
-	use({
-		"glepnir/dashboard-nvim",
-	})
-	use({
-		"akinsho/bufferline.nvim",
-		tag = "v2.*",
-		requires = "kyazdani42/nvim-web-devicons",
-	})
 	use("famiu/bufdelete.nvim")
-	use({
-		"akinsho/toggleterm.nvim",
-		tag = "v1.*",
-	})
+	use("dhruvasagar/vim-zoom")
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then

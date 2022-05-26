@@ -1,7 +1,11 @@
+local caps = require("skadic.lsp.handlers").capabilities
+caps.offset_encoding = "utf-8"
+caps.offsetEncoding = "utf-8"
+
 local opts = {
 	server = {
 		on_attach = require("skadic.lsp.handlers").on_attach,
-		capabilities = require("skadic.lsp.handlers").capabilities,
+		capabilities = caps,
 	},
 }
 

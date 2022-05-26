@@ -1,6 +1,8 @@
 local opts = { noremap = true, silent = true }
-
 local term_opts = { silent = true }
+local wk_opts = { mode = "n", prefix = "<leader>", noremap = true, silent = true }
+
+local wk = require("which-key")
 
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
@@ -35,6 +37,26 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
+wk.register({
+  f = {
+    name = "Find Files",
+    f = { "<cmd>Telescope git_files<cr>", "Git Files" },
+    g = { "<cmd>Telescope find_files<cr>", "Find File" },
+    l = { "<cmd>Telescope live_grep<cr>", "Live Grep" }
+  },
+  e = { ":NvimTreeToggle<cr>", "Toggle NvimTree" },
+  l = {
+    name = "Language Server",
+    --a = { "<cmd>lua require('cosmic-ui').code_actions()<cr>", "Code Action" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
+    i = { "<cmd>lua vim.lsp.buf.implementations()<cr>", "Implementations" },
+    o = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
+    f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "Format File" },
+    r = { "<cmd>lua require('cosmic-ui').rename()<cr>", "Rename" }
+  }
+}, wk_opts)
+
 -- Insert --
 -- Press jk fast to enter
 keymap("i", "jk", "<ESC>", opts)
@@ -62,13 +84,3 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-
-keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
-
--- Nvimtree
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
-
--- LSP
-keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", opts)
