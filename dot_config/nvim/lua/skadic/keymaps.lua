@@ -48,7 +48,7 @@ wk.register({
   l = {
     name = "Language Server",
     --a = { "<cmd>lua require('cosmic-ui').code_actions()<cr>", "Code Action" },
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
     h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
     i = { "<cmd>lua vim.lsp.buf.implementations()<cr>", "Implementations" },
     o = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },

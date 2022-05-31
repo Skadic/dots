@@ -48,7 +48,7 @@ return packer.startup(function(use)
 	-- Colorschemes
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("projekt0n/github-nvim-theme")
-	use "dracula/vim"
+	use("dracula/vim")
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -86,8 +86,8 @@ return packer.startup(function(use)
 	use("p00f/nvim-ts-rainbow")
 
 	-- Visual Funsies
-	use 'feline-nvim/feline.nvim'
-	use "glepnir/dashboard-nvim"
+	use("feline-nvim/feline.nvim")
+	use("glepnir/dashboard-nvim")
 	use({
 		"CosmicNvim/cosmic-ui",
 		requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
@@ -101,6 +101,7 @@ return packer.startup(function(use)
 		tag = "v2.*",
 		requires = "kyazdani42/nvim-web-devicons",
 	})
+	use("weilbith/nvim-code-action-menu")
 
 	-- Extra Functionality
 	use("lewis6991/gitsigns.nvim")
@@ -127,8 +128,13 @@ return packer.startup(function(use)
 	})
 	use({
 		"kkoomen/vim-doge",
+		cmd = "CodeActionMenu",
+	})
+
+	use({
+		"kosayoda/nvim-lightbulb",
 		config = function()
-			vim.api.nvim_exec("doge#install()")
+			require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 		end,
 	})
 

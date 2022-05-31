@@ -185,6 +185,17 @@ _G.packer_plugins = {
     path = "/home/skadic/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-code-action-menu"] = {
+    loaded = true,
+    path = "/home/skadic/.local/share/nvim/site/pack/packer/start/nvim-code-action-menu",
+    url = "https://github.com/weilbith/nvim-code-action-menu"
+  },
+  ["nvim-lightbulb"] = {
+    config = { "\27LJ\2\n_\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\fautocmd\1\0\0\1\0\1\fenabled\2\nsetup\19nvim-lightbulb\frequire\0" },
+    loaded = true,
+    path = "/home/skadic/.local/share/nvim/site/pack/packer/start/nvim-lightbulb",
+    url = "https://github.com/kosayoda/nvim-lightbulb"
+  },
   ["nvim-lsp-installer"] = {
     loaded = true,
     path = "/home/skadic/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
@@ -256,9 +267,11 @@ _G.packer_plugins = {
     url = "https://github.com/dracula/vim"
   },
   ["vim-doge"] = {
-    config = { "\27LJ\2\n@\0\0\3\0\4\0\0066\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\1K\0\1\0\19doge#install()\14nvim_exec\bapi\bvim\0" },
-    loaded = true,
-    path = "/home/skadic/.local/share/nvim/site/pack/packer/start/vim-doge",
+    commands = { "CodeActionMenu" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/skadic/.local/share/nvim/site/pack/packer/opt/vim-doge",
     url = "https://github.com/kkoomen/vim-doge"
   },
   ["vim-zoom"] = {
@@ -275,22 +288,28 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
--- Config for: vim-doge
-time([[Config for vim-doge]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\4\0\0066\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\1K\0\1\0\19doge#install()\14nvim_exec\bapi\bvim\0", "config", "vim-doge")
-time([[Config for vim-doge]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
 -- Config for: cosmic-ui
 time([[Config for cosmic-ui]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14cosmic-ui\frequire\0", "config", "cosmic-ui")
 time([[Config for cosmic-ui]], false)
+-- Config for: nvim-lightbulb
+time([[Config for nvim-lightbulb]], true)
+try_loadstring("\27LJ\2\n_\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\fautocmd\1\0\0\1\0\1\fenabled\2\nsetup\19nvim-lightbulb\frequire\0", "config", "nvim-lightbulb")
+time([[Config for nvim-lightbulb]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file CodeActionMenu lua require("packer.load")({'vim-doge'}, { cmd = "CodeActionMenu", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
