@@ -1,6 +1,6 @@
 local status_ok, rust_tools = pcall(require, "rust-tools")
 if not status_ok then
-	vim.notify("Rust tools setup failed")
+	vim.notify("Rust tools setup failed", "error")
 end
 
 local opts = {

@@ -49,6 +49,7 @@ return packer.startup(function(use)
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("projekt0n/github-nvim-theme")
 	use("dracula/vim")
+  use("rebelot/kanagawa.nvim")
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -102,6 +103,7 @@ return packer.startup(function(use)
 		requires = "kyazdani42/nvim-web-devicons",
 	})
 	use("weilbith/nvim-code-action-menu")
+  use("rcarriga/nvim-notify")
 
 	-- Extra Functionality
 	use("lewis6991/gitsigns.nvim")
@@ -127,8 +129,7 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
-		"kkoomen/vim-doge",
-		cmd = "CodeActionMenu",
+		"kkoomen/vim-doge"
 	})
 
 	use({
@@ -151,6 +152,7 @@ return packer.startup(function(use)
 	})
 	use("famiu/bufdelete.nvim")
 	use("dhruvasagar/vim-zoom")
+  use("andweeb/presence.nvim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

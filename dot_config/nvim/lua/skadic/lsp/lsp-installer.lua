@@ -22,6 +22,11 @@ lsp_installer.on_server_ready(function(server)
         opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
     end
 
+    if server.name == "ltex" then
+        local ltex_opts = require("skadic.lsp.settings.ltex")
+        opts = vim.tbl_deep_extend("force", ltex_opts, opts)
+    end
+
     if server.name == "rust_analyzer" then
         return
     end

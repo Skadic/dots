@@ -13,5 +13,5 @@ local status_ok, clangd_extensions = pcall(require, "clangd_extensions")
 if status_ok then
 	clangd_extensions.setup(opts)
 else
-	vim.notify("Clangd extensions setup failed")
+	vim.notify("Clangd extensions setup failed", "error")
 end

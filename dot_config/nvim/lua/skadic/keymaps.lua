@@ -47,9 +47,9 @@ wk.register({
   e = { ":NvimTreeToggle<cr>", "Toggle NvimTree" },
   l = {
     name = "Language Server",
-    --a = { "<cmd>lua require('cosmic-ui').code_actions()<cr>", "Code Action" },
     a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
     h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
+    d = { "<cmd>lua vim.lsp.diagnostic.open_float()<cr>", "Show line diagnostic" },
     i = { "<cmd>lua vim.lsp.buf.implementations()<cr>", "Implementations" },
     o = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
     f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "Format File" },
