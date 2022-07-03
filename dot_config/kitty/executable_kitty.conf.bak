@@ -1517,6 +1517,6 @@ map kitty_mod+d detach_tab
 
 
 # BEGIN_KITTY_THEME
-# Ayu
+# Kaolin Breeze
 include current-theme.conf
 # END_KITTY_THEME
