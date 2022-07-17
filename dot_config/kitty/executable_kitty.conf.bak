@@ -1517,6 +1517,6 @@ map kitty_mod+d detach_tab
 
 
 # BEGIN_KITTY_THEME
-# Kaolin Breeze
+# Bright Lights
 include current-theme.conf
 # END_KITTY_THEME

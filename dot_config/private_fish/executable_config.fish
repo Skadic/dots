@@ -51,6 +51,18 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
     end
 end
 
+# Laptop second screen
+function enable-tablet --description "Enable using the Tab S7 as a second screen"
+  xrandr --newmode "2560x1600_120.00"  737.16  2560 2784 3072 3584  1600 1601 1604 1714  -HSync +Vsync;
+  xrandr --addmode DisplayPort-0 2560x1600_120.00;
+  xrandr --output DisplayPort-0 --mode 2560x1600_120.00 --right-of eDP;
+end
+alias disable-tablet="xrandr --output DisplayPort-0 --off"
+alias start-vnc-server="x11vnc -clip xinerama1 -ncache_cr -nc 10 -usepw -noxrecord -repeat"
+
+
+
+
 # C Stuff
 export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
 export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
@@ -59,6 +71,9 @@ export PKG_CONFIG_PATH="/usr/bin/pkgconf"
 export PKG_CONFIG="/usr/bin/pkgconf"
 
 export CC="/usr/bin/cc"
+
+
+
 
 #export QT_QPA_PLATFORMTHEME="qt5ct"
 

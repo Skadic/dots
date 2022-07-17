@@ -50,6 +50,9 @@ return packer.startup(function(use)
 	use("projekt0n/github-nvim-theme")
 	use("dracula/vim")
 	use("rebelot/kanagawa.nvim")
+	use("jacoborus/tender.vim")
+	use("Shatur/neovim-ayu")
+	use("navarasu/onedark.nvim")
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -85,6 +88,7 @@ return packer.startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 	use("simrat39/rust-tools.nvim") -- More capabilities for writing Rust
 	use("p00f/clangd_extensions.nvim") -- More capabilities for writing C++
+	use("folke/lsp-colors.nvim") -- Generate LSP highlight groups for color schemes without lsp support
 
 	-- Treesitter
 	use({
@@ -95,12 +99,29 @@ return packer.startup(function(use)
 
 	-- Org
 	use({
-		"nvim-neorg/neorg", -- Org Mode for Nvim
+		"nvim-neorg/neorg", -- Custom Org Mode for Nvim
 		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "max397574/neorg-kanban" },
+	})
+	use({
+		"nvim-orgmode/orgmode",
+		config = function()
+			require("orgmode").setup_ts_grammar()
+			require("orgmode").setup({
+				org_agenda_files = { "~/MEGAsync/org/*" },
+				org_default_notes_file = "~/Megasync/org/refile.org",
+			})
+		end,
+	})
+	use({
+		"akinsho/org-bullets.nvim",
+		config = function()
+			require("org-bullets").setup()
+		end,
 	})
 
 	-- Visual Funsies
-	use("feline-nvim/feline.nvim") -- Nice bar
+	--use("feline-nvim/feline.nvim") -- Nice bar
+	use("windwp/windline.nvim") -- Nicer bar
 	use("glepnir/dashboard-nvim") -- Dashboard when opening nvim
 	use({
 		"CosmicNvim/cosmic-ui", -- Some nice windows
@@ -161,6 +182,13 @@ return packer.startup(function(use)
 				-- or leave it empty to use the default settings
 				-- refer to the configuration section below
 			})
+		end,
+	})
+	use({ "michaelb/sniprun", run = "bash ./install.sh" })
+	use({
+		"lukas-reineke/headlines.nvim",
+		config = function()
+			require("headlines").setup()
 		end,
 	})
 

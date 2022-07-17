@@ -76,7 +76,7 @@ ${color1}${goto 35}Uptime : ${color}$uptime_short ${alignr}${color1}Load  : ${co
 
 
 ${color1}${font ConkySymbols:size=16}h${font} ${voffset -10} Temperature» $hr${color}
-${color1}${goto 35}CPU : ${color}${exec sensors | grep 'edge' | awk 'NR==1{print $2}'} ${alignr}${color1}GPU : ${color}${exec sensors | grep 'temp1' | awk 'NR==2{print $2}'}
+${color1}${goto 35}CPU : ${color}${exec sensors | grep 'Tctl' | awk 'NR==1{print $2}'} ${alignr}${color1}GPU : ${color}${exec sensors | grep 'temp1' | awk 'NR==2{print $2}'}
 
 
 ${color1}${font ConkySymbols:size=16}J${font} ${voffset -10}Memory» $hr${color}
