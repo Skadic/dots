@@ -70,6 +70,7 @@ return packer.startup(function(use)
 			require("crates").setup()
 		end,
 	})
+	use("zbirenbaum/copilot-cmp")
 
 	-- snippets
 	use({
@@ -89,6 +90,31 @@ return packer.startup(function(use)
 	use("simrat39/rust-tools.nvim") -- More capabilities for writing Rust
 	use("p00f/clangd_extensions.nvim") -- More capabilities for writing C++
 	use("folke/lsp-colors.nvim") -- Generate LSP highlight groups for color schemes without lsp support
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup({})
+		end,
+	})
+	use({
+		"zbirenbaum/copilot.lua",
+		event = { "VimEnter" },
+		config = function()
+			vim.defer_fn(function()
+				require("copilot").setup()
+			end, 100)
+		end,
+	})
+	use({
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		config = function()
+			require("lsp_lines").setup()
+			vim.diagnostic.config({
+				virtual_text = false,
+			})
+		end,
+	})
 
 	-- Treesitter
 	use({
@@ -98,10 +124,10 @@ return packer.startup(function(use)
 	use("p00f/nvim-ts-rainbow")
 
 	-- Org
-	use({
+	--[[use({
 		"nvim-neorg/neorg", -- Custom Org Mode for Nvim
 		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "max397574/neorg-kanban" },
-	})
+	--})]]
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
@@ -122,7 +148,14 @@ return packer.startup(function(use)
 	-- Visual Funsies
 	--use("feline-nvim/feline.nvim") -- Nice bar
 	use("windwp/windline.nvim") -- Nicer bar
-	use("glepnir/dashboard-nvim") -- Dashboard when opening nvim
+	--use("glepnir/dashboard-nvim") -- Dashboard when opening nvim
+	use({
+		"goolord/alpha-nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
+	})
 	use({
 		"CosmicNvim/cosmic-ui", -- Some nice windows
 		requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
@@ -174,7 +207,7 @@ return packer.startup(function(use)
 			require("project_nvim").setup({})
 		end,
 	})
-	use({
+	--[[use({
 		"folke/zen-mode.nvim", -- Zen-Mode for Neorg's presenter
 		config = function()
 			require("zen-mode").setup({
@@ -183,14 +216,12 @@ return packer.startup(function(use)
 				-- refer to the configuration section below
 			})
 		end,
-	})
+	})]]
 	use({ "michaelb/sniprun", run = "bash ./install.sh" })
 	use({
-		"lukas-reineke/headlines.nvim",
-		config = function()
-			require("headlines").setup()
-		end,
-	})
+		"kevinhwang91/nvim-ufo",
+		requires = "kevinhwang91/promise-async",
+	}) -- nice folding
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim") -- Search stuff

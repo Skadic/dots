@@ -1,1 +1,3 @@
-vim.api.nvim_command("set guifont=agave\\ Nerd\\ Font:h10")
+if vim.g.neovide then
+	vim.api.nvim_command("set guifont=FiraCode\\ Nerd\\ Font\\ Mono:h8")
+end

@@ -2,7 +2,7 @@ local home = os.getenv('HOME')
 local status_ok, db = pcall(require, "dashboard")
 
 if not status_ok then
-	vim.notify("Dashboard unavailable")
+	--vim.notify("Dashboard unavailable")
 	return
 end
 

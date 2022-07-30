@@ -65,31 +65,35 @@ local function lsp_keymaps(bufnr)
   local wk = require "which-key"
 
   wk.register({
-    d = {"<cmd>Telescope lsp_definitions<CR>", "Definition"},
-    D = {"<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration"},
-    r = {"<cmd>Telescope lsp_references<CR>", "References"},
-    i = {"<cmd>Telescope lsp_implementations<CR>", "Implementation"},
+    d = {"<cmd>Trouble lsp_definitions<CR>", "Definition"},
+    D = {function() vim.lsp.buf.declaration() end, "Declaration"},
+    i = {"<cmd>Trouble lsp_implementations<CR>", "Implementation"},
+    r = {"<cmd>Trouble lsp_references<CR>", "References"},
     s = {"<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols"},
-    S = {"<cmd>Telescope lsp_workspace_symbols<CR>", "Document Symbols"},
+    S = {"<cmd>Telescope lsp_workspace_symbols<CR>", "Workspace Symbols"},
   }, wk_opts)
 
   wk_opts.prefix = "<leader>l"
   wk.register({
     name = "Language Server",
     a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
-    d = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Show Line Diagnostic" },
-    f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "Format File" },
-    r = { "<cmd>lua require('cosmic-ui').rename()<cr>", "Rename" },
-    s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help"},
-    D = { "<cmd>Telescope diagnostics<CR>", "Show Diagnostics List"},
-    e = { "<Plug>(doge-generate)", "Generate Documentation"}
+    --d = { function() vim.diagnostic.open_float() end, "Show Line Diagnostic" },
+    d = { function() require("lsp_lines").toggle() end, "Toggle Line Diagnostics"},
+    D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List"},
+    q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List"},
+    t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List"},
+    --D = { "<cmd>Telescope diagnostics<CR>", "Show Diagnostics List"},
+    e = { "<Plug>(doge-generate)", "Generate Documentation"},
+    f = { function() vim.lsp.buf.formatting_sync() end, "Format File" },
+    h = { function() vim.lsp.buf.hover() end, "Hover" },
+    r = { function() require('cosmic-ui').rename() end, "Rename" },
+    s = { function() vim.lsp.buf.signature_help() end, "Signature Help"},
   }, wk_opts)
 
   wk_opts.prefix = ""
   wk.register({
-    ["[d"] = {'<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', "Previous Diagnostic"},
-    ["]d"] = {'<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', "Next Diagnostic"},
+    ["[d"] = {function() vim.diagnostic.goto_prev({ border = "rounded" }) end, "Previous Diagnostic"},
+    ["]d"] = {function() vim.diagnostic.goto_next({ border = "rounded" }) end, "Next Diagnostic"},
   }, wk_opts)
 end
 
