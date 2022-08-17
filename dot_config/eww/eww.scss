@@ -1,0 +1,88 @@
+@import 'colors.scss';
+@import 'vars.scss';
+
+.topbar {
+    background: transparent;
+    padding-top: 2px;
+    font-family: $mono_font;
+    font-size: 1.1em;
+}
+
+.bar-left {
+    background: $primary-bg;
+    padding: $default_padding;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+}
+
+.bar-right {
+    background: $primary-bg;
+    padding: $default_padding;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+}
+
+.framed {
+    background-color: $current-line;
+    padding: 0.25rem 1.1rem 0.25rem 1.1rem;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.workspace {
+    padding: 0.45rem 0.9rem 0.45rem 0.9rem;
+}
+
+scale {
+    padding-left: 20px;
+}
+
+scale trough {
+    background-color: $primary-bg;
+    border-radius: 7px;
+    min-height: 14px;
+    min-width: 100px;
+}
+
+.vol-slider trough highlight {
+    padding-left: $default_padding;
+    background-color: $green;
+    border-radius: 7px;
+}
+
+.bri-slider trough highlight {
+    padding-left: $default_padding;
+    background-color: $yellow;
+    border-radius: 7px;
+}
+
+// TEXT COLORS
+
+.text-cyan {
+    color: $cyan;
+}
+
+.text-green {
+    color: $green;
+}
+
+.text-orange {
+    color: $orange;
+}
+
+.text-pink {
+    color: $pink;
+}
+
+.text-purple {
+    color: $purple;
+}
+
+.text-red {
+    color: $red;
+}
+
+.text-yellow {
+    color: $yellow;
+}

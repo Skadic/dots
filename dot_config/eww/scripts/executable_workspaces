@@ -1,0 +1,24 @@
+#!/bin/bash
+
+workspaces=$(i3-msg -t get_workspaces | jq 'sort_by(.name)')
+switch_ws="i3-msg -t command workspace number"
+
+echo '(box :orientation "h"'
+echo '     :spacing "3"'
+echo '     :space-evenly true'
+
+for i in 0 1 2 3 4 5 6 7 8 9
+do
+  ws=$(echo $workspaces | jq ".[$i]")
+
+  if [ "$ws" == "null" ]
+  then
+    continue
+  fi
+
+  ws_num=$(echo $ws | jq '.num')
+  focused=$(echo $ws | jq '.focused')
+  
+  echo "  (button :class \"framed workspace\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+done
+echo ")"

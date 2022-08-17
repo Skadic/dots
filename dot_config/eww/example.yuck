@@ -1,0 +1,68 @@
+(defwindow example
+    :monitor 0
+    :geometry (geometry :x "1%"
+                        :y "1%"
+                        :width "98%"
+                        :height "2%"
+                        :anchor "top left")
+    :stacking "fg"
+    :reserve (struts :distance "20px" :side "top")
+    :windowtype "dock"
+    :wm-ignore false
+  (box :orientation "h"
+       :halign "left"
+       :space-evenly true
+       :width 0
+    ;(left)
+    (center)
+    (right)))
+
+
+(defwidget left []
+  (box :orientation "h"
+       :halign "left"
+    ""))
+
+(defwidget center [] 
+  (box :orientation "h"
+       :halign "center"
+    (music)
+    ))
+
+(defwidget right [] 
+  (box :orientation "h"
+       :halign "right"
+    (temp)
+    (cpu)
+    (bat)
+    (date)
+    ))
+
+(defwidget date [] " ${v_date}")
+(defwidget cpu  [] "﬙ ${EWW_CPU.avg}%")
+(defwidget bat  [] 
+    `${
+    EWW_BATTERY.BAT0.status == "Charging" ? "" :
+    EWW_BATTERY.BAT0.capacity < 10 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 20 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 30 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 40 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 50 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 60 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 70 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 80 ? "" : 
+    EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
+}  ${EWW_BATTERY.BAT0.capacity >= 98 ? "Full" : EWW_BATTERY.BAT0.capacity} ${EWW_BATTERY.BAT0.capacity >= 98 ? "" : EWW_BATTERY.BAT0.status}`)
+
+(defwidget temp [] " ${v_sensors.k10temp-pci-00c3.Tctl.temp1_input}°C")
+
+(defwidget music [] " ${v_music}")
+
+(defpoll v_date :interval "10s"
+  `date "+%A %d. %B %Y %H:%m"`)
+
+(defpoll v_sensors :interval "5s"
+  `sensors -j`)
+
+(deflisten v_music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")

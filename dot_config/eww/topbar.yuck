@@ -1,0 +1,134 @@
+(defwindow topbar 
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "25%"
+                      :height "2%"
+                      :anchor "top left")
+  :stacking "fg"
+  :reserve (struts :distance "2%" :side "top")
+  :windowtype "dock"
+  :wm-ignore false
+  (centerbox :orientation "h"
+       :class "topbar"
+    (left)
+    ""
+    (right)))
+
+(defwidget right []
+  (box :orientation "h"
+       :halign "end"
+       :width "0"
+       :hexpand true
+       :space-evenly false
+       :spacing "5"
+       :class "bar-right"
+    (battery)
+    (brightness)
+    (volume)
+    (date)))
+
+(defwidget left []
+  (box :orientation "h"
+       :halign "start"
+       :width "0"
+       :hexpand true
+       :space-evenly false
+       :spacing "5"
+       :class "bar-left"
+    (workspaces)))
+
+(defwidget date [] 
+  (box :orientation "h" 
+       :halign "fill"
+       :space-evenly true
+       :class "text-cyan framed"
+      "${v_hour}:${v_minute}"))
+
+
+(defvar vol_enable false)
+(defpoll current_vol :interval "1s"
+                     :run-while vol_enable
+                     :initial "0"
+                    "pamixer --get-volume")
+(defwidget volume []
+  (eventbox :onhover "${EWW_CMD} update vol_enable=true"
+            :onhoverlost "${EWW_CMD} update vol_enable=false"
+            :timeout "100ms"
+    (box :orientation "h"
+         :halign "end"
+         :space-evenly false
+         :class "text-green framed"
+      ""
+      (revealer :transition "slideright"
+                :duration "500ms"
+                :reveal vol_enable
+        (scale :orientation "h"
+              :draw-value false
+              :class "vol-slider"
+              :value current_vol
+              :min "0"
+              :max "100"
+              :onchange "scripts/set_vol {}"))
+      )))
+
+
+(defvar brightness_enable false)
+(defpoll current_brightness :interval "1s"
+                     :run-while brightness_enable
+                     :initial "0"
+                    "brightnessctl g")
+(defwidget brightness []
+  (eventbox :onhover "${EWW_CMD} update brightness_enable=true"
+            :onhoverlost "${EWW_CMD} update brightness_enable=false"
+            :timeout "100ms"
+    (box :orientation "h"
+         :halign "end"
+         :space-evenly false
+         :class "text-yellow framed"
+      ""
+      (revealer :transition "slideright"
+                :duration "500ms"
+                :reveal brightness_enable
+        (scale :orientation "h"
+              :draw-value false
+              :class "bri-slider"
+              :value current_brightness
+              :min "0"
+              :max "255"
+              :onchange "brightnessctl s {}"))
+      )))
+
+(defwidget battery []
+  (box :class "framed text-orange"
+       :tooltip "${EWW_BATTERY.BAT0.capacity >= 98 ? "Full" : EWW_BATTERY.BAT0.capacity}${EWW_BATTERY.BAT0.capacity >= 98 ? "" : "%"}"
+    `${
+      EWW_BATTERY.BAT0.status == "Charging" ? "" :
+      EWW_BATTERY.BAT0.capacity < 10 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 20 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 30 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 40 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 50 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 60 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 70 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 80 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
+  }`))
+
+
+(deflisten active_workspace :initial "0" 
+  "xprop -spy -root _NET_CURRENT_DESKTOP")
+
+(defwidget workspaces [] (literal :content workspaces))
+
+
+(defpoll workspaces :interval "10ms"
+  "./scripts/workspaces")
+
+
+(defpoll v_hour :interval "10s"
+  `date "+%H"`)
+(defpoll v_minute :interval "10s"
+  `date "+%M"`)
+(defpoll v_date :interval "5m"
+  `date "+%d.%m.%y"`)
