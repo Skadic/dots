@@ -26,7 +26,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 | ~doom-serif-font~          | For the ~fixed-pitch-serif~ face                                        |
 
 If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~M-x eval-region~ to execute elisp code, and ~M-x doom/reload-font~ to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
-See ~C-h v doom-font~ for documentation and more examples of what they accept. For example:
+See ~C-h v doom-font~ for documentation and more examples of what they accept.
 
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 14 :weight 'normal)
@@ -43,6 +43,16 @@ available. You can either set ~doom-theme~ or manually load a theme with the
 (setq doom-theme 'doom-dracula)
 #+end_src
 
+Somehow when running emacs through emacsclient the color scheme gets messed up.
+So this is a hook that reloads the color theme when making a new frame.
+
+#+begin_src emacs-lisp
+(add-hook! 'after-make-frame-functions
+  (defun my-load-theme-fix (frame)
+      (select-frame frame)
+      (doom/reload-theme)))
+#+end_src
+
 ** Line Numbers
 
 This determines the style of line numbers in effect. If set to ~nil~, line numbers are disabled. For relative line numbers, set this to ~relative~.
@@ -51,12 +61,24 @@ This determines the style of line numbers in effect. If set to ~nil~, line numbe
 (setq display-line-numbers-type t)
 #+end_src
 
-** Org Directory
+** Org Mode
+
+*** Org Directory
 
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 
 #+begin_src emacs-lisp
 (setq org-directory "~/MEGAsync/org/")
+#+end_src
+
+*** Org Auto-Tangle Hook
+
+This automatically tangles literate config files on save.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook
+          (lambda () (add-hook 'after-save-hook #'org-babel-tangle
+                          :append :local)))
 #+end_src
 
 ** Calendar Language
@@ -122,5 +144,5 @@ This configures the rust mode to use rust-analyzer and display inlay hints.
   (set-eglot-client! 'haxe-mode' '("node" "~/Stuff/haxe-language-server/bin/server.js")))
 
 (after! projectile
-  (setq projectile-project-search-path '("~/Programming/Rust" "~/Documents/Uni/Arbeit")))
+  (setq projectile-project-search-path '("~/Programming/Rust" "~/Documents/Uni/Arbeit" "~/.config")))
 #+end_src

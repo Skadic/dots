@@ -8,9 +8,18 @@
 
 (setq doom-theme 'doom-dracula)
 
+(add-hook! 'after-make-frame-functions
+  (defun my-load-theme-fix (frame)
+      (select-frame frame)
+      (doom/reload-theme)))
+
 (setq display-line-numbers-type t)
 
 (setq org-directory "~/MEGAsync/org/")
+
+(add-hook 'org-mode-hook
+          (lambda () (add-hook 'after-save-hook #'org-babel-tangle
+                          :append :local)))
 
 (setq calendar-week-start-day 1
           calendar-day-name-array ["日 " "月 " "火 " "水 "
@@ -32,4 +41,4 @@
   (set-eglot-client! 'haxe-mode' '("node" "~/Stuff/haxe-language-server/bin/server.js")))
 
 (after! projectile
-  (setq projectile-project-search-path '("~/Programming/Rust" "~/Documents/Uni/Arbeit")))
+  (setq projectile-project-search-path '("~/Programming/Rust" "~/Documents/Uni/Arbeit" "~/.config")))
