@@ -11,15 +11,16 @@ alias grep="rg"
 alias bgs="nitrogen $HOME/Pictures/bg/"
 alias textidote="java -jar $HOME/Apps/textidote.jar"
 
+function ec 
+  emacsclient --create-frame $argv &
+end
+
 # Configuration
 alias i3conf="$EDITOR ~/.config/i3/config"
 alias fishconf="$EDITOR ~/.config/fish/config.fish"
 alias nvimconf="$EDITOR ~/.config/nvim/"
 alias kittyconf="$EDITOR ~/.config/kitty/kitty.conf"
 alias hyprconf="$EDITOR ~/.config/hypr/hypr.conf"
-
-# Emacs
-alias doomsync="$HOME/.emacs.d/bin/doom sync"
 
 # Git
 alias gad="git add"
@@ -36,7 +37,8 @@ alias vimcheat="nohup mupdf /home/skadic/.cmd_resources/vimcheatsheet.pdf &"
 export PATH="/usr/bin/python:$PATH"
 export PATH="/home/skadic/.local/bin/:$PATH"
 export PATH="$HOME/.cargo/bin/:$PATH"
-export PATH="/$PATH"
+export PATH="$HOME/.emacs.d/bin/:$PATH"
+
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -72,13 +74,15 @@ export PKG_CONFIG="/usr/bin/pkgconf"
 
 export CC="/usr/bin/cc"
 
-
-
+export GTK_IM_MODULE="fcitx"
+export QT_IM_MODULE="fcitx"
+export XMODIFIERS="@im=fcitx"
+export GLFW_IM_MODULE="fcitx"
 
 #export QT_QPA_PLATFORMTHEME="qt5ct"
-
-export LUNARVIM_CONFIG_DIR="/home/skadic/.config/lvim/"
 
 set -U fish_greeting "🐟"
 
 starship init fish | source
+
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/skadic/.ghcup/bin $PATH # ghcup-env

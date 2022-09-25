@@ -1,11 +1,15 @@
 @import 'colors.scss';
 @import 'vars.scss';
 
+* {
+    all: unset;
+    font-size: 1.03em;
+    font-family: $mono_font;
+}
+
 .topbar {
     background: transparent;
-    padding-top: 2px;
-    font-family: $mono_font;
-    font-size: 1.1em;
+    //padding-top: 5px;
 }
 
 .bar-left {
@@ -17,21 +21,22 @@
 
 .bar-right {
     background: $primary-bg;
-    padding: $default_padding;
     border-top-left-radius: 10%;
     border-bottom-left-radius: 10%;
+    padding-left: 30px;
+    padding-right: 5px;
 }
 
-.framed {
+.famed {
     background-color: $current-line;
-    padding: 0.25rem 1.1rem 0.25rem 1.1rem;
+    padding: 0rem 0.45rem 0rem 0.45rem;
     border-radius: 5px;
     font-weight: bolder;
     font-size: larger;
 }
 
 .workspace {
-    padding: 0.45rem 0.9rem 0.45rem 0.9rem;
+    padding: 0.1rem 0.4rem 0.1rem 0.4rem;
 }
 
 scale {
@@ -40,9 +45,16 @@ scale {
 
 scale trough {
     background-color: $primary-bg;
-    border-radius: 7px;
-    min-height: 14px;
+    border-radius: $trough_height;
+    min-height: $trough_height;
     min-width: 100px;
+}
+
+scale trough slider {
+    background-color: $foreground;
+    border-radius: 7px;
+    min-width: $trough_height;
+    min-height: $trough_height;
 }
 
 .vol-slider trough highlight {
@@ -85,4 +97,8 @@ scale trough {
 
 .text-yellow {
     color: $yellow;
+}
+
+.text-comment {
+    color: $comment;
 }

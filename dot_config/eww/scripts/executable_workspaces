@@ -19,6 +19,11 @@ do
   ws_num=$(echo $ws | jq '.num')
   focused=$(echo $ws | jq '.focused')
   
-  echo "  (button :class \"framed workspace\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+  if "$focused";
+  then
+    echo "  (button :class \"framed workspace text-green\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+  else 
+    echo "  (button :class \"framed workspace\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+  fi
 done
 echo ")"

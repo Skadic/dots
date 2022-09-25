@@ -3,7 +3,7 @@
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "25%"
-                      :height "2%"
+                      :height "1%"
                       :anchor "top left")
   :stacking "fg"
   :reserve (struts :distance "2%" :side "top")
@@ -23,10 +23,13 @@
        :space-evenly false
        :spacing "5"
        :class "bar-right"
-    (battery)
-    (brightness)
+    ;(battery)
+    ;(brightness)
     (volume)
+    (spacer)
     (date)))
+
+(defwidget spacer [] (box :class "text-comment" "|"))
 
 (defwidget left []
   (box :orientation "h"
@@ -42,7 +45,7 @@
   (box :orientation "h" 
        :halign "fill"
        :space-evenly true
-       :class "text-cyan framed"
+       :class "framed"
       "${v_hour}:${v_minute}"))
 
 
@@ -58,7 +61,7 @@
     (box :orientation "h"
          :halign "end"
          :space-evenly false
-         :class "text-green framed"
+         :class "framed"
       ""
       (revealer :transition "slideright"
                 :duration "500ms"
