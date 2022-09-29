@@ -63,6 +63,7 @@ wk.register({
     n = { "<cmd>Telescope notify<cr>", "Search Notifications" }
   },
   e = { ":NvimTreeToggle<cr>", "Toggle NvimTree" },
+  s = { ":SymbolsOutline<cr>", "Toggle Symbols Outline" },
   g = {
     name = "Git",
     f = {

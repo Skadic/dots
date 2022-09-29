@@ -53,6 +53,8 @@ return packer.startup(function(use)
 	use("jacoborus/tender.vim")
 	use("Shatur/neovim-ayu")
 	use("navarasu/onedark.nvim")
+  use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
+  use { 'Everblush/everblush.nvim', as = 'everblush' }
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -218,10 +220,11 @@ return packer.startup(function(use)
 		end,
 	})]]
 	use({ "michaelb/sniprun", run = "bash ./install.sh" })
-	use({
-		"kevinhwang91/nvim-ufo",
-		requires = "kevinhwang91/promise-async",
-	}) -- nice folding
+	--use({
+	--	"kevinhwang91/nvim-ufo",
+	--	requires = "kevinhwang91/promise-async",
+	--}), -- nice folding
+	use("simrat39/symbols-outline.nvim")
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim") -- Search stuff
