@@ -24,11 +24,15 @@ mason_lsp.setup_handlers {
   end,
   -- targeted overrides for specific language servers
   ["rust_analyzer"] = function()
-    require("rust-tools").setup(server_opts)
+    require("rust-tools").setup({
+      server = server_opts
+    })
   end,
   ["clangd"] = function()
     server_opts.offset_encoding = "utf-8"
     server_opts.offsetEncoding = "utf-8"
-    require("clangd_extensions").setup(server_opts)
+    require("clangd_extensions").setup({
+      server = server_opts
+    })
   end
 }

@@ -112,6 +112,7 @@ return packer.startup(function(use)
 		end,
 	})
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
+  use("elkowar/yuck.vim")
 
 	-- Treesitter
 	use({

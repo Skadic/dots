@@ -97,7 +97,8 @@ local function lsp_keymaps(bufnr)
 		e = { "<Plug>(doge-generate)", "Generate Documentation" },
 		f = {
 			function()
-				vim.lsp.buf.formatting_sync()
+				--vim.lsp.buf.formatting_sync()
+				vim.lsp.buf.format()
 			end,
 			"Format File",
 		},
