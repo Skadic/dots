@@ -52,9 +52,20 @@ return packer.startup(function(use)
 	use("rebelot/kanagawa.nvim")
 	use("jacoborus/tender.vim")
 	use("Shatur/neovim-ayu")
-	use("navarasu/onedark.nvim")
-  use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
-  use { 'Everblush/everblush.nvim', as = 'everblush' }
+	use({
+		"navarasu/onedark.nvim",
+		config = function()
+			require("onedark").setup({
+				style = "darker",
+        code_style = {
+          keywords = "bold",
+        }
+      })
+		end,
+	})
+	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
+	use({ "Everblush/everblush.nvim", as = "everblush" })
+	use("sainnhe/sonokai")
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -72,7 +83,6 @@ return packer.startup(function(use)
 			require("crates").setup()
 		end,
 	})
-	use("zbirenbaum/copilot-cmp")
 
 	-- snippets
 	use({
@@ -87,7 +97,9 @@ return packer.startup(function(use)
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
-	use("williamboman/nvim-lsp-installer") -- simple to use lsp installer
+	--use("williamboman/nvim-lsp-installer") -- simple to use lsp installer
+  use("williamboman/mason.nvim")
+  use("williamboman/mason-lspconfig.nvim")
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 	use("simrat39/rust-tools.nvim") -- More capabilities for writing Rust
 	use("p00f/clangd_extensions.nvim") -- More capabilities for writing C++
@@ -99,24 +111,7 @@ return packer.startup(function(use)
 			require("trouble").setup({})
 		end,
 	})
-	use({
-		"zbirenbaum/copilot.lua",
-		event = { "VimEnter" },
-		config = function()
-			vim.defer_fn(function()
-				require("copilot").setup()
-			end, 100)
-		end,
-	})
-	use({
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-			vim.diagnostic.config({
-				virtual_text = false,
-			})
-		end,
-	})
+	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
 
 	-- Treesitter
 	use({

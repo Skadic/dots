@@ -46,7 +46,7 @@ end
 
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.documentHighlightProvider then
 		vim.api.nvim_exec(
 			[[
       augroup lsp_document_highlight
@@ -61,47 +61,88 @@ local function lsp_highlight_document(client)
 end
 
 local function lsp_keymaps(bufnr)
-  local wk_opts = { mode = "n", prefix="g", noremap = true, silent = true, buffer = bufnr }
-  local wk = require "which-key"
+	local wk_opts = { mode = "n", prefix = "g", noremap = true, silent = true, buffer = bufnr }
+	local wk = require("which-key")
 
-  wk.register({
-    d = {"<cmd>Trouble lsp_definitions<CR>", "Definition"},
-    D = {function() vim.lsp.buf.declaration() end, "Declaration"},
-    i = {"<cmd>Trouble lsp_implementations<CR>", "Implementation"},
-    r = {"<cmd>Trouble lsp_references<CR>", "References"},
-    s = {"<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols"},
-    S = {"<cmd>Telescope lsp_workspace_symbols<CR>", "Workspace Symbols"},
-  }, wk_opts)
+	wk.register({
+		d = { "<cmd>Trouble lsp_definitions<CR>", "Definition" },
+		D = {
+			function()
+				vim.lsp.buf.declaration()
+			end,
+			"Declaration",
+		},
+		i = { "<cmd>Trouble lsp_implementations<CR>", "Implementation" },
+		r = { "<cmd>Trouble lsp_references<CR>", "References" },
+		s = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols" },
+		S = { "<cmd>Telescope lsp_workspace_symbols<CR>", "Workspace Symbols" },
+	}, wk_opts)
 
-  wk_opts.prefix = "<leader>l"
-  wk.register({
-    name = "Language Server",
-    a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-    --d = { function() vim.diagnostic.open_float() end, "Show Line Diagnostic" },
-    d = { function() require("lsp_lines").toggle() end, "Toggle Line Diagnostics"},
-    D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List"},
-    q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List"},
-    t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List"},
-    --D = { "<cmd>Telescope diagnostics<CR>", "Show Diagnostics List"},
-    e = { "<Plug>(doge-generate)", "Generate Documentation"},
-    f = { function() vim.lsp.buf.formatting_sync() end, "Format File" },
-    h = { function() vim.lsp.buf.hover() end, "Hover" },
-    r = { function() require('cosmic-ui').rename() end, "Rename" },
-    s = { function() vim.lsp.buf.signature_help() end, "Signature Help"},
-  }, wk_opts)
+	wk_opts.prefix = "<leader>l"
+	wk.register({
+		name = "Language Server",
+		a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
+		--d = { function() vim.diagnostic.open_float() end, "Show Line Diagnostic" },
+		d = {
+			function()
+				local lines = require("skadic.lsp_lines")
+				lines.toggle()
+			end,
+			"Toggle Line Diagnostics",
+		},
+		D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List" },
+		q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List" },
+		t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List" },
+		--D = { "<cmd>Telescope diagnostics<CR>", "Show Diagnostics List"},
+		e = { "<Plug>(doge-generate)", "Generate Documentation" },
+		f = {
+			function()
+				vim.lsp.buf.formatting_sync()
+			end,
+			"Format File",
+		},
+		h = {
+			function()
+				vim.lsp.buf.hover()
+			end,
+			"Hover",
+		},
+		r = {
+			function()
+				require("cosmic-ui").rename()
+			end,
+			"Rename",
+		},
+		s = {
+			function()
+				vim.lsp.buf.signature_help()
+			end,
+			"Signature Help",
+		},
+	}, wk_opts)
 
-  wk_opts.prefix = ""
-  wk.register({
-    ["[d"] = {function() vim.diagnostic.goto_prev({ border = "rounded" }) end, "Previous Diagnostic"},
-    ["]d"] = {function() vim.diagnostic.goto_next({ border = "rounded" }) end, "Next Diagnostic"},
-  }, wk_opts)
+	wk_opts.prefix = ""
+	wk.register({
+		["[d"] = {
+			function()
+				vim.diagnostic.goto_prev({ border = "rounded" })
+			end,
+			"Previous Diagnostic",
+		},
+		["]d"] = {
+			function()
+				vim.diagnostic.goto_next({ border = "rounded" })
+			end,
+			"Next Diagnostic",
+		},
+	}, wk_opts)
 end
 
 local disable_format = { tsserver = 1, clangd = 1, sumneko_lua = 1, rust_analyzer = 1 }
 
 M.on_attach = function(client, bufnr)
 	if disable_format[client.name] == 1 then
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end
 
 	lsp_keymaps(bufnr)
