@@ -2,13 +2,15 @@
   :monitor 0
   :geometry (geometry :x "0%"
                       :y "0%"
-                      :width "25%"
-                      :height "1%"
+                      :width "100%"
+                      :height "3%"
                       :anchor "top left")
   :stacking "fg"
-  :reserve (struts :distance "2%" :side "top")
-  :windowtype "dock"
-  :wm-ignore false
+  ;:reserve (struts :distance "2%" :side "top")
+  ;:windowtype "dock"
+  ;:wm-ignore false
+  :exclusive true
+  :focusable false
   (centerbox :orientation "h"
        :class "topbar"
     (left)
@@ -39,17 +41,21 @@
        :space-evenly false
        :spacing "5"
        :class "bar-left"
-    (workspaces)))
+    (workspaces)
+    (spacer)
+    (active_window)))
 
 (defwidget date [] 
   (box :orientation "h" 
        :halign "fill"
        :space-evenly true
        :class "framed"
-      "${v_hour}:${v_minute}"))
+      "${v_hour}:${v_minute} ${EWW_NET}"))
 
 
+; ------------------------------ Volume Slider ------------------------------
 (defvar vol_enable false)
+(defvar vol 0)
 (defpoll current_vol :interval "1s"
                      :run-while vol_enable
                      :initial "0"
@@ -62,7 +68,8 @@
          :halign "end"
          :space-evenly false
          :class "framed"
-      ""
+      (vol_icon)
+      "⠀${vol}%"
       (revealer :transition "slideright"
                 :duration "500ms"
                 :reveal vol_enable
@@ -72,10 +79,15 @@
               :value current_vol
               :min "0"
               :max "100"
-              :onchange "scripts/set_vol {}"))
+              :onchange "${EWW_CMD} update vol={} && scripts/set_vol {}"))
       )))
 
+(defwidget vol_icon [] 
+  (box :class "icon" `${is_mute == "yes" ? "ﱝ" : ""}`))
+(defpoll is_mute :interval "1s" 
+  "pactl get-sink-mute @DEFAULT_SINK@ | cut -c 7-")
 
+; ------------------------------ Brightness Slider ------------------------------
 (defvar brightness_enable false)
 (defpoll current_brightness :interval "1s"
                      :run-while brightness_enable
@@ -102,6 +114,8 @@
               :onchange "brightnessctl s {}"))
       )))
 
+; ------------------------------ Battery ------------------------------
+
 (defwidget battery []
   (box :class "framed text-orange"
        :tooltip "${EWW_BATTERY.BAT0.capacity >= 98 ? "Full" : EWW_BATTERY.BAT0.capacity}${EWW_BATTERY.BAT0.capacity >= 98 ? "" : "%"}"
@@ -118,16 +132,17 @@
       EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
   }`))
 
-
-(deflisten active_workspace :initial "0" 
-  "xprop -spy -root _NET_CURRENT_DESKTOP")
+; ------------------------------ Workspaces ------------------------------
 
 (defwidget workspaces [] (literal :content workspaces))
-
-
 (defpoll workspaces :interval "10ms"
-  "./scripts/workspaces")
+  "./scripts/hyprlandworkspaces")
 
+; ------------------------------ Active Window ------------------------------
+
+(defwidget active_window [] (box active_window))
+(defpoll active_window :interval "10ms"
+  `hyprctl activewindow -j | jq ".title" | cut -c 2- | rev | cut -c 2- | rev | head -c 30`)
 
 (defpoll v_hour :interval "10s"
   `date "+%H"`)
@@ -135,3 +150,5 @@
   `date "+%M"`)
 (defpoll v_date :interval "5m"
   `date "+%d.%m.%y"`)
+
+
