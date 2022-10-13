@@ -115,7 +115,6 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "copilot" },
 		{ name = "orgmode" },
 		{ name = "nvim_lua" },
 		{ name = "crates" },
@@ -123,6 +122,18 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "buffer" },
 	},
+  sorting = {
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.recently_used,
+            require("clangd_extensions.cmp_scores"),
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        },
+    },
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,

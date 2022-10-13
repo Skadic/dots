@@ -29,8 +29,8 @@ mason_lsp.setup_handlers {
     })
   end,
   ["clangd"] = function()
-    server_opts.offset_encoding = "utf-8"
-    server_opts.offsetEncoding = "utf-8"
+    server_opts.capabilities.offset_encoding = "utf-8"
+    server_opts.capabilities.offsetEncoding = "utf-8"
     require("clangd_extensions").setup({
       server = server_opts
     })

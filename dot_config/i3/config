@@ -12,6 +12,12 @@ set $rofi_menu rofi -show drun #~/.config/rofi/bin/launcher_colorful
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
+
+input * {
+  xkb_layout "de"
+  xkb_variant "neo_qwertz"
+}
+
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 default_border pixel 2
 #default_border none
