@@ -57,10 +57,10 @@ return packer.startup(function(use)
 		config = function()
 			require("onedark").setup({
 				style = "darker",
-        code_style = {
-          keywords = "bold",
-        }
-      })
+				code_style = {
+					keywords = "bold",
+				},
+			})
 		end,
 	})
 	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
@@ -98,8 +98,8 @@ return packer.startup(function(use)
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
 	--use("williamboman/nvim-lsp-installer") -- simple to use lsp installer
-  use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
+	use("williamboman/mason.nvim")
+	use("williamboman/mason-lspconfig.nvim")
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 	use("simrat39/rust-tools.nvim") -- More capabilities for writing Rust
 	use("p00f/clangd_extensions.nvim") -- More capabilities for writing C++
@@ -112,7 +112,7 @@ return packer.startup(function(use)
 		end,
 	})
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
-  use("elkowar/yuck.vim")
+	use("elkowar/yuck.vim")
 
 	-- Treesitter
 	use({
@@ -169,6 +169,24 @@ return packer.startup(function(use)
 	})
 	use("weilbith/nvim-code-action-menu") -- A nice Code Action menu
 	use("rcarriga/nvim-notify") -- Better-looking notification
+	use({"norcalli/nvim-colorizer.lua",
+    config = function ()
+      require("colorizer").setup({
+        '*',
+        html = {
+          names = true,
+          css = true,
+        },
+        css = {
+          names = true,
+          css = true,
+        },
+      }, {
+        names = false,
+        mode = "foreground",
+      })
+
+    end}) -- Actually color colorcodes #ff0000
 
 	-- Extra Functionality
 	use("lewis6991/gitsigns.nvim") -- Git Commands
@@ -181,7 +199,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"akinsho/toggleterm.nvim", -- Toggleable terminal
-    tag = "*",
+		tag = "*",
 	})
 	use({
 		"folke/which-key.nvim", -- Allows to see keybinds
@@ -191,6 +209,10 @@ return packer.startup(function(use)
 	})
 	use("kkoomen/vim-doge") -- Documentation Generation
 	use("preservim/tagbar")
+	use({
+		"preservim/vim-markdown",
+		requires = "godlygeek/tabular",
+	})
 
 	use({
 		"kosayoda/nvim-lightbulb",
