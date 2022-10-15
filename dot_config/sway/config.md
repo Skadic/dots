@@ -1,6 +1,7 @@
 # Sway Configuration
 
 My sway config. Please see http://i3wm.org/docs/userguide.html for a complete reference!
+This is intended to be compiled with [lmt](https://github.com/driusan/lmt).
 
 ## Setup
 
