@@ -31,6 +31,10 @@
        :space-evenly false
        :spacing "5"
        :class "bar bar-right"
+    (active_wifi)
+    (spacer)
+    (active_eth)
+    (spacer)
     (battery)
     (spacer)
     (brightness)
@@ -79,10 +83,8 @@
 
 ; ------------------------------ Volume Slider ------------------------------
 (defvar vol_enable false)
-(defvar vol 0)
 (defpoll current_vol :interval "1s"
-                     :run-while vol_enable
-                     :initial "0"
+                     :initial "-1"
                     "pamixer --get-volume")
 (defwidget volume []
   (eventbox :onhover "${EWW_CMD} update vol_enable=true"
@@ -93,7 +95,7 @@
          :space-evenly false
          :class "framed text-green"
       (vol_icon)
-      "⠀${vol}%"
+      "⠀${current_vol}%"
       (revealer :transition "slideright"
                 :duration "${revealer_duration}"
                 :reveal vol_enable
@@ -103,7 +105,7 @@
               :value current_vol
               :min "0"
               :max "100"
-              :onchange "${EWW_CMD} update vol={} && scripts/set_vol {}"))
+              :onchange "${EWW_CMD} update current_vol={} && scripts/set_vol {}"))
       )))
 
 (defwidget vol_icon [] 
@@ -198,7 +200,7 @@
                     !ws_info[ws_number - 1].active ? "text-comment" : ""
                   }` 
           :onclick "./scripts/sway/switch_ws.sh ${ws_number}"
-    {ws_number}))
+    {ws_info[ws_number - 1].name}))
 
 ; ------------------------------ Clock ------------------------------
 
@@ -230,3 +232,26 @@
 (defwidget binding_mode []
   (label :class "framed text-red"
          :text "${binding_mode != "default" ? binding_mode : ""}"))
+
+;
+
+(defpoll active_netw :interval "1s"
+    `./scripts/net.sh`)
+(defwidget active_wifi []
+  (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
+       :space-evenly false
+    (label :class "xl-icon"
+           :text "${active_netw["wl"] != "" ? "直" : "睊" } ")
+    (revealer :reveal "${active_netw["wl"] != ""}"
+              :transition "slideright"
+              :duration "${revealer_duration}"
+      (label :text "${active_netw["wl"] != "" ? active_netw["wl"] : "Disconnected"}"))))
+(defwidget active_eth []
+  (box :class "framed ${active_netw["en"] == "" ? "text-comment" : "text-cyan"}"
+       :space-evenly false
+    (label :class "xl-icon"
+           :text "${active_netw["en"] != "" ? "" : "" } ")
+    (revealer :reveal "${active_netw["en"] != ""}"
+              :transition "slideright"
+              :duration "${revealer_duration}"
+      (label :text "${active_netw["en"] != "" ? active_netw["en"] : "Disconnected"}"))))
