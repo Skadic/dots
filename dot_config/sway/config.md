@@ -505,12 +505,12 @@ mode "$mode_gaps_inner" {
 Holding `Shift` makes the changes apply to all windows.
 
 ```swayconfig "inner gap mode"
-bindsym plus  gaps inner current plus 5
-bindsym minus gaps inner current minus 5
-bindsym 0     gaps inner current set 0
+bindsym KP_Add  gaps inner current plus 5
+bindsym KP_Subtract  gaps inner current minus 5
+bindsym 0       gaps inner current set 0
 
-bindsym Shift+plus  gaps inner all plus 5
-bindsym Shift+minus gaps inner all minus 5
+bindsym Shift+KP_Add  gaps inner all plus 5
+bindsym Shift+KP_Subtract gaps inner all minus 5
 bindsym Shift+0     gaps inner all set 0
 ```
 
@@ -527,12 +527,12 @@ mode "$mode_gaps_outer" {
 Holding `Shift` makes the changes apply to all windows.
 
 ```swayconfig "outer gap mode"
-bindsym plus  gaps outer current plus 5
-bindsym minus gaps outer current minus 5
+bindsym KP_Add  gaps outer current plus 5
+bindsym KP_Subtract gaps outer current minus 5
 bindsym 0     gaps outer current set 0
 
-bindsym Shift+plus  gaps outer all plus 5
-bindsym Shift+minus gaps outer all minus 5
+bindsym Shift+KP_Add  gaps outer all plus 5
+bindsym Shift+KP_Subtract gaps outer all minus 5
 bindsym Shift+0     gaps outer all set 0
 ```
 
