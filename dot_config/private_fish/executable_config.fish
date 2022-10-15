@@ -8,7 +8,7 @@ export EDITOR="/usr/bin/nvim"
 alias nvd="neovide --multigrid"
 alias ls="exa --icons"
 alias grep="rg"
-alias bgs="nitrogen $HOME/Pictures/bg/"
+alias xbgs="nitrogen $HOME/Pictures/bg/"
 alias textidote="java -jar $HOME/Apps/textidote.jar"
 
 function ec 
@@ -17,31 +17,22 @@ end
 
 # Configuration
 alias i3conf="$EDITOR ~/.config/i3/config"
+alias swayconf="$EDITOR ~/.config/sway/config.md"
 alias fishconf="$EDITOR ~/.config/fish/config.fish"
 alias nvimconf="$EDITOR ~/.config/nvim/"
 alias kittyconf="$EDITOR ~/.config/kitty/kitty.conf"
-alias hyprconf="$EDITOR ~/.config/hypr/hypr.conf"
-
-# Git
-alias gad="git add"
-alias gst="git status"
-alias gco="git commit"
-alias gpl="git pull"
-alias gps="git push"
 
 # Cheatsheet
 alias showkoy="nohup viewnior /home/skadic/pictures/koy.png &"
 alias vimcheat="nohup mupdf /home/skadic/.cmd_resources/vimcheatsheet.pdf &"
 
-
+# Path extensions
 export PATH="/usr/bin/python:$PATH"
-export PATH="/home/skadic/.local/bin/:$PATH"
+export PATH="$HOME/.local/bin/:$PATH"
 export PATH="$HOME/.cargo/bin/:$PATH"
 export PATH="$HOME/.emacs.d/bin/:$PATH"
 
-
 export XDG_CONFIG_HOME="$HOME/.config"
-
 
 # Add flatpak exports to PATH
 set -l xdg_data_home $XDG_DATA_HOME ~/.local/share
@@ -62,9 +53,6 @@ end
 alias disable-tablet="xrandr --output DisplayPort-0 --off"
 alias start-vnc-server="x11vnc -clip xinerama1 -ncache_cr -nc 10 -usepw -noxrecord -repeat"
 
-
-
-
 # C Stuff
 export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
 export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
@@ -74,15 +62,17 @@ export PKG_CONFIG="/usr/bin/pkgconf"
 
 export CC="/usr/bin/cc"
 
+# Input method
 export GTK_IM_MODULE="fcitx"
 export QT_IM_MODULE="fcitx"
 export XMODIFIERS="@im=fcitx"
 export GLFW_IM_MODULE="fcitx"
 
-#export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_QPA_PLATFORMTHEME="qt5ct"
 
 set -U fish_greeting "🐟"
 
-starship init fish | source
-
+# Haskell
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/skadic/.ghcup/bin $PATH # ghcup-env
+
+starship init fish | source
