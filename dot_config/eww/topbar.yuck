@@ -1,11 +1,14 @@
+(defvar wm "sway")
+(defvar scripts `./$scripts/sway`)
+
 (defwindow topbar 
   :monitor 0
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
-                      :height "3%"
-                      :anchor "top left")
-  :stacking "fg"
+                      :height "2%"
+                      :anchor "top center")
+  :stacking "bottom"
   ;:reserve (struts :distance "2%" :side "top")
   ;:windowtype "dock"
   ;:wm-ignore false
@@ -14,8 +17,10 @@
   (centerbox :orientation "h"
        :class "topbar"
     (left)
-    ""
+    (middle)
     (right)))
+
+(defwidget spacer [] (box :class "text-comment" "|"))
 
 (defwidget right []
   (box :orientation "h"
@@ -24,14 +29,26 @@
        :hexpand true
        :space-evenly false
        :spacing "5"
-       :class "bar-right"
-    ;(battery)
-    ;(brightness)
+       :class "bar bar-right"
+    (battery)
+    (spacer)
+    (brightness)
+    (spacer)
     (volume)
     (spacer)
     (date)))
 
-(defwidget spacer [] (box :class "text-comment" "|"))
+
+(defwidget middle []
+  (box :orientation "h"
+       :halign "start"
+       :width "0"
+       :hexpand true
+       :space-evenly false
+       :spacing "5"
+       :class "bar bar-middle"
+      (label :text " ${player_status != "Stopped" ? music_info : "Nothing playing"}"
+             :length 20)))
 
 (defwidget left []
   (box :orientation "h"
@@ -40,7 +57,7 @@
        :hexpand true
        :space-evenly false
        :spacing "5"
-       :class "bar-left"
+       :class "bar bar-left"
     (workspaces)
     (spacer)
     (active_window)))
@@ -50,7 +67,7 @@
        :halign "fill"
        :space-evenly true
        :class "framed"
-      "${v_hour}:${v_minute} ${EWW_NET}"))
+      "${v_hour}:${v_minute}"))
 
 
 ; ------------------------------ Volume Slider ------------------------------
@@ -83,7 +100,8 @@
       )))
 
 (defwidget vol_icon [] 
-  (box :class "icon" `${is_mute == "yes" ? "ﱝ" : ""}`))
+  (label :class "icon"
+         :text `${is_mute == "yes" ? "ﱝ" : ""}`))
 (defpoll is_mute :interval "1s" 
   "pactl get-sink-mute @DEFAULT_SINK@ | cut -c 7-")
 
@@ -101,7 +119,8 @@
          :halign "end"
          :space-evenly false
          :class "text-yellow framed"
-      ""
+      (label :class "icon" 
+             :text "")
       (revealer :transition "slideright"
                 :duration "500ms"
                 :reveal brightness_enable
@@ -119,7 +138,7 @@
 (defwidget battery []
   (box :class "framed text-orange"
        :tooltip "${EWW_BATTERY.BAT0.capacity >= 98 ? "Full" : EWW_BATTERY.BAT0.capacity}${EWW_BATTERY.BAT0.capacity >= 98 ? "" : "%"}"
-    `${
+    (box :class "icon" `${
       EWW_BATTERY.BAT0.status == "Charging" ? "" :
       EWW_BATTERY.BAT0.capacity < 10 ? "" : 
       EWW_BATTERY.BAT0.capacity < 20 ? "" : 
@@ -130,19 +149,54 @@
       EWW_BATTERY.BAT0.capacity < 70 ? "" : 
       EWW_BATTERY.BAT0.capacity < 80 ? "" : 
       EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
-  }`))
+  } ${EWW_BATTERY.BAT0.capacity}%`)))
 
 ; ------------------------------ Workspaces ------------------------------
 
-(defwidget workspaces [] (literal :content workspaces))
-(defpoll workspaces :interval "10ms"
-  "./scripts/hyprlandworkspaces")
+;(defwidget workspaces [] (literal :content workspaces))
+;(defpoll workspaces :interval "10ms"
+;  "./scripts/hyprlandworkspaces")
+
+(defwidget workspaces [] 
+  (box :halign "center"
+    (ws_button :ws_number 1)
+    (ws_button :ws_number 2)
+    (ws_button :ws_number 3)
+    (ws_button :ws_number 4)
+    (ws_button :ws_number 5)
+    (ws_button :ws_number 6)
+    (ws_button :ws_number 7)
+    (ws_button :ws_number 8)
+    ))
 
 ; ------------------------------ Active Window ------------------------------
 
-(defwidget active_window [] (box active_window))
-(defpoll active_window :interval "10ms"
-  `hyprctl activewindow -j | jq ".title" | cut -c 2- | rev | cut -c 2- | rev | head -c 30`)
+(defwidget active_window [] 
+  (label :text `${active_window}`
+         :limit-width 35))
+;(defpoll active_window :interval "10ms"
+;  `hyprctl activewindow -j | jq -r ".title" | head -c 30`)
+
+;(deflisten active_window :initial "No window found" 
+;  `./scripts/sway/active_window.sh`)
+(defvar active_window "")
+
+; ------------------------------ Workspaces ------------------------------
+
+;(defpoll ws_info :interval "50ms" 
+;  "./scripts/sway/workspaces.sh")
+(defvar ws_info "")
+(defwidget ws_button [ws_number] 
+  (button :class `framed workspace ${
+                    ws_info[ws_number - 1].urgent ? "text-red" : 
+                    ws_info[ws_number - 1].focused ? "text-green" : 
+                    ws_info[ws_number - 1].visible ? "text-yellow" : 
+                    !ws_info[ws_number - 1].active ? "text-comment" : ""
+                  }` 
+          :onclick "./scripts/sway/switch_ws.sh ${ws_number}"
+    {ws_number}))
+
+; ------------------------------ Clock ------------------------------
 
 (defpoll v_hour :interval "10s"
   `date "+%H"`)
@@ -151,4 +205,10 @@
 (defpoll v_date :interval "5m"
   `date "+%d.%m.%y"`)
 
+; ------------------------------ Music ------------------------------
 
+
+(deflisten player_status :initial "Paused"
+  "playerctl --follow status")
+(deflisten music_info :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}'")
