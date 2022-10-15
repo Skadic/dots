@@ -13,7 +13,7 @@ We set the modifier key. The most popular options are `Mod1` for `Alt` and `Mod4
 ```swayconfig config +=
 set $mod Mod4
 ```
-### Terminal {#terminal}
+### Terminal
 
 The default terminal and a keybind to start it. In my case I like using kitty.
 ```swayconfig config +=
@@ -191,7 +191,7 @@ As the name says, these are keybinds for controlling sway, opening programs etc.
 
 This reloads sway.
 ```swayconfig config +=
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c exec cd .config/sway && lmt config.md; reload
 bindsym $mod+Shift+r restart
 ```
 
@@ -222,7 +222,7 @@ bindsym XF86MonBrightnessUp exec "brightnessctl set +10"
 bindsym XF86MonBrightnessDown exec "brightnessctl set -10"
 ```
 
-### Focus {#focus}
+### Focus
 
 These commands change the currently focused window or workspace.
 Generally they will just be `$mod+<key>` like other commands. 
@@ -488,8 +488,6 @@ mode "$mode_gaps" {
 ```swayconfig "gap mode"
 bindsym o      mode "$mode_gaps_outer"
 bindsym i      mode "$mode_gaps_inner"
-bindsym Return mode "default"
-bindsym Escape mode "default"
 ```
 
 ##### Inner Gap Mode
@@ -498,8 +496,8 @@ A mode that modifies inner gaps.
 
 ```swayconfig config +=
 mode "$mode_gaps_inner" {
-<<<inner gap mode>>>
-<<<exit binding mode>>>
+  <<<inner gap mode>>>
+  <<<exit binding mode>>>
 }
 ```
 
@@ -520,8 +518,8 @@ bindsym Shift+0     gaps inner all set 0
 
 ```swayconfig config +=
 mode "$mode_gaps_outer" {
-<<<outer gap mode>>>
-<<<exit binding mode>>>
+  <<<outer gap mode>>>
+  <<<exit binding mode>>>
 }
 ```
 
