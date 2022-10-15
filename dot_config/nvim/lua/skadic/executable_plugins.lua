@@ -181,7 +181,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"akinsho/toggleterm.nvim", -- Toggleable terminal
-		tag = "v1.*",
+    tag = "*",
 	})
 	use({
 		"folke/which-key.nvim", -- Allows to see keybinds
