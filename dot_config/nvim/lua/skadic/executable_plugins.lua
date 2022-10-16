@@ -46,7 +46,45 @@ return packer.startup(function(use)
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
 
 	-- Colorschemes
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use({
+		"EdenEast/nightfox.nvim",
+		config = function()
+			require("nightfox").setup({
+				options = {
+					styles = {
+						keywords = "bold",
+						comments = "italic",
+					},
+				},
+				modules = {
+					cmp = true,
+					dashboard = true,
+					lsp_trouble = true,
+					diagnostic = {
+						enable = true,
+						background = true,
+					},
+					native_lsp = {
+						enable = true,
+						background = true,
+					},
+					nvimtree = true,
+					telescope = true,
+					whichkey = true,
+					symbol_outline = true,
+					gitsigns = true,
+				},
+			})
+		end,
+	})
+	use({
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = function()
+			vim.g.catppuccin_flavour = "mocha"
+			require("catppuccin").setup()
+		end,
+	})
 	use("projekt0n/github-nvim-theme")
 	use("dracula/vim")
 	use("rebelot/kanagawa.nvim")
@@ -63,9 +101,10 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
 	use({ "Everblush/everblush.nvim", as = "everblush" })
 	use("sainnhe/sonokai")
+	use("krfl/fleetish-vim")
+	--use({ "FromSyntax/oxocarbon.nvim", branch = "fennel"})
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -169,24 +208,25 @@ return packer.startup(function(use)
 	})
 	use("weilbith/nvim-code-action-menu") -- A nice Code Action menu
 	use("rcarriga/nvim-notify") -- Better-looking notification
-	use({"norcalli/nvim-colorizer.lua",
-    config = function ()
-      require("colorizer").setup({
-        '*',
-        html = {
-          names = true,
-          css = true,
-        },
-        css = {
-          names = true,
-          css = true,
-        },
-      }, {
-        names = false,
-        mode = "foreground",
-      })
-
-    end}) -- Actually color colorcodes #ff0000
+	use({
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({
+				"*",
+				html = {
+					names = true,
+					css = true,
+				},
+				css = {
+					names = true,
+					css = true,
+				},
+			}, {
+				names = false,
+				mode = "foreground",
+			})
+		end,
+	}) -- Actually color colorcodes #ff0000
 
 	-- Extra Functionality
 	use("lewis6991/gitsigns.nvim") -- Git Commands
