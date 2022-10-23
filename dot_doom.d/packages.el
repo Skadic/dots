@@ -11,6 +11,14 @@
 
 (package! docstr)
 
+(package! mixed-pitch)
+
+(add-hook! org-mode
+           (mixed-pitch-mode))
+
+(after! mixed-pitch
+  (setq mixed-pitch-set-height t)
+  (set-face-attribute 'variable-pitch nil :height 1.3))
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
