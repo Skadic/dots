@@ -191,7 +191,7 @@
 
 ;(defpoll ws_info :interval "50ms" 
 ;  "./scripts/sway/workspaces.sh")
-(defvar ws_info `[{"name":"1","num":1,"focused":true,"urgent":false,"visible":true,"active":true},{"name":"2","num":2,"focused":false,"urgent":false,"visible":false,"active":true},{"name":"3","num":3,"focused":false,"urgent":false,"visible":false,"active":true},{"name":"4","num":4,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"5","num":5,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"6","num":6,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"7","num":7,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"8","num":8,"focused":false,"urgent":false,"visible":false,"active":false}]`)
+(defvar ws_info `[{"name":"1","num":1,"focused":true,"urgent":false,"visible":true,"active":true},{"name":"2","num":2,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"3","num":3,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"4","num":4,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"5","num":5,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"6","num":6,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"7","num":7,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"8","num":8,"focused":false,"urgent":false,"visible":false,"active":false}]`)
 (defwidget ws_button [ws_number] 
   (button :class `framed workspace ${
                     ws_info[ws_number - 1].urgent ? "text-red" : 
@@ -233,7 +233,7 @@
   (label :class "framed text-red"
          :text "${binding_mode != "default" ? binding_mode : ""}"))
 
-;
+; ------------------------------ Networks ------------------------------
 
 (defpoll active_netw :interval "1s"
     `./scripts/net.sh`)

@@ -219,7 +219,7 @@ bindsym $mod+p exec --no-startup-id rofi -show run
 These commands bind screen brightness controls to the brightness buttons.
 ```swayconfig config +=
 bindsym XF86MonBrightnessUp exec "brightnessctl set +10"
-bindsym XF86MonBrightnessDown exec "brightnessctl set -10"
+bindsym XF86MonBrightnessDown exec "brightnessctl set 10-"
 ```
 
 ### Focus
@@ -421,12 +421,12 @@ These commands take screenshots.
 
 This takes a screenshot of the entire currently focused screen.
 ```swayconfig config +=
-bindsym Print exec --no-startup-id  swaymsg -t get_outputs | jq -rM '.[] | select(.focused == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"'
+bindsym Print exec --no-startup-id ./screenshot.sh
 ```
 
 This allows selecting an area and taking a screenshot of that.
 ```swayconfig config +=
-bindsym $mod+Shift+Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
+bindsym Shift+Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
 ```
 
 ### Binding Modes
