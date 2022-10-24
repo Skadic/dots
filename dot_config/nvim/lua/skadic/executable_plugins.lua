@@ -181,6 +181,14 @@ return packer.startup(function(use)
 			require("org-bullets").setup()
 		end,
 	})
+	use({
+		"edluffy/hologram.nvim",
+		config = function()
+			require("hologram").setup({
+				auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
+			})
+		end,
+	})
 
 	-- Visual Funsies
 	--use("feline-nvim/feline.nvim") -- Nice bar
