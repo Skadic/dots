@@ -31,6 +31,7 @@ export PATH="/usr/bin/python:$PATH"
 export PATH="$HOME/.local/bin/:$PATH"
 export PATH="$HOME/.cargo/bin/:$PATH"
 export PATH="$HOME/.emacs.d/bin/:$PATH"
+export PATH="$HOME/.nimble/bin/:$PATH"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -56,6 +57,7 @@ alias start-vnc-server="x11vnc -clip xinerama1 -ncache_cr -nc 10 -usepw -noxreco
 # C Stuff
 export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
 export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
+export CMAKE_GENERATOR="Ninja"
 
 export PKG_CONFIG_PATH="/usr/bin/pkgconf"
 export PKG_CONFIG="/usr/bin/pkgconf"
