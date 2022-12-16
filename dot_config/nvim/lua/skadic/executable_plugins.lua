@@ -82,7 +82,15 @@ return packer.startup(function(use)
 		as = "catppuccin",
 		config = function()
 			vim.g.catppuccin_flavour = "mocha"
-			require("catppuccin").setup()
+			require("catppuccin").setup({
+        styles = {
+          comments = { "italic" },
+          keywords = { "bold" },
+          booleans = { "bold" },
+          functions = { "bold" },
+          loops = { "bold" },
+        }
+      })
 		end,
 	})
 	use("projekt0n/github-nvim-theme")
@@ -104,7 +112,6 @@ return packer.startup(function(use)
 	use({ "Everblush/everblush.nvim", as = "everblush" })
 	use("sainnhe/sonokai")
 	use("krfl/fleetish-vim")
-	--use({ "FromSyntax/oxocarbon.nvim", branch = "fennel"})
 
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -136,7 +143,8 @@ return packer.startup(function(use)
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
-	--use("williamboman/nvim-lsp-installer") -- simple to use lsp installer
+	use("mfussenegger/nvim-dap")
+	use("rcarriga/nvim-dap-ui")
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
@@ -152,6 +160,18 @@ return packer.startup(function(use)
 	})
 	use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")
 	use("elkowar/yuck.vim")
+	use({
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require("lsp_signature").setup({
+				bind = true,
+				handler_opts = {
+					border = "rounded",
+				},
+			})
+		end,
+	})
+	use("alaviss/nim.nvim")
 
 	-- Treesitter
 	use({
@@ -161,10 +181,16 @@ return packer.startup(function(use)
 	use("p00f/nvim-ts-rainbow")
 
 	-- Org
-	--[[use({
-		"nvim-neorg/neorg", -- Custom Org Mode for Nvim
-		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "max397574/neorg-kanban" },
-	--})]]
+	use({
+		"nvim-neorg/neorg",
+		run = ":Neorg sync-parsers", -- This is the important bit!
+		config = function()
+			require("neorg").setup({
+				-- configuration here
+			})
+		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "max397574/neorg-kanban", "max397574/neorg-contexts" },
+	})
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
@@ -181,14 +207,14 @@ return packer.startup(function(use)
 			require("org-bullets").setup()
 		end,
 	})
-	use({
+	--[[use({
 		"edluffy/hologram.nvim",
 		config = function()
 			require("hologram").setup({
 				auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
 			})
 		end,
-	})
+	})]]
 
 	-- Visual Funsies
 	--use("feline-nvim/feline.nvim") -- Nice bar
@@ -235,6 +261,7 @@ return packer.startup(function(use)
 			})
 		end,
 	}) -- Actually color colorcodes #ff0000
+  use 'wakatime/vim-wakatime' -- Programming language metrics
 
 	-- Extra Functionality
 	use("lewis6991/gitsigns.nvim") -- Git Commands
@@ -255,12 +282,20 @@ return packer.startup(function(use)
 			require("which-key").setup({})
 		end,
 	})
-	use("kkoomen/vim-doge") -- Documentation Generation
+	use({
+		"kkoomen/vim-doge",
+		run = ":call doge#install()",
+		config = function()
+      vim.g.doge_doc_standard_cpp='doxygen_cpp_comment_slash'
+      vim.g.doge_doc_standard_c='doxygen_cpp_comment_slash'
+		end
+	}) -- Documentation Generation
 	use("preservim/tagbar")
 	use({
 		"preservim/vim-markdown",
 		requires = "godlygeek/tabular",
 	})
+	use("nullchilly/fsread.nvim")
 
 	use({
 		"kosayoda/nvim-lightbulb",
@@ -286,10 +321,10 @@ return packer.startup(function(use)
 		end,
 	})]]
 	use({ "michaelb/sniprun", run = "bash ./install.sh" })
-	--use({
-	--	"kevinhwang91/nvim-ufo",
-	--	requires = "kevinhwang91/promise-async",
-	--}), -- nice folding
+	use({
+		"kevinhwang91/nvim-ufo",
+		requires = "kevinhwang91/promise-async",
+	}) -- nice folding
 	use("simrat39/symbols-outline.nvim")
 
 	-- Telescope

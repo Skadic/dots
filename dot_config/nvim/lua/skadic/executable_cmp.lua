@@ -114,13 +114,14 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "orgmode" },
-		{ name = "nvim_lua" },
+		{ name = "nvim_lsp", keyword_length = 3 },
+		{ name = "orgmode", keyword_length = 3  },
+		{ name = "neorg" },
+		{ name = "nvim_lua", keyword_length = 3  },
 		{ name = "crates" },
-		{ name = "luasnip" },
+		{ name = "luasnip", keyword_length = 3 },
 		{ name = "path" },
-		{ name = "buffer" },
+		{ name = "buffer", keyword_length = 4 },
 	},
   sorting = {
         comparators = {

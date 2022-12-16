@@ -23,15 +23,7 @@ mason_lsp.setup_handlers({
 	end,
 	-- targeted overrides for specific language servers
 	["rust_analyzer"] = function()
-		require("rust-tools").setup({
-			server = {
-				on_attach = require("skadic.lsp.handlers").on_attach,
-				capabilities = require("skadic.lsp.handlers").capabilities,
-				procMacro = {
-					enable = true,
-				},
-			},
-		})
+    require("skadic.lsp.settings.rust_analyzer")
 	end,
 	["clangd"] = function()
 		local server_opts = {

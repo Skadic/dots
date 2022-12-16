@@ -93,7 +93,7 @@ local function lsp_keymaps(bufnr)
 		D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List" },
 		q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List" },
 		t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List" },
-		--D = { "<cmd>Telescope diagnostics<CR>", "Show Diagnostics List"},
+		b = { "<cmd>DapToggleBreakpoint<CR>", "Toggle Breakpoint" },
 		e = { "<Plug>(doge-generate)", "Generate Documentation" },
 		f = {
 			function()
@@ -101,6 +101,12 @@ local function lsp_keymaps(bufnr)
 				vim.lsp.buf.format()
 			end,
 			"Format File",
+		},
+		c = {
+			function()
+				vim.lsp.codelens.run()
+			end,
+			"Run Code Lens",
 		},
 		h = {
 			function()
@@ -135,6 +141,12 @@ local function lsp_keymaps(bufnr)
 				vim.diagnostic.goto_next({ border = "rounded" })
 			end,
 			"Next Diagnostic",
+		},
+		["<leader>d"] = {
+			function()
+				require("dapui").toggle()
+			end,
+			"Toggle Debug UI",
 		},
 	}, wk_opts)
 end

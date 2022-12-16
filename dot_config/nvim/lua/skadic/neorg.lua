@@ -87,8 +87,10 @@ local opts = {
 				zen_mode = "zen-mode",
 			},
 		},
+    ["core.tangle"] = {},
     ["core.integrations.telescope"] = {},
     ["external.kanban"] = {},
+    ["external.context"] = {},
     ["core.norg.journal"] = {
       config = {
         workspace = "journal",
