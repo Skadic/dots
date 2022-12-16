@@ -178,8 +178,9 @@
 ; ------------------------------ Active Window ------------------------------
 
 (defwidget active_window [] 
-  (label :text `${active_window}`
-         :limit-width 45))
+  (label :class "varfont"
+         :limit-width 45
+         :text `${active_window}`))
 ;(defpoll active_window :interval "10ms"
 ;  `hyprctl activewindow -j | jq -r ".title" | head -c 30`)
 
@@ -221,7 +222,9 @@
     (box :space-evenly false
       (label :class "icon"
              :text " ")
-      (label :text "${music_info}"
+      (label :class "varfont"
+             :limit-width 50
+             :text "${music_info}"
          :length 25)))
 
 
@@ -238,20 +241,22 @@
 (defpoll active_netw :interval "1s"
     `./scripts/net.sh`)
 (defwidget active_wifi []
-  (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
-       :space-evenly false
-    (label :class "xl-icon"
-           :text "${active_netw["wl"] != "" ? "直" : "睊" } ")
-    (revealer :reveal "${active_netw["wl"] != ""}"
-              :transition "slideright"
-              :duration "${revealer_duration}"
-      (label :text "${active_netw["wl"] != "" ? active_netw["wl"] : "Disconnected"}"))))
+  (eventbox :onclick "nm-connection-editor &"
+    (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
+         :space-evenly false
+      (label :class "xl-icon"
+             :text "${active_netw["wl"] != "" ? "直" : "睊" } ")
+      (revealer :reveal "${active_netw["wl"] != ""}"
+                :transition "slideright"
+                :duration "${revealer_duration}"
+        (label :text "${active_netw["wl"] != "" ? active_netw["wl"] : "Disconnected"}")))))
 (defwidget active_eth []
-  (box :class "framed ${active_netw["en"] == "" ? "text-comment" : "text-cyan"}"
-       :space-evenly false
-    (label :class "xl-icon"
-           :text "${active_netw["en"] != "" ? "" : "" } ")
-    (revealer :reveal "${active_netw["en"] != ""}"
-              :transition "slideright"
-              :duration "${revealer_duration}"
-      (label :text "${active_netw["en"] != "" ? active_netw["en"] : "Disconnected"}"))))
+  (eventbox :onclick "nm-connection-editor &"
+    (box :class "framed ${active_netw["en"] == "" ? "text-comment" : "text-cyan"}"
+         :space-evenly false
+      (label :class "xl-icon"
+             :text "${active_netw["en"] != "" ? "" : "" } ")
+      (revealer :reveal "${active_netw["en"] != ""}"
+                :transition "slideright"
+                :duration "${revealer_duration}"
+        (label :text "${active_netw["en"] != "" ? active_netw["en"] : "Disconnected"}")))))
