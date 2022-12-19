@@ -42,16 +42,28 @@ input type:keyboard {
   xkb_variant "neo_qwertz"
 }
 ```
-### Keyboard Input
+### Mouse and Touchpad Input
 
 ```swayconfig config +=
 input type:pointer {
   accel_profile flat
   pointer_accel 0
+}
+
+input type:touchpad {
+  scroll_factor 0.5
   tap enabled
+  natural_scroll enabled
 }
 ```
 
+### Visual Settings
+
+This is stuff added by [SwayFX](https://github.com/WillPower3309/swayfx)!
+
+```swayconfig config +=
+corner_radius 8
+```
 
 ### Monitor Settings
 
@@ -70,7 +82,7 @@ Border style options are :
 - `none`: Self-explanatory
 ```swayconfig config +=
 default_border pixel 2
-default_floating_border normal
+default_floating_border pixel 2
 ```
 
 Smart borders draw borders around container only if it is not the only container on this workspace.
@@ -114,33 +126,30 @@ for_window [urgent=latest] focus
 ### Colors
 
 The colors that sway uses. This is also mostly for borders and titlebars.
-This particular theme at the moment is **Base16 OneDark** by [Lalit Magant](http://github.com/tilal6991)
+These colors are from the [Catppuccin](https://github.com/catppuccin/catppuccin) "Mocha" color palette.
 ```swayconfig config +=
-set $base00 #282c34
-set $base01 #353b45
-set $base02 #3e4451
-set $base03 #545862
-set $base04 #565c64
-set $base05 #abb2bf
-set $base06 #b6bdca
-set $base07 #c8ccd4
-set $base08 #e06c75
-set $base09 #d19a66
-set $base0A #e5c07b
-set $base0B #98c379
-set $base0C #56b6c2
-set $base0D #61afef
-set $base0E #c678dd
-set $base0F #be5046
+set $cl_acce #b4befe
+set $cl_high #b4befe
+set $cl_indi #9399b2
+set $cl_surf #313244
+set $cl_back #1e1e2e
+set $cl_over #45475a
+set $cl_fore #cdd6f4
+set $cl_intx #7f849c
+set $cl_urge #f38ba8
 
-# Basic color configuration using the Base16 variables for windows and borders.
-# Property Name         Border  BG      Text    Indicator Child Border
-client.focused          $base05 $base0D $base00 $base0D $base0C
-client.focused_inactive $base01 $base01 $base05 $base03 $base01
-client.unfocused        $base01 $base00 $base05 $base01 $base01
-client.urgent           $base08 $base08 $base00 $base08 $base08
-client.placeholder      $base00 $base00 $base05 $base00 $base00
-client.background       $base07
+# Colors                border   bg       text     indi     childborder
+client.focused          $cl_acce $cl_back $cl_fore $cl_indi $cl_high
+client.focused_inactive $cl_over $cl_surf $cl_intx $cl_back $cl_back
+client.unfocused        $cl_over $cl_surf $cl_intx $cl_back $cl_back
+client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
+```
+
+### Cursor
+
+Set the cursor theme.
+```swayconfig config +=
+seat seat0 xcursor_theme "Posy's Cursor Black"
 ```
 
 ### Window Rules
