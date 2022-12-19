@@ -58,12 +58,14 @@ wk.register({
       "Git Files"
     },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    b = { "<cmd>Telescope buffers<cr>", "Find File" },
     p = { "<cmd>Telescope projects<cr>", "Projects" },
     l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
     n = { "<cmd>Telescope notify<cr>", "Search Notifications" }
   },
   e = { ":NvimTreeToggle<cr>", "Toggle NvimTree" },
-  s = { ":SymbolsOutline<cr>", "Toggle Symbols Outline" },
+  s = { ":TagbarToggle<cr>", "Toggle Tagbar" },
+  S = { ":SymbolsOutline<cr>", "Toggle Symbols Outline" },
   g = {
     name = "Git",
     f = {

@@ -5,8 +5,7 @@ if not status_ok then
   return M
 end
 
-
-require("lsp_lines").setup()
+lines.setup()
 
 local enabled = false
 
