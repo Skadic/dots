@@ -57,7 +57,7 @@ local opts = {
 -- View options
 opts.view = {
   width = 30,
-  height = 30,
+  --height = 30,
   hide_root_folder = false,
   side = "left",
   --auto_resize = true,

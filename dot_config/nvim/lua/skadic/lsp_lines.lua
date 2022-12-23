@@ -1,12 +1,5 @@
 local M = {}
 
-local status_ok, lines = pcall(require, "lsp_lines")
-if not status_ok then
-  return M
-end
-
-lines.setup()
-
 local enabled = false
 
 function M.set(b)
