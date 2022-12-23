@@ -7,7 +7,14 @@ function M.init(use)
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim") -- Search stuff
-	use("nvim-telescope/telescope-media-files.nvim")
+	use({ -- A native Sorter for telescope to increase performance
+		"nvim-telescope/telescope-fzf-native.nvim",
+		run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+	})
+	use("nvim-telescope/telescope-media-files.nvim") -- Search for media files
+	use("nvim-telescope/telescope-file-browser.nvim") -- A file browser
+	use("nvim-telescope/telescope-packer.nvim") -- Search through plugins
+  use("gbrlsnchs/telescope-lsp-handlers.nvim") -- Better LSP Functions
 
 	use({ -- Modify surrounding symbols
 		"kylechui/nvim-surround",

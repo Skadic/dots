@@ -6,7 +6,9 @@ function M.init(use)
 	use({ -- Discord Rich Presence
 		"andweeb/presence.nvim",
 		config = function()
-			require("presence").setup({})
+			local presence = require("presence")
+      vim.notify(presence);
+      presence:setup()
 		end,
 	})
 end
