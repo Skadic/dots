@@ -1,3 +1,4 @@
+
 local function bg_as_hex(group)
 	local col = vim.api.nvim_get_hl_by_name(group, true).background
 	if col == nil then
@@ -57,16 +58,16 @@ return {
 		},
 		lazy = true,
 		cmd = "Neotree",
-		config = function()
-			require("skadic.neo-tree")
-		end,
+		config = require("skadic.neo-tree"),
 	},
-	{ -- Nicer bar
-		"windwp/windline.nvim",
-		config = function()
-			require("wlsample.evil_line")
-		end,
-	},
+  { -- Nice statusbar
+    "feline-nvim/feline.nvim",
+    name = "feline",
+    config = function ()
+      require("feline").setup(require("skadic.feline_conf"))
+      require("feline").winbar.setup()
+    end
+  },
 	{ -- Toggleable terminal
 		"akinsho/toggleterm.nvim",
 		lazy = true,
@@ -106,6 +107,7 @@ return {
 	{
 		"akinsho/bufferline.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons" },
+    enabled = false,
     config = function ()
       require("skadic.bufferline")
     end
