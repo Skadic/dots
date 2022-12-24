@@ -71,5 +71,5 @@ return {
 			"kevinhwang91/promise-async",
 		},
 	},
-	{ "famiu/bufdelete.nvim", lazy = true }, -- Allow better deletion of buffers
+	{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } }, -- Allow better deletion of buffers
 }

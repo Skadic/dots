@@ -1,15 +1,71 @@
+local function bg_as_hex(group)
+	local col = vim.api.nvim_get_hl_by_name(group, true).background
+	if col == nil then
+		return nil
+	end
+	return string.format("#%x", col)
+end
+local function fg_as_hex(group)
+	local col = vim.api.nvim_get_hl_by_name(group, true).foreground
+	if col == nil then
+		return nil
+	end
+	return string.format("#%x", col)
+end
+
 return {
-	{ -- File Tree
-		"kyazdani42/nvim-tree.lua",
-		dependencies = {
-			"kyazdani42/nvim-web-devicons",
-		},
+	{ -- Start screen
+		"goolord/alpha-nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+		name = "alpha",
 		config = function()
-			require("skadic.nvim-tree")
+			require("alpha").setup(require("alpha.themes.startify").config)
 		end,
-    lazy = true,
-    event = "BufEnter",
-    cmd = "NvimTreeToggle"
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			{ -- Allows you to puck windows
+				"s1n7ax/nvim-window-picker",
+				config = {
+					autoselect_one = true,
+					include_current = false,
+					filter_rules = {
+						-- filter using buffer options
+						bo = {
+							-- if the file type is one of following, the window will be ignored
+							filetype = { "neo-tree", "neo-tree-popup", "notify" },
+							-- if the buffer type is one of following, the window will be ignored
+							buftype = { "terminal", "quickfix" },
+						},
+					},
+					-- if you have include_current_win == true, then current_win_hl_color will
+					-- be highlighted using this background color
+					current_win_hl_color = bg_as_hex("CurSearch"),
+					-- all the windows except the curren window will be highlighted using this
+					-- color
+					other_win_hl_color = bg_as_hex("IncSearch"),
+					-- the foreground (text) color of the picker
+					fg_color = fg_as_hex("CurSearch"),
+				},
+				lazy = true,
+			},
+		},
+		lazy = true,
+		cmd = "Neotree",
+		config = function()
+			require("skadic.neo-tree")
+		end,
+	},
+	{ -- Nicer bar
+		"windwp/windline.nvim",
+		config = function()
+			require("wlsample.evil_line")
+		end,
 	},
 	{ -- Toggleable terminal
 		"akinsho/toggleterm.nvim",
@@ -24,27 +80,35 @@ return {
 		config = true,
 		lazy = true,
 	},
-	{
+
+	--- LSP-Related UI ---
+	{ -- A toggleable symbols outline
 		"simrat39/symbols-outline.nvim",
 		lazy = true,
 		cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
 		config = { autofold_depth = 2 },
-	}, -- A toggleable symbols outpline
+	},
 	{ "preservim/tagbar", lazy = true, cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
 	{ -- Add the vscode lightbulb to the sidebar
 		"kosayoda/nvim-lightbulb",
 		config = function()
 			require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 		end,
-    lazy = true,
-    event = "LspAttach"
+		lazy = true,
+		event = "LspAttach",
 	},
-	{ -- Zen-Mode for Neorg's presenter
-		"folke/zen-mode.nvim",
-		config = function()
-			require("zen-mode").setup()
-		end,
-    lazy = true,
-    cmd = "ZenMode"
+	{ -- Some nice windows
+		"CosmicNvim/cosmic-ui",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		config = { border_style = "rounded" },
+		lazy = true,
 	},
+	{
+		"akinsho/bufferline.nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+    config = function ()
+      require("skadic.bufferline")
+    end
+	},
+	{ "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
 }

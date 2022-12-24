@@ -63,9 +63,11 @@ wk.register({
     l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
     n = { "<cmd>Telescope notify<cr>", "Search Notifications" }
   },
-  e = { ":NvimTreeToggle<cr>", "Toggle NvimTree" },
-  s = { ":TagbarToggle<cr>", "Toggle Tagbar" },
-  S = { ":SymbolsOutline<cr>", "Toggle Symbols Outline" },
+  L = { "<cmd>Lazy<cr>", "Open Lazy"},
+  e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },
+  b = { "<cmd>Neotree buffers<cr>", "Toggle Buffers" },
+  s = { "<cmd>TagbarToggle<cr>", "Toggle Tagbar" },
+  S = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
   g = {
     name = "Git",
     f = {

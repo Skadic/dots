@@ -1,1 +1,3 @@
 dot_config/nvim/plugin
+**/dot_vscode
+**/lazy-lock.json
