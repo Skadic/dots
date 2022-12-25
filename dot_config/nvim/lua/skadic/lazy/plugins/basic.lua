@@ -2,17 +2,16 @@ return {
 	"folke/lazy.nvim", -- Have lazy manage itself
 	{ "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
 	{ "nvim-lua/plenary.nvim", lazy = true }, -- Useful lua functions used ny lots of plugins
-	{
+	{ -- Git Commands
 		"lewis6991/gitsigns.nvim",
 		lazy = true,
 		cmd = "Gitsigns",
 		config = function()
 			require("skadic.gitsigns")
 		end,
-	}, -- Git Commands
+	},
 
-	-- Telescope
-	{
+	{ -- Telescope
 		"nvim-telescope/telescope.nvim",
 		lazy = true,
 		cmd = "Telescope",
@@ -25,13 +24,12 @@ return {
 		config = function()
 			require("skadic.telescope")
 		end,
-	}, -- Search stuff
+	},
 	{ -- A native Sorter for telescope to increase performance
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		lazy = true,
 	},
-
 	{ -- Modify surrounding symbols
 		"kylechui/nvim-surround",
 		config = true,
@@ -52,7 +50,6 @@ return {
 	},
 	{ -- Project management
 		"ahmedkhalf/project.nvim",
-		name = "project_nvim",
 		config = true,
 		lazy = true,
 		cmd = "Telescope projects",
