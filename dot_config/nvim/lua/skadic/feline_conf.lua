@@ -96,21 +96,21 @@ local comps = {
 			fg = theme.sky,
 		},
 	},
-  ft = {
-    provider = {
-      name = "file_type",
-      opts = {
-        filetype_icon = false,
-        case = "lowercase"
-      }
-    },
+	ft = {
+		provider = {
+			name = "file_type",
+			opts = {
+				--filetype_icon = false,
+				--case = "lowercase",
+			},
+		},
 		hl = {
 			fg = theme.bg,
-      bg = theme.sky,
+			bg = theme.sky,
 		},
 		left_sep = "left_slant",
 		right_sep = "right_slant",
-  },
+	},
 	position = {
 		provider = {
 			name = "position",
@@ -128,16 +128,15 @@ local comps = {
 	},
 	scroll = {
 		provider = "scroll_bar",
-			hl = {
-				fg = theme.red,
-				bg = theme.red,
-			},
+		hl = {
+			fg = theme.red,
+			bg = theme.red,
+		},
 	},
 	git = {
 		branch = {
 			provider = "git_branch",
 			left_sep = "block",
-			right_sep = "block",
 			hl = {
 				fg = theme.yellow,
 			},
@@ -170,6 +169,7 @@ local comps = {
 			style = "bold",
 		},
 		icon = ft_icon,
+		left_sep = "block",
 	},
 	diag = {
 		error = {
@@ -205,7 +205,7 @@ return {
 				comps.diag.info,
 			},
 			{
-        comps.ft,
+				comps.ft,
 				comps.git.diff.add,
 				comps.git.diff.change,
 				comps.git.diff.remove,
@@ -215,7 +215,12 @@ return {
 				comps.scroll,
 			},
 		},
-		inactive = {},
+		inactive = {
+			comps.file,
+			comps.diag.error,
+			comps.diag.warn,
+			comps.diag.info,
+		},
 	},
 	conditional_components = {},
 	custom_providers = {},

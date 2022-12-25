@@ -58,6 +58,7 @@ return {
 		},
 		lazy = true,
 		cmd = "Neotree",
+    event = "BufEnter isdirectory(expand('%:p'))",
 		config = require("skadic.neo-tree"),
 	},
   { -- Nice statusbar

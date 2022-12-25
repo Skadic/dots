@@ -13,8 +13,15 @@ local opts = {
 	server = {
 		on_attach = require("skadic.lsp.handlers").on_attach,
 		capabilities = require("skadic.lsp.handlers").capabilities,
-		procMacro = {
-			enable = true,
+		settings = {
+			["rust-analyzer"] = {
+				procMacro = {
+					enable = true,
+				},
+				checkOnSave = {
+					command = "clippy",
+				},
+			},
 		},
 	},
 	tools = {
