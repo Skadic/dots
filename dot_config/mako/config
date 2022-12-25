@@ -1,0 +1,20 @@
+font=Noto\ Sans\ CJK\ JP 10
+
+# Frappe
+#background-color=#303446
+#text-color=#c6d0f5
+#border-color=#8caaee
+
+
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#6c7086
+border-radius=5
+progress-color=over #a6d189aa
+
+default-timeout=5000
+
+[urgency=high]
+border-color=#ef9f76
+default-timeout=7500
+
