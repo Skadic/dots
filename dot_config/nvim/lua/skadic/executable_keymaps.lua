@@ -1,6 +1,5 @@
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
-local wk_opts = { mode = "n", prefix = "<leader>", noremap = true, silent = true }
 
 local wk = require("which-key")
 
@@ -9,8 +8,11 @@ local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+
+
+-- Remove these bindings so I can use them for something else
+keymap("", "<M-j>", "<Nop>", opts)
+keymap("", "<M-k>", "<Nop>", opts)
 
 -- Modes
 --   normal_mode = "n",
@@ -37,6 +39,20 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
+wk.register({
+  ["<C-f>"] = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
+  ["<C-g>"] = { function() vim.notify("Harpooned"); require("harpoon.mark").add_file() end, "Harpoon file"},
+  ["<C-s>"] = { function() vim.notify("Unharpooned"); require("harpoon.mark").rm_file() end, "Harpoon file"},
+  ["<A-1>"] = { function() require("harpoon.ui").nav_file(1) end, "Navigate to 1st harpooned file"},
+  ["<A-2>"] = { function() require("harpoon.ui").nav_file(2) end, "Navigate to 2nd harpooned file"},
+  ["<A-3>"] = { function() require("harpoon.ui").nav_file(3) end, "Navigate to 3rd harpooned file"},
+  ["<A-4>"] = { function() require("harpoon.ui").nav_file(4) end, "Navigate to 4th harpooned file"},
+}, { mode = "n", prefix="", noremap = true, silent = true })
+
+
+
+local wk_opts = { mode = "n", prefix="<leader>", noremap = true, silent = true }
+
 local function call_if_git(command)
   local status_ok, _ = pcall(vim.cmd, command)
   if not status_ok then
@@ -61,7 +77,8 @@ wk.register({
     b = { "<cmd>Telescope buffers<cr>", "Find File" },
     p = { "<cmd>Telescope projects<cr>", "Projects" },
     l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-    n = { "<cmd>Telescope notify<cr>", "Search Notifications" }
+    n = { "<cmd>Telescope notify<cr>", "Search Notifications" },
+    h = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
   },
   L = { "<cmd>Lazy<cr>", "Open Lazy"},
   e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },

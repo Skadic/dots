@@ -20,6 +20,14 @@ return {
 			"nvim-telescope/telescope-media-files.nvim", -- Search for media files
 			"nvim-telescope/telescope-file-browser.nvim", -- A file browser
 			"gbrlsnchs/telescope-lsp-handlers.nvim", -- Better LSP Functions
+			{ "ThePrimeagen/harpoon", keys = { "<A-f>", "<A-j>" }, config = true }, -- Pin files to quickly return to
+			{ -- Project management
+				"ahmedkhalf/project.nvim",
+        name = "project_nvim",
+				config = true,
+				lazy = true,
+				cmd = "Telescope projects",
+			},
 		},
 		config = function()
 			require("skadic.telescope")
@@ -46,15 +54,6 @@ return {
 		end,
 		dependencies = {
 			"hrsh7th/nvim-cmp",
-		},
-	},
-	{ -- Project management
-		"ahmedkhalf/project.nvim",
-		config = true,
-		lazy = true,
-		cmd = "Telescope projects",
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
 		},
 	},
 	{ -- nice folding

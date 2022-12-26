@@ -37,6 +37,7 @@ vim.opt.guifont = "agave Nerd Font:h17" -- the font used in graphical neovim app
 vim.opt.shortmess:append "c"
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
