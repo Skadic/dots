@@ -60,6 +60,7 @@ local function ft_icon()
 end
 
 require("gitsigns")
+local navic = require("nvim-navic")
 
 local comps = {
 	mode = {
@@ -115,6 +116,15 @@ local comps = {
 		provider = {
 			name = "position",
 		},
+	},
+	breadcrumbs = {
+		provider = function ()
+		  return navic.get_location()
+		end,
+    enabled = function ()
+      return navic.is_available()
+    end,
+    left_sep = ""
 	},
 	line_percent = {
 		provider = {
@@ -194,36 +204,56 @@ local comps = {
 }
 
 return {
-	components = {
-		active = {
-			{
-				comps.mode,
-				comps.file,
-				comps.position,
-				comps.diag.error,
-				comps.diag.warn,
-				comps.diag.info,
-			},
-			{
-				comps.ft,
-				comps.git.diff.add,
-				comps.git.diff.change,
-				comps.git.diff.remove,
-				comps.git.branch,
-				comps.lsp,
-				comps.line_percent,
-				comps.scroll,
-			},
-		},
-		inactive = {
-			comps.file,
-			comps.diag.error,
-			comps.diag.warn,
-			comps.diag.info,
-		},
-	},
-	conditional_components = {},
-	custom_providers = {},
-	theme = theme,
-	vi_mode_colors = vi_mode_colors,
+  bar = {
+    components = {
+      active = {
+        {
+          comps.mode,
+          comps.file,
+          comps.position,
+          comps.diag.error,
+          comps.diag.warn,
+          comps.diag.info,
+        },
+        {
+          comps.ft,
+          comps.git.diff.add,
+          comps.git.diff.change,
+          comps.git.diff.remove,
+          comps.git.branch,
+          comps.lsp,
+          comps.line_percent,
+          comps.scroll,
+        },
+      },
+      inactive = {
+        comps.file,
+        comps.diag.error,
+        comps.diag.warn,
+        comps.diag.info,
+      },
+    },
+    conditional_components = {},
+    custom_providers = {},
+    theme = theme,
+    vi_mode_colors = vi_mode_colors,
+    bg = theme.bg
+  },
+  winbar = {
+    components = {
+      active = {
+        {
+          comps.file,
+          comps.breadcrumbs
+        },
+        {
+        }
+      },
+      inactive = {
+        {
+          comps.file
+        }
+      }
+    }
+  }
 }

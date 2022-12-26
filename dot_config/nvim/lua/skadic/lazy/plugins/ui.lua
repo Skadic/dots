@@ -1,4 +1,3 @@
-
 local function bg_as_hex(group)
 	local col = vim.api.nvim_get_hl_by_name(group, true).background
 	if col == nil then
@@ -58,17 +57,26 @@ return {
 		},
 		lazy = true,
 		cmd = "Neotree",
-    event = "BufEnter isdirectory(expand('%:p'))",
+		event = "BufEnter isdirectory(expand('%:p'))",
 		config = require("skadic.neo-tree"),
 	},
-  { -- Nice statusbar
-    "feline-nvim/feline.nvim",
-    name = "feline",
-    config = function ()
-      require("feline").setup(require("skadic.feline_conf"))
-      require("feline").winbar.setup()
-    end
-  },
+	{ -- Nice statusbar
+		"feline-nvim/feline.nvim",
+		name = "feline",
+		dependencies = {
+			{
+				"SmiteshP/nvim-navic",
+				dependencies = { "neovim/nvim-lspconfig" },
+				config = function ()
+				  require("nvim-navic").setup(require("skadic.navic"))
+				end,
+			},
+		},
+		config = function()
+			require("feline").setup(require("skadic.feline_conf").bar)
+			require("feline").winbar.setup(require("skadic.feline_conf").winbar)
+		end,
+	},
 	{ -- Toggleable terminal
 		"akinsho/toggleterm.nvim",
 		lazy = true,
@@ -108,10 +116,10 @@ return {
 	{
 		"akinsho/bufferline.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons" },
-    enabled = false,
-    config = function ()
-      require("skadic.bufferline")
-    end
+		enabled = false,
+		config = function()
+			require("skadic.bufferline")
+		end,
 	},
 	{ "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
 }
