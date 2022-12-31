@@ -1,0 +1,31 @@
+
+(defwindow dashboard 
+  :monitor 0
+  :geometry (geometry :x "10%"
+                      :y "50%"
+                      :width "800px"
+                      :height "900px"
+                      :anchor "center")
+  :stacking "fg"
+  :exclusive false
+  :focusable false 
+  (box :orientation "h"
+       :class "db-grid"
+    (label :class "db-frame"
+           :text "a")
+    (box :orientation "v"
+      (label :class "db-frame"
+             :text "b")
+      (label :class "db-frame"
+             :text "c"))
+    (label :class "db-frame"
+           :text "d")))
+
+; ------------------------------ Clock ------------------------------
+
+(defpoll db-hour :interval "10s"
+  `date "+%H"`)
+(defpoll db-minute :interval "10s"
+  `date "+%M"`)
+(defpoll db-date :interval "5m"
+  `date "+%d.%m.%y"`)

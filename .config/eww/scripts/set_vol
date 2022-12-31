@@ -1,0 +1,6 @@
+#!/bin/bash
+
+float=$1
+int=${float%.*}
+
+pamixer --set-volume $int

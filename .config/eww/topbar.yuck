@@ -1,0 +1,262 @@
+(defvar wm "sway")
+(defvar scripts `./$scripts/sway`)
+(defvar revealer_duration "500ms")
+
+(defwindow topbar 
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "2%"
+                      :anchor "top center")
+  :stacking "bottom"
+  ;:reserve (struts :distance "2%" :side "top")
+  ;:windowtype "dock"
+  ;:wm-ignore false
+  :exclusive true
+  :focusable false
+  (centerbox :orientation "h"
+       :class "topbar"
+    (left)
+    (middle)
+    (right)))
+
+(defwidget spacer [] (box :class "text-comment" "|"))
+
+(defwidget right []
+  (box :orientation "h"
+       :halign "end"
+       :width "0"
+       :hexpand true
+       :space-evenly false
+       :spacing "5"
+       :class "bar bar-right"
+    (active_wifi)
+    (spacer)
+    (active_eth)
+    (spacer)
+    (battery)
+    (spacer)
+    (brightness)
+    (spacer)
+    (volume)
+    (spacer)
+    (date)))
+
+
+(defwidget middle []
+  (revealer :reveal "${player_status != "Stopped"}"
+            :transition "crossfade"
+            :duration "${revealer_duration}"
+    (box :orientation "h"
+         :halign "start"
+         :width "0"
+         :hexpand true
+         :space-evenly false
+         :spacing "5"
+         :class "bar bar-middle"
+        (player))))
+
+(defwidget left []
+  (box :orientation "h"
+       :halign "start"
+       :width "0"
+       :hexpand true
+       :space-evenly false
+       :spacing "5"
+       :class "bar bar-left"
+    (workspaces)
+    (revealer :reveal "${binding_active}"
+              :transition "slideright"
+              :duration "${revealer_duration}"
+        (binding_mode))
+    (spacer)
+    (active_window)))
+
+(defwidget date [] 
+  (box :orientation "h" 
+       :halign "fill"
+       :space-evenly true
+       :class "framed"
+      "${v_hour}:${v_minute}"))
+
+
+; ------------------------------ Volume Slider ------------------------------
+(defvar vol_enable false)
+(defpoll current_vol :interval "1s"
+                     :initial "-1"
+                    "pamixer --get-volume")
+(defwidget volume []
+  (eventbox :onhover "${EWW_CMD} update vol_enable=true"
+            :onhoverlost "${EWW_CMD} update vol_enable=false"
+            :timeout "100ms"
+    (box :orientation "h"
+         :halign "end"
+         :space-evenly false
+         :class "framed text-green"
+      (vol_icon)
+      "⠀${current_vol}%"
+      (revealer :transition "slideright"
+                :duration "${revealer_duration}"
+                :reveal vol_enable
+        (scale :orientation "h"
+              :draw-value false
+              :class "vol-slider"
+              :value current_vol
+              :min "0"
+              :max "100"
+              :onchange "${EWW_CMD} update current_vol={} && scripts/set_vol {}"))
+      )))
+
+(defwidget vol_icon [] 
+  (label :class "icon"
+         :text `${is_mute == "yes" ? "ﱝ" : ""}`))
+(defpoll is_mute :interval "1s" 
+  "pactl get-sink-mute @DEFAULT_SINK@ | cut -c 7-")
+
+; ------------------------------ Brightness Slider ------------------------------
+(defvar brightness_enable false)
+(defvar current_brightness "0")
+(defwidget brightness []
+  (eventbox :onhover "${EWW_CMD} update brightness_enable=true && ${EWW_CMD} update current_brightness=$(brightnessctl g)"
+            :onhoverlost "${EWW_CMD} update brightness_enable=false"
+            :timeout "100ms"
+    (box :orientation "h"
+         :halign "end"
+         :space-evenly false
+         :class "text-yellow framed"
+      (label :class "icon" 
+             :text "")
+      (revealer :transition "slideright"
+                :duration "${revealer_duration}"
+                :reveal brightness_enable
+        (scale :orientation "h"
+              :draw-value false
+              :class "bri-slider"
+              :value current_brightness
+              :min "0"
+              :max "255"
+              :onchange "brightnessctl s {}"))
+      )))
+
+; ------------------------------ Battery ------------------------------
+
+(defwidget battery []
+  (box :class "framed text-orange"
+       :tooltip "${EWW_BATTERY.BAT0.capacity >= 98 ? "Full" : EWW_BATTERY.BAT0.capacity}${EWW_BATTERY.BAT0.capacity >= 98 ? "" : "%"}"
+    (box :class "icon" `${
+      EWW_BATTERY.BAT0.status == "Charging" ? "" :
+      EWW_BATTERY.BAT0.capacity < 10 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 20 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 30 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 40 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 50 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 60 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 70 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 80 ? "" : 
+      EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
+  } ${EWW_BATTERY.BAT0.capacity}%`)))
+
+; ------------------------------ Workspaces ------------------------------
+
+;(defwidget workspaces [] (literal :content workspaces))
+;(defpoll workspaces :interval "10ms"
+;  "./scripts/hyprlandworkspaces")
+
+(defwidget workspaces [] 
+  (box :halign "center"
+    (ws_button :ws_number 1)
+    (ws_button :ws_number 2)
+    (ws_button :ws_number 3)
+    (ws_button :ws_number 4)
+    (ws_button :ws_number 5)
+    (ws_button :ws_number 6)
+    (ws_button :ws_number 7)
+    (ws_button :ws_number 8)
+    ))
+
+; ------------------------------ Active Window ------------------------------
+
+(defwidget active_window [] 
+  (label :class "varfont"
+         :limit-width 45
+         :text `${active_window}`))
+;(defpoll active_window :interval "10ms"
+;  `hyprctl activewindow -j | jq -r ".title" | head -c 30`)
+
+;(deflisten active_window :initial "No window found" 
+;  `./scripts/sway/active_window.sh`)
+(defvar active_window "")
+
+; ------------------------------ Workspaces ------------------------------
+
+;(defpoll ws_info :interval "50ms" 
+;  "./scripts/sway/workspaces.sh")
+(defvar ws_info `[{"name":"1","num":1,"focused":true,"urgent":false,"visible":true,"active":true},{"name":"2","num":2,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"3","num":3,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"4","num":4,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"5","num":5,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"6","num":6,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"7","num":7,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"8","num":8,"focused":false,"urgent":false,"visible":false,"active":false}]`)
+(defwidget ws_button [ws_number] 
+  (button :class `framed workspace ${
+                    ws_info[ws_number - 1].urgent ? "text-red" : 
+                    ws_info[ws_number - 1].focused ? "text-green" : 
+                    ws_info[ws_number - 1].visible ? "text-yellow" : 
+                    !ws_info[ws_number - 1].active ? "text-comment" : ""
+                  }` 
+          :onclick "./scripts/sway/switch_ws.sh ${ws_number}"
+    {ws_info[ws_number - 1].name}))
+
+; ------------------------------ Clock ------------------------------
+
+(defpoll v_hour :interval "10s"
+  `date "+%H"`)
+(defpoll v_minute :interval "10s"
+  `date "+%M"`)
+(defpoll v_date :interval "5m"
+  `date "+%d.%m.%y"`)
+
+; ------------------------------ Music ------------------------------
+
+(deflisten player_status :initial "Stopped"
+  "playerctl --follow status")
+(deflisten music_info :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}'")
+(defwidget player []
+    (box :space-evenly false
+      (label :class "icon"
+             :text " ")
+      (label :class "varfont"
+             :limit-width 50
+             :text "${music_info}"
+         :length 25)))
+
+
+; ------------------------------ Sway Binding Mode ------------------------------
+
+(defvar binding_mode "default")
+(defvar binding_active "false")
+(defwidget binding_mode []
+  (label :class "framed text-red"
+         :text "${binding_mode != "default" ? binding_mode : ""}"))
+
+; ------------------------------ Networks ------------------------------
+
+(defpoll active_netw :interval "1s"
+    `./scripts/net.sh`)
+(defwidget active_wifi []
+  (eventbox :onclick "nm-connection-editor &"
+    (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
+         :space-evenly false
+      (label :class "xl-icon"
+             :text "${active_netw["wl"] != "" ? "直" : "睊" } ")
+      (revealer :reveal "${active_netw["wl"] != ""}"
+                :transition "slideright"
+                :duration "${revealer_duration}"
+        (label :text "${active_netw["wl"] != "" ? active_netw["wl"] : "Disconnected"}")))))
+(defwidget active_eth []
+  (eventbox :onclick "nm-connection-editor &"
+    (box :class "framed ${active_netw["en"] == "" ? "text-comment" : "text-cyan"}"
+         :space-evenly false
+      (label :class "xl-icon"
+             :text "${active_netw["en"] != "" ? "" : "" } ")
+      (revealer :reveal "${active_netw["en"] != ""}"
+                :transition "slideright"
+                :duration "${revealer_duration}"
+        (label :text "${active_netw["en"] != "" ? active_netw["en"] : "Disconnected"}")))))
