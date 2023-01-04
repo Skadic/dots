@@ -77,7 +77,7 @@ local function lsp_keymaps(bufnr)
 	wk.register({
 		name = "Language Server",
 		a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-	  d = { "<cmd>Lspsaga show_cursor_diagnostic<cr>", "Show Cursor Diagnostic" },
+	  d = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostic" },
 		D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List" },
 		q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List" },
 		t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List" },
