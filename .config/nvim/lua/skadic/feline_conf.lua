@@ -37,11 +37,18 @@ local vi_mode_colors = {
 	NONE = theme.yellow,
 }
 
-local function first_lsp()
+local function lsp_name()
 	local clients = vim.lsp.buf_get_clients(0)
 	if clients == nil or next(clients) == nil or clients[1] == nil then
 		return ""
 	end
+
+  for _, client in ipairs(clients) do
+    if not (client.name == "null-ls") then
+	    return " " .. client.name
+    end
+  end
+
 	local client = clients[1].name
 	return " " .. client
 end
@@ -173,7 +180,7 @@ local comps = {
 		},
 	},
 	lsp = {
-		provider = first_lsp,
+		provider = lsp_name,
 		hl = {
 			fg = theme.orange,
 			style = "bold",
