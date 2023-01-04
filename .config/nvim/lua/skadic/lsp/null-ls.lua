@@ -14,15 +14,23 @@ null_ls.setup({
 	sources = {
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
-		-- formatting.yapf,
 		formatting.stylua,
-		--diagnostics.flake8,
 		formatting.rustfmt.with({ extra_args = { "--edition=2021" } }),
 		formatting.clang_format,
+		formatting.cmake_format,
+    formatting.crystal_format,
+    formatting.csharpier,
+    formatting.fish_indent,
+    formatting.nimpretty,
 		code_actions.gitsigns,
     code_actions.xo,
     diagnostics.clang_check,
+    diagnostics.cppcheck,
     diagnostics.cmake_lint,
+    diagnostics.commitlint,
+    diagnostics.fish,
+    diagnostics.markdownlint,
+    diagnostics.selene
 	},
 })
 
