@@ -1,8 +1,10 @@
-local mason_status_ok, mason_lsp = pcall(require, "mason-lspconfig")
+local status_ok, mason_lsp = pcall(require, "mason-lspconfig")
 
-if not mason_status_ok then
+if not status_ok then
 	return
 end
+
+require("skadic.lsp.handlers").setup()
 
 local opts = {}
 

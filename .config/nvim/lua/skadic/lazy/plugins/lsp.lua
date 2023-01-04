@@ -1,5 +1,33 @@
 -- LSP and Coding-Related stuff
 return {
+  -- Mason
+	{ -- Allow installing tools like LSP Servers, Linters etc
+		"williamboman/mason.nvim",
+		lazy = true,
+		cmd = "Mason",
+		event = { "BufRead" },
+		config = require("skadic.lsp.mason"),
+	},
+	{ -- for formatters and linters
+		"jose-elias-alvarez/null-ls.nvim",
+		lazy = true,
+    config = function ()
+      require("skadic.lsp.null-ls")
+    end,
+    event = "BufRead"
+	},
+	{ -- Lsp Configuration for mason
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("skadic.lsp.mason-lspconfig")
+		end,
+		dependencies = {
+			"neovim/nvim-lspconfig", -- Some LSP configs
+			"williamboman/mason.nvim",
+		},
+    lazy = true,
+	},
+
 	{
 		"mfussenegger/nvim-dap",
 		lazy = true,
@@ -9,20 +37,6 @@ return {
 		end,
 	},
 	{ "rcarriga/nvim-dap-ui", lazy = true, event = "LspAttach", dependencies = { "mfussenegger/nvim-dap" } },
-	{
-		"williamboman/mason.nvim",
-		lazy = true,
-		cmd = "Mason",
-		event = { "BufRead" },
-		config = function()
-			require("skadic.lsp")
-		end,
-		dependencies = {
-			"neovim/nvim-lspconfig", -- Some LSP configs
-			"williamboman/mason-lspconfig.nvim", -- Lsp Configuration for mason
-			"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
-		},
-	},
 	{ "folke/lsp-colors.nvim", lazy = true, event = "LspAttach" }, -- Generate LSP highlight groups for color schemes without lsp support
 	{
 		"folke/trouble.nvim",
@@ -46,13 +60,15 @@ return {
 	},
 	{ -- Documentation Generation
 		"kkoomen/vim-doge",
-		build = ":call doge#install()",
+		build = function()
+			vim.cmd("call doge#install()")
+		end,
 		config = function()
 			vim.g.doge_doc_standard_cpp = "doxygen_cpp_comment_slash"
 			vim.g.doge_doc_standard_c = "doxygen_cpp_comment_slash"
 		end,
 		lazy = true,
-		event = "LspAttach",
+		cmd = "DogeGenerate",
 	},
 
 	-- Language-Specific
@@ -71,9 +87,6 @@ return {
 		dependencies = { "godlygeek/tabular" },
 		lazy = true,
 		ft = "markdown",
-		config = function()
-			vim.g.vim_markdown_folding_disabled = 1
-		end,
 	},
 
 	-- Treesitter

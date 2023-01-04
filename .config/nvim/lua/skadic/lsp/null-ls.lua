@@ -19,7 +19,10 @@ null_ls.setup({
 		--diagnostics.flake8,
 		formatting.rustfmt.with({ extra_args = { "--edition=2021" } }),
 		formatting.clang_format,
-		--code_actions.gitsigns,
+		code_actions.gitsigns,
+    code_actions.xo,
+    diagnostics.clang_check,
+    diagnostics.cmake_lint,
 	},
 })
 

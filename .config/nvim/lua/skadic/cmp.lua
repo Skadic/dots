@@ -8,7 +8,7 @@ if not snip_status_ok then
 	return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
@@ -102,7 +102,7 @@ cmp.setup({
 			--vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			if entry.source.name == "copilot" then
 				vim_item.kind = "Copilot"
-        vim_item.kind_hl_group = "CmpItemKindCopilot"
+				vim_item.kind_hl_group = "CmpItemKindCopilot"
 			end
 			vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			vim_item.menu = ({
@@ -115,26 +115,25 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp", keyword_length = 3 },
-		{ name = "orgmode", keyword_length = 3  },
-		{ name = "neorg" },
-		{ name = "nvim_lua", keyword_length = 3  },
+		{ name = "nvim_lsp_signature_help" },
+		{ name = "nvim_lua", keyword_length = 3 },
 		{ name = "crates" },
 		{ name = "luasnip", keyword_length = 3 },
 		{ name = "path" },
 		{ name = "buffer", keyword_length = 4 },
 	},
-  sorting = {
-        comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.recently_used,
-            require("clangd_extensions.cmp_scores"),
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-        },
-    },
+	sorting = {
+		comparators = {
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
+			cmp.config.compare.recently_used,
+			require("clangd_extensions.cmp_scores"),
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
+	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,

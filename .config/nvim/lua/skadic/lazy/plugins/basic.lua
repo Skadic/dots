@@ -49,8 +49,8 @@ return {
 		lazy = true,
 		event = { "BufRead" },
 		config = function()
-			--require("skadic.autopairs")
-			require("nvim-autopairs").setup({})
+			require("skadic.autopairs")
+			--require("nvim-autopairs").setup({})
 		end,
 		dependencies = {
 			"hrsh7th/nvim-cmp",

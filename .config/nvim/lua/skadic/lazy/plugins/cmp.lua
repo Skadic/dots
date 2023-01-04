@@ -11,11 +11,25 @@ return {
 			"hrsh7th/cmp-buffer", -- buffer completions
 			"hrsh7th/cmp-path", -- path completions
 			"hrsh7th/cmp-cmdline", -- cmdline completions
+			"davidsierradz/cmp-conventionalcommits", -- conventional commits
 			{ -- snippet completions
 				"saadparwaiz1/cmp_luasnip",
 				lazy = true,
 				dependencies = {
-					"L3MON4D3/LuaSnip",
+					{ -- Snippets
+						"L3MON4D3/LuaSnip",
+						name = "luasnip",
+						lazy = true,
+						config = function()
+							require("luasnip").config.setup({
+								history = false,
+							})
+						end,
+						dependencies = {
+							{ "michaelb/sniprun", build = "bash ./install.sh", lazy = true }, -- Run code snippets
+							"rafamadriz/friendly-snippets", -- a bunch of snippets to use
+						},
+					},
 				},
 			},
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
@@ -28,20 +42,5 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		config = true,
 		lazy = true,
-	},
-
-	{ -- Snippets
-		"L3MON4D3/LuaSnip",
-		name = "luasnip",
-		lazy = true,
-		config = function()
-			require("luasnip").config.setup({
-				history = false,
-			})
-		end,
-		dependencies = {
-			{ "michaelb/sniprun", build = "bash ./install.sh", lazy = true }, -- Run code snippets
-			"rafamadriz/friendly-snippets", -- a bunch of snippets to use
-		},
 	},
 }
