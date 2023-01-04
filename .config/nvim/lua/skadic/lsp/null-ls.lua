@@ -22,7 +22,7 @@ null_ls.setup({
     formatting.csharpier,
     formatting.fish_indent,
     formatting.nimpretty,
-		code_actions.gitsigns,
+		--code_actions.gitsigns,
     code_actions.xo,
     diagnostics.clang_check,
     diagnostics.cmake_lint,
