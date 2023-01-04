@@ -10,7 +10,7 @@ local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
-	debug = false,
+	debug = true,
 	sources = {
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
@@ -25,12 +25,11 @@ null_ls.setup({
 		code_actions.gitsigns,
     code_actions.xo,
     diagnostics.clang_check,
-    diagnostics.cppcheck,
     diagnostics.cmake_lint,
     diagnostics.commitlint,
     diagnostics.fish,
     diagnostics.markdownlint,
-    diagnostics.selene
+    --diagnostics.selene
 	},
 })
 
