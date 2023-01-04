@@ -66,12 +66,7 @@ local function lsp_keymaps(bufnr)
 
 	wk.register({
 		d = { "<cmd>Trouble lsp_definitions<CR>", "Definition" },
-		D = {
-			function()
-				vim.lsp.buf.declaration()
-			end,
-			"Declaration",
-		},
+		D = { "<cmd>Lspsaga lsp_finder<CR>", "LSP finder" },
 		i = { "<cmd>Trouble lsp_implementations<CR>", "Implementation" },
 		r = { "<cmd>Trouble lsp_references<CR>", "References" },
 		s = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols" },
@@ -82,14 +77,7 @@ local function lsp_keymaps(bufnr)
 	wk.register({
 		name = "Language Server",
 		a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-		--d = { function() vim.diagnostic.open_float() end, "Show Line Diagnostic" },
-		d = {
-			function()
-				local lines = require("skadic.lsp_lines")
-				lines.toggle()
-			end,
-			"Toggle Line Diagnostics",
-		},
+	  d = { "<cmd>Lspsaga show_cursor_diagnostic<cr>", "Show Cursor Diagnostic" },
 		D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List" },
 		q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List" },
 		t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List" },
@@ -97,7 +85,6 @@ local function lsp_keymaps(bufnr)
 		e = { "<Plug>(doge-generate)", "Generate Documentation" },
 		f = {
 			function()
-				--vim.lsp.buf.formatting_sync()
 				vim.lsp.buf.format()
 			end,
 			"Format File",
@@ -130,18 +117,8 @@ local function lsp_keymaps(bufnr)
 
 	wk_opts.prefix = ""
 	wk.register({
-		["[d"] = {
-			function()
-				vim.diagnostic.goto_prev({ border = "rounded" })
-			end,
-			"Previous Diagnostic",
-		},
-		["]d"] = {
-			function()
-				vim.diagnostic.goto_next({ border = "rounded" })
-			end,
-			"Next Diagnostic",
-		},
+		["[d"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic"},
+		["]d"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
 		["<leader>d"] = {
 			function()
 				require("dapui").toggle()
@@ -161,7 +138,7 @@ M.on_attach = function(client, bufnr)
 
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
-  navic.attach(client, bufnr)
+	navic.attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

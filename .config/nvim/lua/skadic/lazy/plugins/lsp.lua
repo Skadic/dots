@@ -1,6 +1,6 @@
 -- LSP and Coding-Related stuff
 return {
-  -- Mason
+	-- Mason
 	{ -- Allow installing tools like LSP Servers, Linters etc
 		"williamboman/mason.nvim",
 		lazy = true,
@@ -11,10 +11,10 @@ return {
 	{ -- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
 		lazy = true,
-    config = function ()
-      require("skadic.lsp.null-ls")
-    end,
-    event = "BufRead"
+		config = function()
+			require("skadic.lsp.null-ls")
+		end,
+		event = "BufRead",
 	},
 	{ -- Lsp Configuration for mason
 		"williamboman/mason-lspconfig.nvim",
@@ -25,10 +25,10 @@ return {
 			"neovim/nvim-lspconfig", -- Some LSP configs
 			"williamboman/mason.nvim",
 		},
-    lazy = true,
+		lazy = true,
 	},
 
-	{
+	{ -- Debugging
 		"mfussenegger/nvim-dap",
 		lazy = true,
 		event = "LspAttach",
@@ -36,16 +36,11 @@ return {
 			require("skadic.dap")
 		end,
 	},
-	{ "rcarriga/nvim-dap-ui", lazy = true, event = "LspAttach", dependencies = { "mfussenegger/nvim-dap" } },
-	{ "folke/lsp-colors.nvim", lazy = true, event = "LspAttach" }, -- Generate LSP highlight groups for color schemes without lsp support
-	{
-		"folke/trouble.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		config = true,
+	{ -- Generate LSP highlight groups for color schemes without lsp support
+		"folke/lsp-colors.nvim",
 		lazy = true,
 		event = "LspAttach",
 	},
-	{ url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim", lazy = true, config = true }, -- Show diagnostics below lines
 	{ -- Help with function signatures
 		"ray-x/lsp_signature.nvim",
 		name = "lsp_signature",

@@ -1,18 +1,3 @@
-local function bg_as_hex(group)
-	local col = vim.api.nvim_get_hl_by_name(group, true).background
-	if col == nil then
-		return nil
-	end
-	return string.format("#%x", col)
-end
-local function fg_as_hex(group)
-	local col = vim.api.nvim_get_hl_by_name(group, true).foreground
-	if col == nil then
-		return nil
-	end
-	return string.format("#%x", col)
-end
-
 return {
 	{ -- Start screen
 		"goolord/alpha-nvim",
@@ -43,14 +28,6 @@ return {
 							buftype = { "terminal", "quickfix" },
 						},
 					},
-					-- if you have include_current_win == true, then current_win_hl_color will
-					-- be highlighted using this background color
-					current_win_hl_color = bg_as_hex("CurSearch"),
-					-- all the windows except the curren window will be highlighted using this
-					-- color
-					other_win_hl_color = bg_as_hex("IncSearch"),
-					-- the foreground (text) color of the picker
-					fg_color = fg_as_hex("CurSearch"),
 				},
 				lazy = true,
 			},
@@ -67,8 +44,8 @@ return {
 			{
 				"SmiteshP/nvim-navic",
 				dependencies = { "neovim/nvim-lspconfig" },
-				config = function ()
-				  require("nvim-navic").setup(require("skadic.navic"))
+				config = function()
+					require("nvim-navic").setup(require("skadic.navic"))
 				end,
 			},
 		},
@@ -99,27 +76,36 @@ return {
 		config = { autofold_depth = 2 },
 	},
 	{ "preservim/tagbar", lazy = true, cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
-	{ -- Add the vscode lightbulb to the sidebar
-		"kosayoda/nvim-lightbulb",
-		config = function()
-			require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
-		end,
-		lazy = true,
-		event = "LspAttach",
-	},
 	{ -- Some nice windows
 		"CosmicNvim/cosmic-ui",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		config = { border_style = "rounded" },
 		lazy = true,
 	},
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		enabled = false,
-		config = function()
-			require("skadic.bufferline")
-		end,
+	{ -- Debugger UI
+		"rcarriga/nvim-dap-ui",
+		lazy = true,
+		event = "LspAttach",
+		dependencies = { "mfussenegger/nvim-dap" },
 	},
 	{ "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
+	{
+		"folke/trouble.nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+		config = true,
+		lazy = true,
+		event = "LspAttach",
+	},
+	{
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		config = function()
+			require("lspsaga").init_lsp_saga({
+				border_style = "rounded",
+			})
+		end,
+    lazy = true,
+    cmd = "Lspsaga",
+    event = "LspAttach"
+	},
 }
