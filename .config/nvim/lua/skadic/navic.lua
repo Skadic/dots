@@ -1,24 +1,14 @@
+local colors = require("skadic.colors")
 local ctpn_status_ok, catppuccin = pcall(require, "catppuccin.palettes")
 if not ctpn_status_ok then
 	return
 end
 local palette = catppuccin.get_palette("mocha")
 
-local theme = {
-	fg = palette.text,
-	bg = palette.mantle,
-	black = palette.crust,
-	skyblue = palette.sky,
-	cyan = palette.teal,
-	green = palette.green,
-	oceanblue = palette.sapphire,
-	magenta = palette.pink,
-	orange = palette.peach,
-	red = palette.red,
-	violet = palette.mauve,
-	white = palette.text,
-	yellow = palette.yellow,
-}
+
+local theme = colors.palette
+theme.oceanblue = palette.sapphire
+theme.skyblue = palette.sky
 
 -- LuaFormatter off
 vim.api.nvim_set_hl(0, "NavicIconsFile",          {default = true, bg = theme.bg, fg = theme.red})

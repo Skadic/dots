@@ -62,7 +62,7 @@ return {
 			vim.g.doge_doc_standard_cpp = "doxygen_cpp_comment_slash"
 			vim.g.doge_doc_standard_c = "doxygen_cpp_comment_slash"
 		end,
-		lazy = true,
+		lazy = false,
 		cmd = "DogeGenerate",
 	},
 
@@ -82,6 +82,25 @@ return {
 		dependencies = { "godlygeek/tabular" },
 		lazy = true,
 		ft = "markdown",
+	},
+	{ 
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		config = function()
+      local palette = require("skadic.colors").palette
+      palette.normal_bg = palette.bg;
+      palette.title_bg = palette.black;
+			require("lspsaga").setup({
+				ui = {
+					theme = "round",
+          border = "rounded",
+          colors = palette
+				},
+			})
+		end,
+		lazy = true,
+		cmd = "Lspsaga",
+		event = "LspAttach",
 	},
 
 	-- Treesitter

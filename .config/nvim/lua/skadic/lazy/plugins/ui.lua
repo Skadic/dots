@@ -96,16 +96,4 @@ return {
 		lazy = true,
 		event = "LspAttach",
 	},
-	{
-		"glepnir/lspsaga.nvim",
-		branch = "main",
-		config = function()
-			require("lspsaga").init_lsp_saga({
-				border_style = "rounded",
-			})
-		end,
-    lazy = true,
-    cmd = "Lspsaga",
-    event = "LspAttach"
-	},
 }

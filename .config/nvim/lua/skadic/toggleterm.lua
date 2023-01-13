@@ -1,7 +1,7 @@
 
 
 local opts = {
-  open_mapping = [[<c-p>]]
+  open_mapping = [[<c-o>]]
 }
 
 

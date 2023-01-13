@@ -26,7 +26,7 @@ return {
 		"rcarriga/nvim-notify",
 		name = "notify",
 		config = function()
-			require("skadic.notify")
-		end,
+      require("skadic.notify")
+    end,
 	},
 }
