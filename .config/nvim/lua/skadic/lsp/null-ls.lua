@@ -24,11 +24,11 @@ null_ls.setup({
     formatting.nimpretty,
 		--code_actions.gitsigns,
     code_actions.xo,
-    diagnostics.clang_check,
+    --diagnostics.clang_check,
     diagnostics.cmake_lint,
     diagnostics.commitlint,
     diagnostics.fish,
-    diagnostics.markdownlint,
+    --diagnostics.markdownlint,
     --diagnostics.selene
 	},
 })

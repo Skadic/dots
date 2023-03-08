@@ -96,4 +96,10 @@ return {
 		lazy = true,
 		event = "LspAttach",
 	},
+	{
+		"andythigpen/nvim-coverage",
+		config = true,
+		lazy = true,
+		event = "LspAttach",
+	},
 }

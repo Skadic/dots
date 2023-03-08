@@ -72,35 +72,55 @@ return {
 		"p00f/clangd_extensions.nvim",
 		lazy = true,
 		ft = { "cpp", "hpp", "c", "h" },
-		dependencies = { "williamboman/mason-lspconfig.nvim" },
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"alepez/vim-gtest",
+		},
 	},
 	{ "alaviss/nim.nvim", lazy = true, ft = "nim", dependencies = { "williamboman/mason-lspconfig.nvim" } },
 	{ "vim-crystal/vim-crystal", lazy = true, ft = "crystal", dependencies = { "williamboman/mason-lspconfig.nvim" } },
 	{ "elkowar/yuck.vim", lazy = true, ft = "yuck" },
+	{
+		"adelarsq/neofsharp.vim",
+		lazy = true,
+		ft = "fsharp",
+		dependencies = { "williamboman/mason-lspconfig.nvim" },
+	},
 	{ -- Better Markdown features
 		"preservim/vim-markdown",
 		dependencies = { "godlygeek/tabular" },
 		lazy = true,
 		ft = "markdown",
 	},
-	{ 
+	{
 		"glepnir/lspsaga.nvim",
 		branch = "main",
 		config = function()
-      local palette = require("skadic.colors").palette
-      palette.normal_bg = palette.bg;
-      palette.title_bg = palette.black;
+			local palette = require("skadic.colors").palette
+			palette.normal_bg = palette.bg
+			palette.title_bg = palette.black
 			require("lspsaga").setup({
 				ui = {
 					theme = "round",
-          border = "rounded",
-          colors = palette
+					border = "rounded",
+					colors = palette,
 				},
 			})
 		end,
 		lazy = true,
 		cmd = "Lspsaga",
 		event = "LspAttach",
+	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"rouge8/neotest-rust",
+		},
+		config = function()
+			require("skadic.neotest")
+		end,
 	},
 
 	-- Treesitter
@@ -114,6 +134,9 @@ return {
 		end,
 		dependencies = {
 			"p00f/nvim-ts-rainbow",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+			},
 		},
 	},
 }

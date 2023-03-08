@@ -5,6 +5,13 @@ if not null_ls_status_ok then
 end
 local diagnostics = null_ls.builtins.diagnostics
 
+local wk = require("which-key")
+local wk_opts = { mode = "n", prefix="<leader>l", noremap = true, silent = true }
+
+wk.register({
+  v = { "<cmd>ClangdSwitchSourceHeader<cr>", "Toggle between source file and header" }
+}, wk_opts)
+
 null_ls.register(diagnostics.cppcheck.with({
   extra_args = function (params)
     if params.filetype == "cpp" then
