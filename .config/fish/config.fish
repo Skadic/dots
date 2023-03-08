@@ -1,5 +1,20 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    #eval (zellij setup --generate-auto-start fish | string collect)
+    if set -q ZELLIJ
+    else
+      # Attach to zellij session
+      set ZJ_SESSIONS (zellij list-sessions | string split "\n")
+      set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
+
+      echo $ZJ_SESSIONS
+
+      if test $NO_SESSIONS -ge 2
+        zellij attach (echo $ZJ_SESSIONS | string split " " | fzf)
+      else
+        zellij attach -c
+      end
+    end
 end
 
 export EDITOR="/usr/bin/nvim"
@@ -31,6 +46,7 @@ export PATH="$HOME/.cargo/bin/:$PATH"
 export PATH="$HOME/.emacs.d/bin/:$PATH"
 export PATH="$HOME/.nimble/bin/:$PATH"
 export PATH="$HOME/.dotbare:$PATH"
+export PATH="$HOME/Stuff/flutter/bin:$PATH"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -44,14 +60,12 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
     end
 end
 
-# Laptop second screen
-function enable-tablet --description "Enable using the Tab S7 as a second screen"
-  xrandr --newmode "2560x1600_120.00"  737.16  2560 2784 3072 3584  1600 1601 1604 1714  -HSync +Vsync;
-  xrandr --addmode DisplayPort-0 2560x1600_120.00;
-  xrandr --output DisplayPort-0 --mode 2560x1600_120.00 --right-of eDP;
+# Enable rust instrumentation
+function enable-tablet --description "Enable rust instrumentation"
+  export CARGO_INCREMENTAL=0
+  export RUSTFLAGS='-Cinstrument-coverage'
+  export LLVM_PROFILE_FILE='cargo-test-%p-%m.profraw'
 end
-alias disable-tablet="xrandr --output DisplayPort-0 --off"
-alias start-vnc-server="x11vnc -clip xinerama1 -ncache_cr -nc 10 -usepw -noxrecord -repeat"
 
 # C Stuff
 export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
@@ -76,5 +90,7 @@ set -U fish_greeting "🐟"
 
 # Haskell
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/skadic/.ghcup/bin $PATH # ghcup-env
+
+source /home/skadic/.config/fish/zoxide.fish
 
 starship init fish | source
