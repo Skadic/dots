@@ -1,114 +1,115 @@
 return {
-	{
-		-- Start screen
-		"goolord/alpha-nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		name = "alpha",
-		config = function()
-			require("alpha").setup(require("alpha.themes.startify").config)
-		end,
-	},
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-			{
-				-- Allows you to puck windows
-				"s1n7ax/nvim-window-picker",
-				opts = {
-					autoselect_one = true,
-					include_current = false,
-					filter_rules = {
-						-- filter using buffer options
-						bo = {
-							-- if the file type is one of following, the window will be ignored
-							filetype = { "neo-tree", "neo-tree-popup", "notify" },
-							-- if the buffer type is one of following, the window will be ignored
-							buftype = { "terminal", "quickfix" },
-						},
-					},
-				},
-				lazy = true,
-			},
-		},
-		lazy = true,
-		cmd = "Neotree",
-		event = "BufEnter",
-		opts = require("skadic.neo-tree"),
-	},
-	{
-		-- Nice statusbar
-		"feline-nvim/feline.nvim",
-		name = "feline",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-		},
-		config = function()
-			require("feline").setup(require("skadic.feline_conf").bar)
-			require("feline").winbar.setup(require("skadic.feline_conf").winbar)
-		end,
-	},
-	{
-		"SmiteshP/nvim-navic",
-		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			require("nvim-navic").setup(require("skadic.navic"))
-		end,
-	},
-	{
-		-- Toggleable terminal
-		"akinsho/toggleterm.nvim",
-		lazy = true,
-		keys = "<C-p>",
-		opts = {
-			open_mapping = [[<c-p>]],
-		},
-	},
-	{
-		-- Allows to see keybinds
-		"folke/which-key.nvim",
-		config = true,
-		lazy = true,
-	},
+  {
+    -- Start screen
+    "goolord/alpha-nvim",
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+    name = "alpha",
+    config = function()
+      require("alpha").setup(require("alpha.themes.startify").config)
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      {
+        -- Allows you to puck windows
+        "s1n7ax/nvim-window-picker",
+        opts = {
+          autoselect_one = true,
+          include_current = false,
+          filter_rules = {
+            -- filter using buffer options
+            bo = {
+              -- if the file type is one of following, the window will be ignored
+              filetype = { "neo-tree", "neo-tree-popup", "notify" },
+              -- if the buffer type is one of following, the window will be ignored
+              buftype = { "terminal", "quickfix" },
+            },
+          },
+        },
+        lazy = true,
+      },
+    },
+    lazy = true,
+    cmd = "Neotree",
+    event = "BufEnter",
+    opts = require("skadic.neo-tree"),
+  },
+  {
+    -- Nice statusbar
+    "feline-nvim/feline.nvim",
+    name = "feline",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+    },
+    config = function()
+      require("feline").setup(require("skadic.feline_conf").bar)
+      require("feline").winbar.setup(require("skadic.feline_conf").winbar)
+    end,
+  },
+  {
+    "SmiteshP/nvim-navic",
+    dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+      require("nvim-navic").setup(require("skadic.navic"))
+    end,
+  },
+  {
+    -- Toggleable terminal
+    "akinsho/toggleterm.nvim",
+    lazy = true,
+    keys = "<C-p>",
+    opts = {
+      open_mapping = [[<c-p>]],
+    },
+  },
+  {
+    -- Allows to see keybinds
+    "folke/which-key.nvim",
+    config = true,
+    lazy = true,
+  },
 
-	--- LSP-Related UI ---
-	{
-		-- A toggleable symbols outline
-		"simrat39/symbols-outline.nvim",
-		lazy = true,
-		cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-		opts = { autofold_depth = 2 },
-	},
-	{ "preservim/tagbar", lazy = true, cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
-	{
-		-- Some nice windows
-		"CosmicNvim/cosmic-ui",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		opts = { border_style = "rounded" },
-		lazy = true,
-	},
-	{
-		-- Debugger UI
-		"rcarriga/nvim-dap-ui",
-		lazy = true,
-		event = "LspAttach",
-		dependencies = { "mfussenegger/nvim-dap" },
-	},
-	{ "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
-	{
-		"folke/trouble.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		config = true,
-		lazy = true,
-		event = "LspAttach",
-	},
-	{
-		"andythigpen/nvim-coverage",
-		config = true,
-		lazy = true,
-		event = "LspAttach",
-	},
+  --- LSP-Related UI ---
+  {
+    -- A toggleable symbols outline
+    "simrat39/symbols-outline.nvim",
+    lazy = true,
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    opts = { autofold_depth = 2 },
+  },
+  { "preservim/tagbar",  lazy = true,  cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
+  {
+    -- Some nice windows
+    "CosmicNvim/cosmic-ui",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = { border_style = "rounded" },
+    lazy = true,
+  },
+  { "j-hui/fidget.nvim", config = true },
+  {
+    -- Debugger UI
+    "rcarriga/nvim-dap-ui",
+    lazy = true,
+    event = "LspAttach",
+    dependencies = { "mfussenegger/nvim-dap" },
+  },
+  { "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
+  {
+    "folke/trouble.nvim",
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+    config = true,
+    lazy = true,
+    event = "LspAttach",
+  },
+  {
+    "andythigpen/nvim-coverage",
+    config = true,
+    lazy = true,
+    event = "LspAttach",
+  },
 }
