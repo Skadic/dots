@@ -2,7 +2,8 @@ return {
 	"folke/lazy.nvim", -- Have lazy manage itself
 	{ "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
 	{ "nvim-lua/plenary.nvim", lazy = true }, -- Useful lua functions used ny lots of plugins
-	{ -- Git Commands
+	{
+		-- Git Commands
 		"lewis6991/gitsigns.nvim",
 		lazy = true,
 		cmd = "Gitsigns",
@@ -11,7 +12,8 @@ return {
 		end,
 	},
 
-	{ -- Telescope
+	{
+		-- Telescope
 		"nvim-telescope/telescope.nvim",
 		lazy = true,
 		cmd = "Telescope",
@@ -21,9 +23,10 @@ return {
 			"nvim-telescope/telescope-file-browser.nvim", -- A file browser
 			"gbrlsnchs/telescope-lsp-handlers.nvim", -- Better LSP Functions
 			{ "ThePrimeagen/harpoon", keys = { "<A-f>", "<A-j>" }, config = true }, -- Pin files to quickly return to
-			{ -- Project management
+			{
+				-- Project management
 				"ahmedkhalf/project.nvim",
-        name = "project_nvim",
+				name = "project_nvim",
 				config = true,
 				lazy = true,
 				cmd = "Telescope projects",
@@ -33,18 +36,21 @@ return {
 			require("skadic.telescope")
 		end,
 	},
-	{ -- A native Sorter for telescope to increase performance
+	{
+		-- A native Sorter for telescope to increase performance
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		lazy = true,
 	},
-	{ -- Modify surrounding symbols
+	{
+		-- Modify surrounding symbols
 		"kylechui/nvim-surround",
 		config = true,
 		lazy = true,
 		keys = { "ys", "ds", "cs" },
 	},
-	{ -- Auto-close parentheses
+	{
+		-- Auto-close parentheses
 		"windwp/nvim-autopairs",
 		lazy = true,
 		event = { "BufRead" },
@@ -56,7 +62,8 @@ return {
 			"hrsh7th/nvim-cmp",
 		},
 	},
-	{ -- nice folding
+	{
+		-- nice folding
 		"kevinhwang91/nvim-ufo",
 		lazy = true,
 		keys = { "z", mode = "n" },

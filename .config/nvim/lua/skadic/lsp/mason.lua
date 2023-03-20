@@ -8,6 +8,5 @@ local opts = {
   }
 }
 
-
 return opts
 --require("skadic.lsp.mason-lspconfig")

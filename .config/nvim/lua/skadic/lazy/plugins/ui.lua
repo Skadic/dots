@@ -1,5 +1,6 @@
 return {
-	{ -- Start screen
+	{
+		-- Start screen
 		"goolord/alpha-nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons" },
 		name = "alpha",
@@ -14,9 +15,10 @@ return {
 			"nvim-lua/plenary.nvim",
 			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
-			{ -- Allows you to puck windows
+			{
+				-- Allows you to puck windows
 				"s1n7ax/nvim-window-picker",
-				config = {
+				opts = {
 					autoselect_one = true,
 					include_current = false,
 					filter_rules = {
@@ -34,55 +36,62 @@ return {
 		},
 		lazy = true,
 		cmd = "Neotree",
-		event = "BufEnter isdirectory(expand('%:p'))",
-		config = require("skadic.neo-tree"),
+		event = "BufEnter",
+		opts = require("skadic.neo-tree"),
 	},
-	{ -- Nice statusbar
+	{
+		-- Nice statusbar
 		"feline-nvim/feline.nvim",
 		name = "feline",
 		dependencies = {
-			{
-				"SmiteshP/nvim-navic",
-				dependencies = { "neovim/nvim-lspconfig" },
-				config = function()
-					require("nvim-navic").setup(require("skadic.navic"))
-				end,
-			},
+			"SmiteshP/nvim-navic",
 		},
 		config = function()
 			require("feline").setup(require("skadic.feline_conf").bar)
 			require("feline").winbar.setup(require("skadic.feline_conf").winbar)
 		end,
 	},
-	{ -- Toggleable terminal
+	{
+		"SmiteshP/nvim-navic",
+		dependencies = { "neovim/nvim-lspconfig" },
+		config = function()
+			require("nvim-navic").setup(require("skadic.navic"))
+		end,
+	},
+	{
+		-- Toggleable terminal
 		"akinsho/toggleterm.nvim",
 		lazy = true,
 		keys = "<C-p>",
-		config = {
+		opts = {
 			open_mapping = [[<c-p>]],
 		},
 	},
-	{ -- Allows to see keybinds
+	{
+		-- Allows to see keybinds
 		"folke/which-key.nvim",
 		config = true,
 		lazy = true,
 	},
 
 	--- LSP-Related UI ---
-	{ -- A toggleable symbols outline
+	{
+		-- A toggleable symbols outline
 		"simrat39/symbols-outline.nvim",
 		lazy = true,
 		cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-		config = { autofold_depth = 2 },
+		opts = { autofold_depth = 2 },
 	},
 	{ "preservim/tagbar", lazy = true, cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
-	{ -- Some nice windows
+	{
+		-- Some nice windows
 		"CosmicNvim/cosmic-ui",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		config = { border_style = "rounded" },
+		opts = { border_style = "rounded" },
 		lazy = true,
 	},
-	{ -- Debugger UI
+	{
+		-- Debugger UI
 		"rcarriga/nvim-dap-ui",
 		lazy = true,
 		event = "LspAttach",

@@ -1,7 +1,7 @@
 return {
 	{
 		"EdenEast/nightfox.nvim",
-		config = {
+		opts = {
 			options = {
 				styles = {
 					keywords = "bold",
@@ -32,7 +32,7 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
-		config = {
+		opts = {
 			styles = {
 				comments = { "italic" },
 				keywords = { "bold" },
@@ -50,7 +50,7 @@ return {
 	{ "Shatur/neovim-ayu", lazy = true },
 	{
 		"navarasu/onedark.nvim",
-		config = {
+		opts = {
 			style = "darker",
 			code_style = {
 				keywords = "bold",

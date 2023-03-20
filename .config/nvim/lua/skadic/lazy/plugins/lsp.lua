@@ -1,14 +1,16 @@
 -- LSP and Coding-Related stuff
 return {
 	-- Mason
-	{ -- Allow installing tools like LSP Servers, Linters etc
+	{
+		-- Allow installing tools like LSP Servers, Linters etc
 		"williamboman/mason.nvim",
 		lazy = true,
 		cmd = "Mason",
 		event = { "BufRead" },
-		config = require("skadic.lsp.mason"),
+		opts = require("skadic.lsp.mason"),
 	},
-	{ -- for formatters and linters
+	{
+		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
 		lazy = true,
 		config = function()
@@ -16,7 +18,8 @@ return {
 		end,
 		event = "BufRead",
 	},
-	{ -- Lsp Configuration for mason
+	{
+		-- Lsp Configuration for mason
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("skadic.lsp.mason-lspconfig")
@@ -26,25 +29,29 @@ return {
 			"williamboman/mason.nvim",
 		},
 		lazy = true,
+		event = "BufRead",
 	},
 
-	{ -- Debugging
+	{
+		-- Debugging
 		"mfussenegger/nvim-dap",
 		lazy = true,
 		event = "LspAttach",
 		config = function()
-			require("skadic.dap")
+			require("skadic.dap.init")
 		end,
 	},
-	{ -- Generate LSP highlight groups for color schemes without lsp support
+	{
+		-- Generate LSP highlight groups for color schemes without lsp support
 		"folke/lsp-colors.nvim",
 		lazy = true,
 		event = "LspAttach",
 	},
-	{ -- Help with function signatures
+	{
+		-- Help with function signatures
 		"ray-x/lsp_signature.nvim",
 		name = "lsp_signature",
-		config = {
+		opts = {
 			bind = true,
 			handler_opts = {
 				border = "rounded",
@@ -53,7 +60,8 @@ return {
 		lazy = true,
 		event = "LspAttach",
 	},
-	{ -- Documentation Generation
+	{
+		-- Documentation Generation
 		"kkoomen/vim-doge",
 		build = function()
 			vim.cmd("call doge#install()")
@@ -67,15 +75,30 @@ return {
 	},
 
 	-- Language-Specific
-	{ "simrat39/rust-tools.nvim", lazy = true, ft = "rust", dependencies = { "williamboman/mason-lspconfig.nvim" } }, -- More capabilities for writing Rust
-	{ -- More capabilities for writing C++
+	{
+		-- More capabilities for writing Rust
+		"simrat39/rust-tools.nvim",
+		lazy = true,
+		ft = "rust",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"SmiteshP/nvim-navic",
+		},
+		config = function() 
+      require("skadic.lsp.settings.rust_analyzer")
+    end
+	},
+	{
+		-- More capabilities for writing C++
 		"p00f/clangd_extensions.nvim",
 		lazy = true,
 		ft = { "cpp", "hpp", "c", "h" },
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
 			"alepez/vim-gtest",
+			"SmiteshP/nvim-navic",
 		},
+		opts = require("skadic.lsp.settings.clangd"),
 	},
 	{ "alaviss/nim.nvim", lazy = true, ft = "nim", dependencies = { "williamboman/mason-lspconfig.nvim" } },
 	{ "vim-crystal/vim-crystal", lazy = true, ft = "crystal", dependencies = { "williamboman/mason-lspconfig.nvim" } },
@@ -86,7 +109,8 @@ return {
 		ft = "fsharp",
 		dependencies = { "williamboman/mason-lspconfig.nvim" },
 	},
-	{ -- Better Markdown features
+	{
+		-- Better Markdown features
 		"preservim/vim-markdown",
 		dependencies = { "godlygeek/tabular" },
 		lazy = true,
@@ -121,6 +145,8 @@ return {
 		config = function()
 			require("skadic.neotest")
 		end,
+		lazy = true,
+		ft = { "rust" },
 	},
 
 	-- Treesitter

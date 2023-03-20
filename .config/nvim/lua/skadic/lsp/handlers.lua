@@ -130,7 +130,6 @@ end
 
 local disable_format = { tsserver = 1, clangd = 1, sumneko_lua = 1, rust_analyzer = 1 }
 
-local navic = require("nvim-navic")
 M.on_attach = function(client, bufnr)
 	if disable_format[client.name] == 1 then
 		client.server_capabilities.documentFormattingProvider = false
@@ -138,7 +137,7 @@ M.on_attach = function(client, bufnr)
 
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
-	navic.attach(client, bufnr)
+	require("nvim-navic").attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
