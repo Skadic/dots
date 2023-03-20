@@ -8,9 +8,13 @@ local actions = require("telescope.actions")
 telescope.setup({
 	defaults = {
 
-		prompt_prefix = " ",
-		selection_caret = " ",
+		prompt_prefix = "  ",
+		selection_caret = " ",
 		path_display = { "smart" },
+    layout_config = {
+      vertical = { width = 0.5 }
+    },
+    theme = "ivy",
 
 		mappings = {
 			i = {
@@ -85,6 +89,15 @@ telescope.setup({
 		-- }
 		-- Now the picker_config_key will be applied every time you call this
 		-- builtin picker
+    file_browser = {
+      theme = "ivy"
+    },
+    find_files = {
+      theme = "ivy"
+    },
+    buffers = {
+      theme = "ivy"
+    }
 	},
 	extensions = {
 		media_files = {

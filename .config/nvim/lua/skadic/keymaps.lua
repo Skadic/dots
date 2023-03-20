@@ -40,7 +40,7 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 wk.register({
-  ["<C-f>"] = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
+  ["<C-f>"] = { "<cmd>Telescope harpoon marks theme=dropdown<cr>", "Harpooned Files"},
   ["<C-g>"] = { function() vim.notify("Harpooned"); require("harpoon.mark").add_file() end, "Harpoon file"},
   ["<C-s>"] = { function() vim.notify("Unharpooned"); require("harpoon.mark").rm_file() end, "Harpoon file"},
   ["<A-1>"] = { function() require("harpoon.ui").nav_file(1) end, "Navigate to 1st harpooned file"},
@@ -78,8 +78,8 @@ wk.register({
       "Git Files"
     },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    b = { "<cmd>Telescope buffers<cr>", "Find File" },
-    p = { "<cmd>Telescope projects<cr>", "Projects" },
+    b = { "<cmd>Telescope buffers<cr>", "Search Buffers" },
+    p = { "<cmd>Telescope projects theme=dropdown<cr>", "Projects" },
     l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
     n = { "<cmd>Telescope notify<cr>", "Search Notifications" },
     h = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
