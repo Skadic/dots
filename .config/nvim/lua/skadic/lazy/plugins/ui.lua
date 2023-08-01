@@ -90,7 +90,7 @@ return {
     opts = { border_style = "rounded" },
     lazy = true,
   },
-  { "j-hui/fidget.nvim", config = true },
+  { "j-hui/fidget.nvim", config = true, tag = "legacy" },
   {
     -- Debugger UI
     "rcarriga/nvim-dap-ui",

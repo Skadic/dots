@@ -1,2 +1,3 @@
 ;(include "example.yuck")
 (include "topbar.yuck")
+(include "dashboard.yuck")

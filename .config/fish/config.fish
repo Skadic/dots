@@ -1,20 +1,25 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
     #eval (zellij setup --generate-auto-start fish | string collect)
-    if set -q ZELLIJ
-    else
-      # Attach to zellij session
-      set ZJ_SESSIONS (zellij list-sessions | string split "\n")
-      set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
-
-      echo $ZJ_SESSIONS
-
-      if test $NO_SESSIONS -ge 2
-        zellij attach (echo $ZJ_SESSIONS | string split " " | fzf)
+  #if [ $TERM = "xterm-kitty" ]
+  #else
+      if set -q ZELLIJ
       else
-        zellij attach -c
+        # Attach to zellij session
+        set ZJ_SESSIONS (zellij list-sessions | string split "\n")
+        set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
+
+        echo $ZJ_SESSIONS
+
+        if test $NO_SESSIONS -ge 2
+          zellij attach (echo $ZJ_SESSIONS | string split " " | fzf --header "Choose Zellij Workspace")
+        else if test $NO_SESSIONS -ge 1
+          zellij attach -c
+        else
+          zellij -s main
+        end
       end
-    end
+  #end
 end
 
 export EDITOR="/usr/bin/nvim"
@@ -22,6 +27,7 @@ export EDITOR="/usr/bin/nvim"
 # Apps
 alias nvd="neovide --multigrid"
 alias ls="exa --icons"
+alias tree="erd -HI"
 alias grep="rg"
 alias xbgs="nitrogen $HOME/Pictures/bg/"
 alias textidote="java -jar $HOME/Apps/textidote.jar"
@@ -48,7 +54,12 @@ export PATH="$HOME/.nimble/bin/:$PATH"
 export PATH="$HOME/.dotbare:$PATH"
 export PATH="$HOME/Stuff/flutter/bin:$PATH"
 
+export LD_LIBRARY_PATH="/usr/lib/:/usr/lib64/:/lib/:/lib64/:$LD_LIBRARY_PATH"
+
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# don't even ask
+export CARGO_MOMMYS_LITTLE="boy"
 
 # Add flatpak exports to PATH
 set -l xdg_data_home $XDG_DATA_HOME ~/.local/share
@@ -85,6 +96,12 @@ export GLFW_IM_MODULE="fcitx"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
+export CARGO_REGISTRIES_CRATES_IO_PROTOCOL="sparse"
+
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 set -U fish_greeting "🐟"
 

@@ -1,25 +1,47 @@
 
 (defwindow dashboard 
   :monitor 0
-  :geometry (geometry :x "10%"
-                      :y "50%"
+  :geometry (geometry :x "0%"
+                      :y "0%"
                       :width "800px"
                       :height "900px"
-                      :anchor "center")
+                      :anchor "top right")
   :stacking "fg"
   :exclusive false
-  :focusable false 
+  :focusable false
   (box :orientation "h"
-       :class "db-grid"
-    (label :class "db-frame"
+    (label :class ""
            :text "a")
     (box :orientation "v"
-      (label :class "db-frame"
-             :text "b")
-      (label :class "db-frame"
-             :text "c"))
-    (label :class "db-frame"
-           :text "d")))
+         :halign "center"
+         :valign "center"
+         :vexpand false
+         :hexpand false
+         :spacing 20
+      (clock)
+      (box :orientation "h"
+        (box :orientation "v"
+          (label :class "db-frame" :text "b")
+          (label :class "db-frame" :text "c"))
+        (power)))))
+
+(defwidget clock [] 
+  (box :class "db-frame pad" :orientation "h" :space-evenly false :spacing 35 :valign "center"
+    (box :class "text-cyan"  :orientation "h" :space-evenly false :spacing 10 :valign "center" :height 220
+      (box :orientation "v" :space-evenly false :valign "start" (label :style "font-size: 7rem" :text "${db-hour}"))
+      (box :orientation "v" :space-evenly false :valign "end"   (label :style "font-size: 7rem" :text "${db-minute}")))
+    
+    
+    (box :orientation "v" :spacing 10 :valign "center" :height 120
+      (label :class "db-text-size text-yellow" :halign "end" :text "${db-weekday}")
+      (label :class "db-text-size text-orange" :halign "end" :text "${db-date}"))))
+
+(defwidget power []
+  (box :orientation "v"
+    (label :class "db-frame" :text "󰐥")
+    (label :class "db-frame" :text "󰜉")
+    (label :class "db-frame" :text "z")
+    (label :class "db-frame" :text "aa")))
 
 ; ------------------------------ Clock ------------------------------
 
@@ -28,4 +50,6 @@
 (defpoll db-minute :interval "10s"
   `date "+%M"`)
 (defpoll db-date :interval "5m"
-  `date "+%d.%m.%y"`)
+  `date "+%d.%m"`)
+(defpoll db-weekday :interval "5m"
+  `date "+%A"`)

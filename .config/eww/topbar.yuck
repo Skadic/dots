@@ -22,6 +22,7 @@
     (right)))
 
 (defwidget spacer [] (box :class "text-comment" "|"))
+(defwidget spacer_invis [] (box :class "text-comment" " "))
 
 (defwidget right []
   (box :orientation "h"
@@ -35,13 +36,18 @@
     (spacer)
     (active_eth)
     (spacer)
+    (cputemp)
+    (spacer)
     (battery)
     (spacer)
     (brightness)
     (spacer)
     (volume)
     (spacer)
-    (date)))
+    (systray :class "framed")
+    (spacer)
+    (date)
+    ))
 
 
 (defwidget middle []
@@ -110,7 +116,7 @@
 
 (defwidget vol_icon [] 
   (label :class "icon"
-         :text `${is_mute == "yes" ? "ﱝ" : ""}`))
+         :text `${is_mute == "yes" ? "󰖁" : ""}`))
 (defpoll is_mute :interval "1s" 
   "pactl get-sink-mute @DEFAULT_SINK@ | cut -c 7-")
 
@@ -157,6 +163,16 @@
       EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
   } ${EWW_BATTERY.BAT0.capacity}%`)))
 
+; ------------------------------ Battery ------------------------------
+(defwidget cputemp []
+    (box :class "framed text-red" 
+      (box :class "icon" `${
+        EWW_TEMPS.K10TEMP_TCTL < 50 ? "" : 
+        EWW_TEMPS.K10TEMP_TCTL < 60 ? "" : 
+        EWW_TEMPS.K10TEMP_TCTL < 70 ? "" : 
+        EWW_TEMPS.K10TEMP_TCTL < 80 ? "" : ""
+      } ${round(EWW_TEMPS.K10TEMP_TCTL, 0)}°`)))
+
 ; ------------------------------ Workspaces ------------------------------
 
 ;(defwidget workspaces [] (literal :content workspaces))
@@ -178,15 +194,23 @@
 ; ------------------------------ Active Window ------------------------------
 
 (defwidget active_window [] 
-  (label :class "varfont"
-         :limit-width 45
-         :text `${active_window}`))
+  (box :space-evenly false
+    (image :visible `${active_window != "" && active_window_icon != ""}`
+           :path "${active_window_icon}"
+           :width "${active_window_icon_size + 10}"
+           :height "${active_window_icon_size}")
+    (label :class "varfont"
+           :limit-width 45
+           :text `${active_window}`)
+    ))
 ;(defpoll active_window :interval "10ms"
 ;  `hyprctl activewindow -j | jq -r ".title" | head -c 30`)
 
 ;(deflisten active_window :initial "No window found" 
 ;  `./scripts/sway/active_window.sh`)
 (defvar active_window "")
+(defvar active_window_icon "")
+(defvar active_window_icon_size "1")
 
 ; ------------------------------ Workspaces ------------------------------
 
@@ -194,7 +218,7 @@
 ;  "./scripts/sway/workspaces.sh")
 (defvar ws_info `[{"name":"1","num":1,"focused":true,"urgent":false,"visible":true,"active":true},{"name":"2","num":2,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"3","num":3,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"4","num":4,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"5","num":5,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"6","num":6,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"7","num":7,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"8","num":8,"focused":false,"urgent":false,"visible":false,"active":false}]`)
 (defwidget ws_button [ws_number] 
-  (button :class `framed workspace ${
+  (button :class `workspace framed ${
                     ws_info[ws_number - 1].urgent ? "text-red" : 
                     ws_info[ws_number - 1].focused ? "text-green" : 
                     ws_info[ws_number - 1].visible ? "text-yellow" : 
@@ -224,8 +248,7 @@
              :text " ")
       (label :class "varfont"
              :limit-width 50
-             :text "${music_info}"
-         :length 25)))
+             :text "${music_info}")))
 
 
 ; ------------------------------ Sway Binding Mode ------------------------------
@@ -239,9 +262,10 @@
 ; ------------------------------ Networks ------------------------------
 
 (defpoll active_netw :interval "1s"
+                     :initial "{}"
     `./scripts/net.sh`)
 (defwidget active_wifi []
-  (eventbox :onclick "nm-connection-editor &"
+  (eventbox :onclick "nm-connection-editor"
     (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
          :space-evenly false
       (label :class "xl-icon"

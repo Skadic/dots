@@ -2,5 +2,43 @@ $default_padding: 2px;
 
 $trough_height: 12px;
 
-$mono_font: agave Nerd Font Mono;
-$default_font: Noto Sans Mono CJK JP;
+$mono_font: Agave Nerd Font;
+//$default_font: Potta One;
+//$default_font: Shippori Antique B1;
+$default_font: Lilex;
+
+//$default_font: Cherry Bomb One;
+
+// TEXT COLORS
+
+.text-cyan {
+    color: $cyan;
+}
+
+.text-green {
+    color: $green;
+}
+
+.text-orange {
+    color: $orange;
+}
+
+.text-pink {
+    color: $pink;
+}
+
+.text-purple {
+    color: $purple;
+}
+
+.text-red {
+    color: $red;
+}
+
+.text-yellow {
+    color: $yellow;
+}
+
+.text-comment {
+    color: $comment;
+}

@@ -9,7 +9,7 @@ These are basic configurations that are fundamental settings for sway.
 
 ### Mod Key
 
-We set the modifier key. The most popular options are `Mod1` for `Alt` and `Mod4` for the windows key.
+We set the modifier key. The most popular options are `Mod1` for `Alt` and `Mod4` for the Windows key.
 ```swayconfig config +=
 set $mod Mod4
 ```
@@ -62,15 +62,16 @@ input type:touchpad {
 This is stuff added by [SwayFX](https://github.com/WillPower3309/swayfx)!
 
 ```swayconfig config +=
-#corner_radius 8
+corner_radius 8
+blur enable
 ```
 
 ### Monitor Settings
 
 This sets up my monitors. This might need tweaking depending on the setup I'm working with at the moment.
 ```swayconfig config +=
-output HDMI-A-1 pos 0 0 mode 1920x1080@60Hz
-output DP-1 pos 1920 0 mode 1920x1080@144Hz
+output HDMI-A-1 pos 380 0 mode 1920x1080@120Hz
+output eDP-1 pos 0 1080 mode 2560x1600@60Hz
 ```
 
 ### Border Settings
@@ -81,8 +82,8 @@ Border style options are :
 - `pixel <px>`: A border with the specified width and no titlebar. 
 - `none`: Self-explanatory
 ```swayconfig config +=
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 3
+default_floating_border pixel 
 ```
 
 Smart borders draw borders around container only if it is not the only container on this workspace.
@@ -215,12 +216,12 @@ bindsym $mod+Return exec $terminal
 
 This keybind opens a program launcher.
 ```swayconfig config +=
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec rofi -show drun
 #bindsym $mod+d exec nwg-drawer -r -fm dolphin -nofs -term kitty && nwg-drawer 
 ```
 This opens a launcher that runs a terminal command.
 ```swayconfig config +=
-bindsym $mod+p exec --no-startup-id rofi -show run
+bindsym $mod+p exec rofi -show run
 ```
 ### Brightness
 
@@ -388,9 +389,9 @@ bindsym $mod+f fullscreen toggle
 
 These keybinds control audio.
 ```swayconfig config +=
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 ```
 These control a running player.
 ```swayconfig config +=
@@ -407,11 +408,11 @@ These commands take screenshots.
 
 This takes a screenshot of the entire currently focused screen.
 ```swayconfig config +=
-bindsym Print exec --no-startup-id ./screenshot.sh
+bindsym Print exec ./screenshot.sh
 ```
 This allows selecting an area and taking a screenshot of that.
 ```swayconfig config +=
-bindsym Shift+Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy
 ```
 ### Binding Modes
 
@@ -510,52 +511,60 @@ bindsym Shift+0     gaps outer all set 0
 
 This restarts pulseaudio for audio.
 ```swayconfig config +=
-exec --no-startup-id pkill pulseaudio
-exec --no-startup-id pulseaudio --start
+exec pkill pulseaudio
+exec pulseaudio --start
 ```
 
 This enables bluetooth.
 ```swayconfig config +=
-exec --no-startup-id blueman-applet
+exec blueman-applet
 ```
 
 This starts the polkit.
 ```swayconfig config +=
 # Autostart applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /usr/libexec/polkit-gnome-authentication-agent-1
 ```
 This loads my `.profile` file.
 ```swayconfig config +=
-exec --no-startup-id /home/skadic/.profile
-```
-This sets my desktop backgrounds.
-```swayconfig config +=
-exec_always --no-startup-id swaybg -o DP-1 -m fill -i ~/Pictures/bg/gris_window.jpg -o HDMI-A-1 -i ~/Pictures/bg/rumia_poly.jpg
+exec /home/skadic/.profile
 ```
 This starts fcitx5 to enable my input methods.
 ```swayconfig config +=
-exec --no-startup-id fcitx5
+exec fcitx5
 ```
 This starts the emacs daemon in the background in case I use emacs.
 ```swayconfig config +=
-exec --no-startup-id emacs --daemon
+#exec emacs --daemon
 ```
 This loads my eww bar and starts the sway IPC daemons.
 ```swayconfig config +=
-exec --no-startup-id ~/Scripts/eww.sh 
+exec eww open topbar
+exec sway_update window mode shutdown
+exec sway_update workspace shutdown
+```
+
+This starts the wallpaper.
+```swayconfig config +=
+exec hyprpaper
 ```
 
 Make nwg-drawer open faster
 ```swayconfig config +=
-exec_always --no-startup-id nwg-drawer -r -fm dolphin -nofs -term kitty
+#exec_always nwg-drawer -r -fm dolphin -nofs -term kitty
 ```
 
 Start mako, the notification daemon I use.
 ```swayconfig config +=
-exec --no-startup-id mako
+exec mako
 ```
 
 Try to fix the file dialog with flatpaks:
 ```swayconfig config +=
-exec_always --no-startup-id /usr/libexec/xdg-desktop-portal -r
+exec_always /usr/libexec/xdg-desktop-portal -r
+```
+
+Start Nextcloud.
+```swayconfig config +=
+exec_always nextcloud --background
 ```

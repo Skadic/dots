@@ -1,7 +1,7 @@
 local configs = require("nvim-treesitter.configs")
 
 configs.setup({
-	ensure_installed = { "rust", "cpp", "lua", "json", "css", "html", "svelte", "astro", "python", "latex" },
+	ensure_installed = { "rust", "cpp", "lua", "json", "css", "html", "python", "latex" },
 	sync_install = false,
 	ignore_install = { "" }, -- List of parsers to ignore installing
 	highlight = {

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+workspaces=$(hyprctl -j workspaces | jq 'sort_by(.name)')
+switch_ws="hyprctl dispatch workspace"
+
+focused_ws=$(hyprctl -j activewindow | jq ".workspace.id")
+
+echo '(box :orientation "h"'
+echo '     :spacing "3"'
+echo '     :space-evenly true'
+
+for i in 0 1 2 3 4 5 6 7 8 9
+do
+  ws=$(echo $workspaces | jq ".[$i]")
+
+  if [ "$ws" == "null" ]
+  then
+    continue
+  fi
+
+  ws_num=$(echo $ws | jq '.id')
+  
+  if [ "$ws_num" == "$focused_ws" ]
+  then
+    echo "  (button :class \"framed workspace text-green\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+  else 
+    echo "  (button :class \"framed workspace\" :onclick \"$switch_ws $ws_num\"  $ws_num)"
+  fi
+done
+echo ")"

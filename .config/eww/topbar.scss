@@ -1,4 +1,23 @@
 
+* {
+    all: unset;
+    font-size: 1rem;
+    font-family: $default_font;
+    font-weight: bolder;
+}
+
+tooltip {
+  background: $current-line;
+  padding: $default_padding;
+  border-radius: 5px;
+  border-color: $primary-bg;
+  border-width: 5px;
+}
+
+.varfont {
+  font-family: $default_font;
+}
+
 .topbar {
     background: transparent;
 }
@@ -6,30 +25,23 @@
 .bar {
     background: $primary-bg;
     padding: $default_padding;
-    border-bottom-width: 2px;
-    border-color: $current-line;
-    border-style: solid;
 }
 
 .bar-middle {
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    border-left-width: 2px;
-    border-right-width: 2px;
     padding-right: 10px;
     padding-left: 10px;
 }
 
 .bar-left {
     border-bottom-right-radius: 10px;
-    border-right-width: 2px;
     padding-right: 10px;
     padding-left: 5px;
 }
 
 .bar-right {
     border-bottom-left-radius: 10px;
-    border-left-width: 2px;
     padding-left: 10px;
     padding-right: 5px;
 }
@@ -44,17 +56,20 @@
 }
 
 .icon {
+    font-family: $mono_font;
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .xl-icon {
+    font-family: $mono_font;
     font-weight: normal;
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 .workspace {
     padding: 0.5rem 0.8rem;
+    font-family: $mono_font;
     //padding: 0.2rem 0.4rem 0.2rem 0.4rem;
     //margin: 0.4rem;
 }
@@ -90,3 +105,4 @@ scale trough slider {
     background-color: $yellow;
     border-radius: 7px; 
 }
+
