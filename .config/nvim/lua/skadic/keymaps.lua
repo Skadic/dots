@@ -9,7 +9,6 @@ local keymap = vim.api.nvim_set_keymap
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
-
 -- Remove these bindings so I can use them for something else
 keymap("", "<M-j>", "<Nop>", opts)
 keymap("", "<M-k>", "<Nop>", opts)
@@ -115,9 +114,8 @@ wk.register({
   }
 }, wk_opts)
 
-
 -- Insert --
--- Press jk fast to enter
+-- Press jk fast to enter normal mode
 keymap("i", "jk", "<ESC>", opts)
 
 -- Visual --

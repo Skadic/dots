@@ -27,7 +27,4 @@ mason_lsp.setup_handlers({
 	["rust_analyzer"] = function()
     -- Do nothing, we let Lazy handle this
 	end,
-	["clangd"] = function()
-    -- Do nothing, we let Lazy handle this
-	end,
 })
