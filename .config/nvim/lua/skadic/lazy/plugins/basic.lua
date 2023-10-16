@@ -22,6 +22,7 @@ return {
 			"nvim-telescope/telescope-media-files.nvim", -- Search for media files
 			"nvim-telescope/telescope-file-browser.nvim", -- A file browser
 			"gbrlsnchs/telescope-lsp-handlers.nvim", -- Better LSP Functions
+      "HUAHUAI23/telescope-session.nvim",
 			{ "ThePrimeagen/harpoon", keys = { "<A-f>", "<A-j>" }, config = true }, -- Pin files to quickly return to
 			{
 				-- Project management

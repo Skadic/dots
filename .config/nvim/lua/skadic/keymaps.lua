@@ -40,13 +40,12 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 wk.register({
   ["<C-f>"] = { "<cmd>Telescope harpoon marks theme=dropdown<cr>", "Harpooned Files"},
-  ["<C-g>"] = { function() vim.notify("Harpooned"); require("harpoon.mark").add_file() end, "Harpoon file"},
+  ["<C-a"] = { function() vim.notify("Harpooned"); require("harpoon.mark").add_file() end, "Harpoon file"},
   ["<C-s>"] = { function() vim.notify("Unharpooned"); require("harpoon.mark").rm_file() end, "Harpoon file"},
   ["<A-1>"] = { function() require("harpoon.ui").nav_file(1) end, "Navigate to 1st harpooned file"},
   ["<A-2>"] = { function() require("harpoon.ui").nav_file(2) end, "Navigate to 2nd harpooned file"},
   ["<A-3>"] = { function() require("harpoon.ui").nav_file(3) end, "Navigate to 3rd harpooned file"},
   ["<A-4>"] = { function() require("harpoon.ui").nav_file(4) end, "Navigate to 4th harpooned file"},
-
 }, { mode = "n", prefix="", noremap = true, silent = true })
 
 wk.register({
@@ -86,8 +85,22 @@ wk.register({
   L = { "<cmd>Lazy<cr>", "Open Lazy"},
   e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },
   b = { "<cmd>Neotree buffers<cr>", "Toggle Buffers" },
-  s = { "<cmd>TagbarToggle<cr>", "Toggle Tagbar" },
-  S = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
+  t = { "<cmd>TagbarToggle<cr>", "Toggle Tagbar" },
+  T = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
+  S = {
+    name = "Session",
+    s = {
+      function ()
+        local session_name = vim.fn.input("Session Name: ")
+        MiniSessions.write(session_name)
+      end, "Save Session"
+    },
+    r = {
+      function ()
+        MiniSessions.select("read")
+      end, "Load Session"
+    },
+  },
   g = {
     name = "Git",
     f = {

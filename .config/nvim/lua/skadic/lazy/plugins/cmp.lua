@@ -56,7 +56,13 @@ return {
 		"Saecki/crates.nvim",
 		event = { "BufRead Cargo.toml" },
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = true,
+		config = {
+      src = {
+        cmp = {
+          enabled = true
+        }
+      }
+    },
 		lazy = true,
 	},
 }

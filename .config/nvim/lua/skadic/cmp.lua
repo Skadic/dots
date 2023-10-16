@@ -45,7 +45,6 @@ local kind_icons = {
 	Copilot = "",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
-
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -99,7 +98,11 @@ cmp.setup({
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			-- Kind icons
-			--vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+      local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+      local strings = vim.split(kind.kind, "%s", { trimempty = true })
+      kind.kind = " " .. (strings[1] or "") .. " "
+      kind.menu = "    (" .. (strings[2] or "") .. ")"
+      --[[
 			if entry.source.name == "copilot" then
 				vim_item.kind = "Copilot"
 				vim_item.kind_hl_group = "CmpItemKindCopilot"
@@ -110,6 +113,7 @@ cmp.setup({
 				buffer = "[Buffer]",
 				path = "[Path]",
 			})[entry.source.name]
+      --]]
 			return vim_item
 		end,
 	},
@@ -141,7 +145,11 @@ cmp.setup({
 	},
 	window = {
 		documentation = cmp.config.window.bordered(),
-		completion = cmp.config.window.bordered(),
+		completion = {
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = 0,
+      side_padding = 0,
+    },
 	},
 
 	experimental = {
@@ -149,3 +157,46 @@ cmp.setup({
 		native_menu = false,
 	},
 })
+
+-- Customization for Pmenu
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#45475a", fg = "NONE" })
+vim.api.nvim_set_hl(0, "Pmenu", { fg = "#cdd6f4", bg = "#313244" })
+
+
+vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#82AAFF", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#cdd6f4", bg = "NONE", italic = true })
+
+vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#1e1e2e", bg = "#f38ba8" })
+vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#1e1e2e", bg = "#f38ba8" })
+vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#1e1e2e", bg = "#f38ba8" })
+vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#1e1e2e", bg = "#f38ba8" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#1e1e2e", bg = "#a6e3a1" })
+vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#1e1e2e", bg = "#a6e3a1" })
+vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#1e1e2e", bg = "#a6e3a1" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#1e1e2e", bg = "#fab387" })
+vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#1e1e2e", bg = "#fab387" })
+vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#1e1e2e", bg = "#fab387" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#1e1e2e", bg = "#89dceb" })
+vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#1e1e2e", bg = "#89dceb" })
+vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#1e1e2e", bg = "#89dceb" })
+vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#1e1e2e", bg = "#89dceb" })
+vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#1e1e2e", bg = "#89dceb" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#1e1e2e", bg = "#f9e2af" })
+vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#1e1e2e", bg = "#f9e2af" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#1e1e2e", bg = "#cba6f7" })
+vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#1e1e2e", bg = "#cba6f7" })
+vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#1e1e2e", bg = "#cba6f7" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#1e1e2e", bg = "#89dceb" })
+vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#1e1e2e", bg = "#89dceb" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#1e1e2e", bg = "#cba6f7" })
+vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#1e1e2e", bg = "#cba6f7" })
+vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#cdd6f4", bg = "#89b4fa" })

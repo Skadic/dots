@@ -1,4 +1,5 @@
 return {
+  --[[
   {
     -- Start screen
     "goolord/alpha-nvim",
@@ -7,7 +8,7 @@ return {
     config = function()
       require("alpha").setup(require("alpha.themes.startify").config)
     end,
-  },
+  },]]
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
