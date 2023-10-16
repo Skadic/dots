@@ -1,3 +1,12 @@
+# Path extensions
+export PATH="/usr/bin/python:$PATH"
+export PATH="$HOME/.local/bin/:$PATH"
+export PATH="$HOME/.cargo/bin/:$PATH"
+export PATH="$HOME/.emacs.d/bin/:$PATH"
+export PATH="$HOME/.nimble/bin/:$PATH"
+export PATH="$HOME/.dotbare:$PATH"
+export PATH="$HOME/Stuff/flutter/bin:$PATH"
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
     #eval (zellij setup --generate-auto-start fish | string collect)
@@ -27,6 +36,7 @@ export EDITOR="/usr/bin/nvim"
 # Apps
 alias nvd="neovide --multigrid"
 alias ls="exa --icons"
+alias ll="ls -lh --group-directories-first"
 alias tree="erd -HI"
 alias grep="rg"
 alias xbgs="nitrogen $HOME/Pictures/bg/"
@@ -44,15 +54,6 @@ alias nvimconf="$EDITOR ~/.config/nvim/"
 alias kittyconf="$EDITOR ~/.config/kitty/kitty.conf"
 
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-
-# Path extensions
-export PATH="/usr/bin/python:$PATH"
-export PATH="$HOME/.local/bin/:$PATH"
-export PATH="$HOME/.cargo/bin/:$PATH"
-export PATH="$HOME/.emacs.d/bin/:$PATH"
-export PATH="$HOME/.nimble/bin/:$PATH"
-export PATH="$HOME/.dotbare:$PATH"
-export PATH="$HOME/Stuff/flutter/bin:$PATH"
 
 export LD_LIBRARY_PATH="/usr/lib/:/usr/lib64/:/lib/:/lib64/:$LD_LIBRARY_PATH"
 
@@ -94,7 +95,8 @@ export QT_IM_MODULE="fcitx"
 export XMODIFIERS="@im=fcitx"
 export GLFW_IM_MODULE="fcitx"
 
-export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_STYLE_OVERRIDE="kvantum"
+export QT_QUICK_CONTROLS_STYLE="org.kde.desktop"
 
 export CARGO_REGISTRIES_CRATES_IO_PROTOCOL="sparse"
 
@@ -111,3 +113,7 @@ set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; se
 source /home/skadic/.config/fish/zoxide.fish
 
 starship init fish | source
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
