@@ -5,6 +5,9 @@ font=Noto\ Sans\ CJK\ JP 10
 #text-color=#c6d0f5
 #border-color=#8caaee
 
+height=300
+width=500
+
 
 background-color=#1e1e2e
 text-color=#cdd6f4

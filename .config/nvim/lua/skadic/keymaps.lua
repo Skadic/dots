@@ -48,10 +48,10 @@ wk.register({
   ["<A-4>"] = { function() require("harpoon.ui").nav_file(4) end, "Navigate to 4th harpooned file"},
 }, { mode = "n", prefix="", noremap = true, silent = true })
 
-wk.register({
+--[[wk.register({
   ["<C-p>"] = { "<cmd>Lspsaga term_toggle<cr>", "Toggle Terminal" }
 }, { mode = { "n", "t"}, prefix="", noremap = true, silent = true })
-
+--]]
 
 local wk_opts = { mode = "n", prefix="<leader>", noremap = true, silent = true }
 
@@ -83,10 +83,10 @@ wk.register({
     h = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
   },
   L = { "<cmd>Lazy<cr>", "Open Lazy"},
+  M = { "<cmd>Mason<cr>", "Open Mason"},
   e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },
   b = { "<cmd>Neotree buffers<cr>", "Toggle Buffers" },
-  t = { "<cmd>TagbarToggle<cr>", "Toggle Tagbar" },
-  T = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
+  n = { "<cmd>Navbuddy<cr>", "Navbuddy" },
   S = {
     name = "Session",
     s = {

@@ -25,6 +25,7 @@ mason_lsp.setup_handlers({
 	end,
 	-- targeted overrides for specific language servers
 	["rust_analyzer"] = function()
-    -- Do nothing, we let Lazy handle this
+		-- Do nothing, we let Lazy handle this
+		require("skadic.lsp.settings.rust_analyzer")
 	end,
 })

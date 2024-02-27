@@ -10,7 +10,7 @@
                       :height "2%"
                       :anchor "top center")
   :stacking "bottom"
-  ;:reserve (struts :distance "2%" :side "top")
+  :reserve (struts :distance "2%" :side "top")
   ;:windowtype "dock"
   ;:wm-ignore false
   :exclusive true
@@ -214,6 +214,7 @@
 
 ; ------------------------------ Workspaces ------------------------------
 
+(defvar ws_names `[" ", "󰈹 ", "3", "4", "5", "6", "7", "8", "9"]`)
 ;(defpoll ws_info :interval "50ms" 
 ;  "./scripts/sway/workspaces.sh")
 (defvar ws_info `[{"name":"1","num":1,"focused":true,"urgent":false,"visible":true,"active":true},{"name":"2","num":2,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"3","num":3,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"4","num":4,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"5","num":5,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"6","num":6,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"7","num":7,"focused":false,"urgent":false,"visible":false,"active":false},{"name":"8","num":8,"focused":false,"urgent":false,"visible":false,"active":false}]`)
@@ -225,7 +226,7 @@
                     !ws_info[ws_number - 1].active ? "text-comment" : ""
                   }` 
           :onclick "./scripts/sway/switch_ws.sh ${ws_number}"
-    {ws_info[ws_number - 1].name}))
+    {ws_names[ws_number - 1]}))
 
 ; ------------------------------ Clock ------------------------------
 
@@ -246,9 +247,9 @@
     (box :space-evenly false
       (label :class "icon"
              :text " ")
-      (label :class "varfont"
-             :limit-width 50
-             :text "${music_info}")))
+        (label :class "varfont"
+               :limit-width 50
+               :text "${music_info}")))
 
 
 ; ------------------------------ Sway Binding Mode ------------------------------
@@ -269,7 +270,7 @@
     (box :class "framed ${active_netw["wl"] == "" ? "text-comment" : "text-cyan"}"
          :space-evenly false
       (label :class "xl-icon"
-             :text "${active_netw["wl"] != "" ? "直" : "睊" } ")
+             :text "${active_netw["wl"] != "" ? "󰤨" : "󰤮" } ")
       (revealer :reveal "${active_netw["wl"] != ""}"
                 :transition "slideright"
                 :duration "${revealer_duration}"

@@ -13,26 +13,29 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     dependencies = {
+      -- Allows you to puck windows
       "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
       {
-        -- Allows you to puck windows
         "s1n7ax/nvim-window-picker",
-        opts = {
-          autoselect_one = true,
-          include_current = false,
-          filter_rules = {
-            -- filter using buffer options
-            bo = {
-              -- if the file type is one of following, the window will be ignored
-              filetype = { "neo-tree", "neo-tree-popup", "notify" },
-              -- if the buffer type is one of following, the window will be ignored
-              buftype = { "terminal", "quickfix" },
+        version = "2.*",
+        config = function()
+          require("window-picker").setup({
+            filter_rules = {
+              include_current_win = false,
+              autoselect_one = true,
+              -- filter using buffer options
+              bo = {
+                -- if the file type is one of following, the window will be ignored
+                filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                -- if the buffer type is one of following, the window will be ignored
+                buftype = { "terminal", "quickfix" },
+              },
             },
-          },
-        },
-        lazy = true,
+          })
+        end,
       },
     },
     lazy = true,
@@ -60,15 +63,6 @@ return {
     end,
   },
   {
-    -- Toggleable terminal
-    "akinsho/toggleterm.nvim",
-    lazy = true,
-    keys = "<C-p>",
-    opts = {
-      open_mapping = [[<c-p>]],
-    },
-  },
-  {
     -- Allows to see keybinds
     "folke/which-key.nvim",
     config = true,
@@ -77,13 +71,14 @@ return {
 
   --- LSP-Related UI ---
   {
-    -- A toggleable symbols outline
-    "simrat39/symbols-outline.nvim",
+    "SmiteshP/nvim-navbuddy",
     lazy = true,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-    opts = { autofold_depth = 2 },
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "SmiteshP/nvim-navic",
+      "MunifTanjim/nui.nvim",
+    },
   },
-  { "preservim/tagbar",  lazy = true,  cmd = { "Tagbar", "TagbarToggle" } }, -- A little like Symbols outline but simpler
   {
     -- Some nice windows
     "CosmicNvim/cosmic-ui",
@@ -91,7 +86,7 @@ return {
     opts = { border_style = "rounded" },
     lazy = true,
   },
-  { "j-hui/fidget.nvim", config = true, tag = "legacy" },
+  { "j-hui/fidget.nvim",              config = true, tag = "legacy" },
   {
     -- Debugger UI
     "rcarriga/nvim-dap-ui",
@@ -99,7 +94,7 @@ return {
     event = "LspAttach",
     dependencies = { "mfussenegger/nvim-dap" },
   },
-  { "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
+  { "weilbith/nvim-code-action-menu", lazy = true,   cmd = "CodeActionMenu" }, -- A nice Code Action menu
   {
     "folke/trouble.nvim",
     dependencies = { "kyazdani42/nvim-web-devicons" },

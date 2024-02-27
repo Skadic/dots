@@ -1,9 +1,14 @@
 
 * {
     all: unset;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: $default_font;
     font-weight: bolder;
+}
+
+menu {
+  background: $primary-bg;
+  padding: 1rem;
 }
 
 tooltip {
@@ -58,13 +63,13 @@ tooltip {
 .icon {
     font-family: $mono_font;
     font-weight: normal;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 .xl-icon {
     font-family: $mono_font;
     font-weight: normal;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 .workspace {

@@ -8,42 +8,92 @@ export PATH="$HOME/.dotbare:$PATH"
 export PATH="$HOME/Stuff/flutter/bin:$PATH"
 
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-    #eval (zellij setup --generate-auto-start fish | string collect)
-  #if [ $TERM = "xterm-kitty" ]
-  #else
-      if set -q ZELLIJ
-      else
-        # Attach to zellij session
-        set ZJ_SESSIONS (zellij list-sessions | string split "\n")
-        set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
-
-        echo $ZJ_SESSIONS
-
-        if test $NO_SESSIONS -ge 2
-          zellij attach (echo $ZJ_SESSIONS | string split " " | fzf --header "Choose Zellij Workspace")
-        else if test $NO_SESSIONS -ge 1
-          zellij attach -c
-        else
-          zellij -s main
-        end
-      end
+  # Commands to run in interactive sessions can go here
+  #if not set -q ZELLIJ
+    # Find all zellij sessions
+  #  set ZJ_SESSIONS (zellij list-sessions | string split "\n" | awk '{print $1;}' | sed -e 's/\x1b\[[0-9;]*m//g')
+  #  # If there is a session manager already, delete it 
+  #  if contains "session-manager" $ZJ_SESSIONS
+  #    zellij delete-session --force session-manager  
+  #  end
+    # Start the session manager
+  #  zellij -s session-manager -l session-man
   #end
 end
 
 export EDITOR="/usr/bin/nvim"
 
+function zn 
+  zellij
+end
+
+function za 
+  # Attach to zellij session
+  set ZJ_SESSIONS (zellij list-sessions | rg -v 'EXITED' | awk '{print $1;}' | sed -e 's/\x1b\[[0-9;]*m//g')
+  set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
+
+  if test $NO_SESSIONS -ge 2
+    zellij attach (echo $ZJ_SESSIONS | string split " " | fzf --header "Choose Zellij Workspace")
+  else if test $NO_SESSIONS -ge 1
+    zellij attach -c
+  else
+    zellij
+  end
+end
+
+function zad
+  # Attach to dead zellij session
+  set ZJ_SESSIONS (zellij list-sessions | rg 'EXITED' | awk '{print $1;}' | sed -e 's/\x1b\[[0-9;]*m//g')
+  set NO_SESSIONS (echo $ZJ_SESSIONS | wc -w)
+
+  if test $NO_SESSIONS -ge 2
+    zellij attach (echo $ZJ_SESSIONS | string split " " | fzf --header "Choose Zellij Workspace")
+  else if test $NO_SESSIONS -ge 1
+    zellij attach -c
+  else
+    zellij
+  end
+end
+
 # Apps
 alias nvd="neovide --multigrid"
-alias ls="exa --icons"
-alias ll="ls -lh --group-directories-first"
+alias rm="trash"
+alias ls="eza --icons"
+alias ll="ls -lh --group-directories-first --git"
 alias tree="erd -HI"
 alias grep="rg"
-alias xbgs="nitrogen $HOME/Pictures/bg/"
 alias textidote="java -jar $HOME/Apps/textidote.jar"
+alias nbim="nvim"
+alias vim="nvim"
+alias bim="nvim"
 
-function ec 
-  emacsclient --create-frame $argv &
+function trash-size 
+  ll --total-size --no-permissions $(trash-list --trash-dirs) | grep files | string trim | string split " " | head -n 1
+end
+
+function zs 
+  set ZJ_SESSIONS (zellij list-sessions | string split "\n" | awk '{print $1;}' | sed -e 's/\x1b\[[0-9;]*m//g')
+  # If there is a session manager already, delete it 
+  if contains "session-manager" $ZJ_SESSIONS
+    zellij delete-session --force session-manager  
+  end
+  # Start the session manager
+  zellij -s session-manager -l session-man
+end
+
+function wgup
+  set -l find_res $(find /home/skadic/WireGuard/* | fzf --header "Choose VPN Connection to enable")
+  sudo wg-quick up $find_res
+end
+
+function wgdown
+  set -l find_res $(find /home/skadic/WireGuard/* | fzf --header "Choose VPN Connection to disable")
+  sudo wg-quick down $find_res
+end
+
+function enable_tablet
+  swaymsg create_output HEADLESS-1
+  wayvnc --output=HEADLESS-1 --max-fps=20 192.168.0.242 5900 &
 end
 
 # Configuration
@@ -72,22 +122,20 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
     end
 end
 
-# Enable rust instrumentation
-function enable-tablet --description "Enable rust instrumentation"
-  export CARGO_INCREMENTAL=0
-  export RUSTFLAGS='-Cinstrument-coverage'
-  export LLVM_PROFILE_FILE='cargo-test-%p-%m.profraw'
-end
-
 # C Stuff
-export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
-export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/lib/gcc/x86_64-redhat-linux/12/include"
+export CPATH="$CPATH:/usr/lib/gcc/x86_64-redhat-linux/13/include"
+export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/usr/lib/gcc/x86_64-redhat-linux/13/include"
 export CMAKE_GENERATOR="Ninja"
 
 export PKG_CONFIG_PATH="/usr/bin/pkgconf"
 export PKG_CONFIG="/usr/bin/pkgconf"
 
+export ASAN_OPTIONS="symbolize=1"
+export ASAN_SYMBOLIZER_PATH="/usr/bin/llvm-symbolizer"
+
 export CC="/usr/bin/cc"
+
+export HIP_CLANG_PATH="/usr/bin/hipcc"
 
 # Input method
 export GTK_IM_MODULE="fcitx"
@@ -110,9 +158,14 @@ set -U fish_greeting "🐟"
 # Haskell
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/skadic/.ghcup/bin $PATH # ghcup-env
 
-source /home/skadic/.config/fish/zoxide.fish
+zoxide init fish | source
+source /home/skadic/.config/fish/secret.fish
 
+function starship_transient_prompt_func
+  starship module character
+end
 starship init fish | source
+enable_transience
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

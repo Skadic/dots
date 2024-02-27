@@ -17,7 +17,8 @@ set $mod Mod4
 
 The default terminal and a keybind to start it. In my case I like using kitty.
 ```swayconfig config +=
-set $terminal kitty
+#set $terminal kitty
+set $terminal foot
 ```
 ### Font
 
@@ -70,8 +71,11 @@ blur enable
 
 This sets up my monitors. This might need tweaking depending on the setup I'm working with at the moment.
 ```swayconfig config +=
-output HDMI-A-1 pos 380 0 mode 1920x1080@120Hz
-output eDP-1 pos 0 1080 mode 2560x1600@60Hz
+#output eDP-1 pos 0 1080 mode 2560x1600@60Hz
+#output HDMI-A-1 pos 380 0 mode 1920x1080@120Hz
+output eDP-1 pos 0 0 mode 2560x1600@60Hz
+output HDMI-A-1 pos 2560 0 mode 1920x1080@120Hz
+output HEADLESS-1 pos 2560 1080 mode 2560x1600
 ```
 
 ### Border Settings
@@ -527,7 +531,7 @@ exec /usr/libexec/polkit-gnome-authentication-agent-1
 ```
 This loads my `.profile` file.
 ```swayconfig config +=
-exec /home/skadic/.profile
+#exec /home/skadic/.profile
 ```
 This starts fcitx5 to enable my input methods.
 ```swayconfig config +=
@@ -549,11 +553,6 @@ This starts the wallpaper.
 exec hyprpaper
 ```
 
-Make nwg-drawer open faster
-```swayconfig config +=
-#exec_always nwg-drawer -r -fm dolphin -nofs -term kitty
-```
-
 Start mako, the notification daemon I use.
 ```swayconfig config +=
 exec mako
@@ -561,10 +560,19 @@ exec mako
 
 Try to fix the file dialog with flatpaks:
 ```swayconfig config +=
-exec_always /usr/libexec/xdg-desktop-portal -r
+exec_always /usr/libexec/xdg-desktop-portal-gtk -r
 ```
 
 Start Nextcloud.
 ```swayconfig config +=
 exec_always nextcloud --background
+```
+
+Set GTK settings
+```swayconfig config +=
+exec_always {
+    gsettings set org.gnome.desktop.interface cursor-theme "Posy's Cursor Black"
+    gsettings set org.gnome.desktop.interface cursor-size 32
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+}
 ```

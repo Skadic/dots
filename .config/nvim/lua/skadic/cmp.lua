@@ -16,34 +16,7 @@ local check_backspace = function()
 end
 
 --   פּ ﯟ   some other good icons
-local kind_icons = {
-	Text = "",
-	Method = "m",
-	Function = "",
-	Constructor = "",
-	Field = "",
-	Variable = "",
-	Class = "",
-	Interface = "",
-	Module = "",
-	Property = "",
-	Unit = "",
-	Value = "",
-	Enum = "",
-	Keyword = "",
-	Snippet = "",
-	Color = "",
-	File = "",
-	Reference = "",
-	Folder = "",
-	EnumMember = "",
-	Constant = "",
-	Struct = "",
-	Event = "",
-	Operator = "",
-	TypeParameter = "",
-	Copilot = "",
-}
+local kind_icons = require("skadic.defs").icons
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 cmp.setup({
 	snippet = {
@@ -98,15 +71,15 @@ cmp.setup({
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			-- Kind icons
-      local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-      local strings = vim.split(kind.kind, "%s", { trimempty = true })
-      kind.kind = " " .. (strings[1] or "") .. " "
-      kind.menu = "    (" .. (strings[2] or "") .. ")"
-      --[[
 			if entry.source.name == "copilot" then
 				vim_item.kind = "Copilot"
 				vim_item.kind_hl_group = "CmpItemKindCopilot"
 			end
+			local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			kind.kind = " " .. (strings[1] or "") .. " "
+			kind.menu = "    (" .. (strings[2] or "") .. ")"
+			--[[
 			vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			vim_item.menu = ({
 				luasnip = "[Snippet]",
@@ -118,10 +91,10 @@ cmp.setup({
 		end,
 	},
 	sources = cmp.config.sources({
+		{ name = "crates" },
 		{ name = "nvim_lsp", keyword_length = 3 },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lua", keyword_length = 3 },
-		{ name = "crates" },
 		{ name = "luasnip", keyword_length = 3 },
 		{ name = "path" },
 	}, {
@@ -131,8 +104,10 @@ cmp.setup({
 		comparators = {
 			cmp.config.compare.offset,
 			cmp.config.compare.exact,
+			cmp.config.compare.score,
 			cmp.config.compare.recently_used,
 			--require("clangd_extensions.cmp_scores"),
+      cmp.config.compare.locality,
 			cmp.config.compare.kind,
 			cmp.config.compare.sort_text,
 			cmp.config.compare.length,
@@ -146,10 +121,10 @@ cmp.setup({
 	window = {
 		documentation = cmp.config.window.bordered(),
 		completion = {
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-      col_offset = 0,
-      side_padding = 0,
-    },
+			--winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			col_offset = 0,
+			side_padding = 0,
+		},
 	},
 
 	experimental = {
@@ -161,7 +136,6 @@ cmp.setup({
 -- Customization for Pmenu
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#45475a", fg = "NONE" })
 vim.api.nvim_set_hl(0, "Pmenu", { fg = "#cdd6f4", bg = "#313244" })
-
 
 vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
 vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
@@ -197,6 +171,7 @@ vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#1e1e2e", bg = "#cba6f7" })
 vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#1e1e2e", bg = "#89dceb" })
 vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#1e1e2e", bg = "#89dceb" })
 
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#1e1e2e", bg = "#cba6f7" })
 vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#1e1e2e", bg = "#cba6f7" })
 vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#1e1e2e", bg = "#cba6f7" })
 vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#cdd6f4", bg = "#89b4fa" })

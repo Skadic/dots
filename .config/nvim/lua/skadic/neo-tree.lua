@@ -90,7 +90,8 @@ return {
 				nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
 			},
 			["<2-LeftMouse>"] = "open",
-			["<cr>"] = "open_with_window_picker",
+			--["<cr>"] = "open_with_window_picker",
+			["<cr>"] = "open",
 			["<esc>"] = "revert_preview",
 			["P"] = { "toggle_preview", config = { use_float = true } },
 			--["S"] = "open_split",
