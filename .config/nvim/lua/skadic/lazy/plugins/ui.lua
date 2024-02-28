@@ -1,23 +1,13 @@
 return {
-  --[[
-  {
-    -- Start screen
-    "goolord/alpha-nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
-    name = "alpha",
-    config = function()
-      require("alpha").setup(require("alpha.themes.startify").config)
-    end,
-  },]]
   {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     dependencies = {
-      -- Allows you to puck windows
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+      -- Allows you to pick windows
       {
         "s1n7ax/nvim-window-picker",
         version = "2.*",
@@ -78,30 +68,26 @@ return {
       "SmiteshP/nvim-navic",
       "MunifTanjim/nui.nvim",
     },
+    opts = {
+      lsp = {
+        auto_attach = true,
+      },
+    },
   },
   {
-    -- Some nice windows
-    "CosmicNvim/cosmic-ui",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = { border_style = "rounded" },
-    lazy = true,
+    "j-hui/fidget.nvim",
+    config = true,
+    tag = "legacy",
   },
-  { "j-hui/fidget.nvim",              config = true, tag = "legacy" },
   {
     -- Debugger UI
     "rcarriga/nvim-dap-ui",
     lazy = true,
+    enabled = false,
     event = "LspAttach",
     dependencies = { "mfussenegger/nvim-dap" },
   },
-  { "weilbith/nvim-code-action-menu", lazy = true,   cmd = "CodeActionMenu" }, -- A nice Code Action menu
-  {
-    "folke/trouble.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
-    config = true,
-    lazy = true,
-    event = "LspAttach",
-  },
+  { "weilbith/nvim-code-action-menu", lazy = true, cmd = "CodeActionMenu" }, -- A nice Code Action menu
   {
     "andythigpen/nvim-coverage",
     config = true,

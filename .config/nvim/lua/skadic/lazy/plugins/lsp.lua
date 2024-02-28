@@ -98,6 +98,7 @@ return {
     -- Debugging
     "mfussenegger/nvim-dap",
     lazy = true,
+    enabled = false,
     event = "LspAttach",
     config = function()
       require("skadic.dap.init")
@@ -142,12 +143,6 @@ return {
     "mrcjkb/rustaceanvim",
     lazy = true,
     ft = "rust",
-    dependencies = {
-      {
-        "lvimuser/lsp-inlayhints.nvim",
-        opts = {}
-      }
-    }
   },
   {
     "vxpm/ferris.nvim",
@@ -205,18 +200,20 @@ return {
     cmd = "Lspsaga",
     event = "LspAttach",
   },
+  { "folke/neodev.nvim", opts = {}, lazy = true, ft= "lua" }, -- for neovim config development
   {
     "nvim-neotest/neotest",
     dependencies = {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "rouge8/neotest-rust",
+      "alfaix/neotest-gtest",
+      "mrcjkb/rustaceanvim",
     },
     config = function()
       require("skadic.neotest")
     end,
     lazy = true,
-    ft = { "rust" },
+    ft = { "rust", "cpp", "c" },
   },
 
   -- Treesitter
@@ -239,9 +236,7 @@ return {
           })
         end,
       },
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-      },
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
   },
 }

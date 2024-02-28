@@ -122,8 +122,6 @@ telescope.setup({
 telescope.load_extension("fzf")
 telescope.load_extension("media_files")
 telescope.load_extension("notify")
-telescope.load_extension("projects")
 telescope.load_extension("file_browser")
 telescope.load_extension("lsp_handlers")
-telescope.load_extension('harpoon')
 telescope.load_extension('xray23')

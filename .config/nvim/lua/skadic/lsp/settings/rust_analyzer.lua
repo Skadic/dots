@@ -11,7 +11,7 @@ local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
 local rust_on_attach = function(client, bufnr) 
   require("skadic.lsp.handlers").on_attach(client, bufnr)
-  require("lsp-inlayhints").on_attach(client, bufnr)
+  --require("lsp-inlayhints").on_attach(client, bufnr)
 end
 
 vim.g.rustaceanvim = {

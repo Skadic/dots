@@ -29,7 +29,7 @@ return {
               })
             end,
             dependencies = {
-              { "michaelb/sniprun", build = "bash ./install.sh", lazy = true }, -- Run code snippets
+              --{ "michaelb/sniprun", build = "bash ./install.sh", lazy = true }, -- Run code snippets
               "rafamadriz/friendly-snippets",                                   -- a bunch of snippets to use
             },
           },

@@ -65,10 +65,10 @@ local function lsp_keymaps(bufnr)
 	local wk = require("which-key")
 
 	wk.register({
-		d = { "<cmd>Trouble lsp_definitions<CR>", "Definition" },
+		d = { "<cmd>Telescope lsp_definitions<CR>", "Definition" },
 		D = { "<cmd>Lspsaga lsp_finder<CR>", "LSP finder" },
-		i = { "<cmd>Trouble lsp_implementations<CR>", "Implementation" },
-		r = { "<cmd>Trouble lsp_references<CR>", "References" },
+		i = { "<cmd>Telescope lsp_implementations<CR>", "Implementation" },
+		r = { "<cmd>Telescope lsp_references<CR>", "References" },
 		s = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols" },
 		S = { "<cmd>Telescope lsp_workspace_symbols<CR>", "Workspace Symbols" },
 	}, wk_opts)
@@ -77,10 +77,7 @@ local function lsp_keymaps(bufnr)
 	wk.register({
 		name = "Language Server",
 		a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-	  d = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostic" },
-		D = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Toggle Diagnostics List" },
-		q = { "<cmd>TroubleToggle quickfix<CR>", "Toggle Quickfix List" },
-		t = { "<cmd>TroubleToggle lsp_type_definitions<CR>", "Toggle Quickfix List" },
+		d = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostic" },
 		b = { "<cmd>DapToggleBreakpoint<CR>", "Toggle Breakpoint" },
 		e = { "<Plug>(doge-generate)", "Generate Documentation" },
 		f = {
@@ -101,12 +98,7 @@ local function lsp_keymaps(bufnr)
 			end,
 			"Hover",
 		},
-		r = {
-			function()
-				require("cosmic-ui").rename()
-			end,
-			"Rename",
-		},
+		r = { "<cmd>Lspsaga rename<cr>", "Rename" },
 		s = {
 			function()
 				vim.lsp.buf.signature_help()
@@ -117,15 +109,22 @@ local function lsp_keymaps(bufnr)
 
 	wk_opts.prefix = ""
 	wk.register({
-		["[d"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic"},
-		["]d"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
-		["<leader>d"] = {
-			function()
-				require("dapui").toggle()
-			end,
-			"Toggle Debug UI",
-		},
+		["[d"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic" },
+		["]d"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic" },
 	}, wk_opts)
+
+	local status_ok, dapui = pcall(require, "dapui")
+
+	if status_ok then
+		wk.register({
+			["<leader>d"] = {
+				function()
+					dapui.toggle()
+				end,
+				"Toggle Debug UI",
+			},
+		}, wk_opts)
+	end
 end
 
 local disable_format = { tsserver = 1, clangd = 1, sumneko_lua = 1, rust_analyzer = 1 }
@@ -138,8 +137,8 @@ M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 	require("nvim-navic").attach(client, bufnr)
-  require("nvim-navbuddy").attach(client, bufnr)
-  require("lsp-inlayhints").on_attach(client, bufnr)
+
+	vim.lsp.inlay_hint.enable(bufnr, true)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

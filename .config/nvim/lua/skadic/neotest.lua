@@ -13,6 +13,7 @@ wk.register({
 
 neotest.setup({
 	adapters = {
-		require("neotest-rust"),
+		require("neotest-gtest"),
+    require("rustaceanvim.neotest")
 	},
 })

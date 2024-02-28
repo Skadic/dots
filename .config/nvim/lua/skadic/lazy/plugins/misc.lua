@@ -19,6 +19,7 @@ return {
 		config = function()
 			require("zen-mode").setup()
 		end,
+    enabled = false,
 		lazy = true,
 		cmd = "ZenMode",
 	},

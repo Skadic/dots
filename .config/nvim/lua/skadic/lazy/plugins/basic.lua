@@ -23,15 +23,6 @@ return {
 			"nvim-telescope/telescope-file-browser.nvim", -- A file browser
 			"gbrlsnchs/telescope-lsp-handlers.nvim", -- Better LSP Functions
       "HUAHUAI23/telescope-session.nvim",
-			{ "ThePrimeagen/harpoon", keys = { "<A-f>", "<A-j>" }, config = true }, -- Pin files to quickly return to
-			{
-				-- Project management
-				"ahmedkhalf/project.nvim",
-				name = "project_nvim",
-				config = true,
-				lazy = true,
-				cmd = "Telescope projects",
-			},
 		},
 		config = function()
 			require("skadic.telescope")
