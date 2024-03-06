@@ -7,11 +7,17 @@ return {
 		"lewis6991/gitsigns.nvim",
 		lazy = true,
 		cmd = "Gitsigns",
+		enabled = false,
 		config = function()
 			require("skadic.gitsigns")
 		end,
 	},
-
+	{
+		"mhinz/vim-signify",
+		config = function()
+			require("skadic.vim_signify")
+		end,
+	},
 	{
 		-- Telescope
 		"nvim-telescope/telescope.nvim",
@@ -22,7 +28,7 @@ return {
 			"nvim-telescope/telescope-media-files.nvim", -- Search for media files
 			"nvim-telescope/telescope-file-browser.nvim", -- A file browser
 			"gbrlsnchs/telescope-lsp-handlers.nvim", -- Better LSP Functions
-      "HUAHUAI23/telescope-session.nvim",
+			"HUAHUAI23/telescope-session.nvim",
 		},
 		config = function()
 			require("skadic.telescope")

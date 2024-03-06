@@ -1,6 +1,5 @@
 local M = {}
 
--- TODO: backfill this to template
 M.setup = function()
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
@@ -66,7 +65,7 @@ local function lsp_keymaps(bufnr)
 
 	wk.register({
 		d = { "<cmd>Telescope lsp_definitions<CR>", "Definition" },
-		D = { "<cmd>Lspsaga lsp_finder<CR>", "LSP finder" },
+		D = { "<cmd>Lspsaga finder<CR>", "LSP finder" },
 		i = { "<cmd>Telescope lsp_implementations<CR>", "Implementation" },
 		r = { "<cmd>Telescope lsp_references<CR>", "References" },
 		s = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols" },
@@ -76,9 +75,8 @@ local function lsp_keymaps(bufnr)
 	wk_opts.prefix = "<leader>l"
 	wk.register({
 		name = "Language Server",
-		a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
+		a = { "<cmd>lua require('actions-preview').code_actions()<CR>", "Code Action" },
 		d = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostic" },
-		b = { "<cmd>DapToggleBreakpoint<CR>", "Toggle Breakpoint" },
 		e = { "<Plug>(doge-generate)", "Generate Documentation" },
 		f = {
 			function()
@@ -107,10 +105,21 @@ local function lsp_keymaps(bufnr)
 		},
 	}, wk_opts)
 
+	-- Setup the goto commands for diagnostics
+	local goto_next, goto_prev
+	local delimited_status_ok, delimited = pcall(require, "delimited")
+	if delimited_status_ok then
+		goto_next = delimited.goto_next
+		goto_prev = delimited.goto_prev
+	else
+		goto_next = vim.diagnostic.goto_next
+		goto_prev = vim.diagnostic.goto_prev
+	end
+
 	wk_opts.prefix = ""
 	wk.register({
-		["[d"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic" },
-		["]d"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic" },
+		["[d"] = { goto_prev, "Previous Diagnostic" },
+		["]d"] = { goto_next, "Next Diagnostic" },
 	}, wk_opts)
 
 	local status_ok, dapui = pcall(require, "dapui")

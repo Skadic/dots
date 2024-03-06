@@ -38,93 +38,90 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
-wk.register({
-  ["<C-f>"] = { "<cmd>Telescope harpoon marks theme=dropdown<cr>", "Harpooned Files"},
-  ["<C-a"] = { function() vim.notify("Harpooned"); require("harpoon.mark").add_file() end, "Harpoon file"},
-  ["<C-s>"] = { function() vim.notify("Unharpooned"); require("harpoon.mark").rm_file() end, "Harpoon file"},
-  ["<A-1>"] = { function() require("harpoon.ui").nav_file(1) end, "Navigate to 1st harpooned file"},
-  ["<A-2>"] = { function() require("harpoon.ui").nav_file(2) end, "Navigate to 2nd harpooned file"},
-  ["<A-3>"] = { function() require("harpoon.ui").nav_file(3) end, "Navigate to 3rd harpooned file"},
-  ["<A-4>"] = { function() require("harpoon.ui").nav_file(4) end, "Navigate to 4th harpooned file"},
-}, { mode = "n", prefix="", noremap = true, silent = true })
-
---[[wk.register({
-  ["<C-p>"] = { "<cmd>Lspsaga term_toggle<cr>", "Toggle Terminal" }
-}, { mode = { "n", "t"}, prefix="", noremap = true, silent = true })
---]]
-
-local wk_opts = { mode = "n", prefix="<leader>", noremap = true, silent = true }
+local wk_opts = { mode = "n", prefix = "<leader>", noremap = true, silent = true }
 
 local function call_if_git(command)
-  local status_ok, _ = pcall(vim.cmd, command)
-  if not status_ok then
-    vim.notify("Not a git repo")
-  end
+	local status_ok, _ = pcall(vim.cmd, command)
+	if not status_ok then
+		vim.notify("Not a git repo")
+	end
 end
 
 wk.register({
-  f = {
-    name = "Search",
-    g = {
-      function()
-        -- We want to just call the normal find files command if the current dir is not a git directory
-        local status_ok, _ = pcall(vim.cmd, "Telescope git_files")
-        if not status_ok then
-          vim.cmd("Telescope find_files")
-        end
-      end,
-      "Git Files"
-    },
-    f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    b = { "<cmd>Telescope buffers<cr>", "Search Buffers" },
-    p = { "<cmd>Telescope projects theme=dropdown<cr>", "Projects" },
-    l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-    n = { "<cmd>Telescope notify<cr>", "Search Notifications" },
-    h = { "<cmd>Telescope harpoon marks<cr>", "Harpooned Files"},
-  },
-  L = { "<cmd>Lazy<cr>", "Open Lazy"},
-  M = { "<cmd>Mason<cr>", "Open Mason"},
-  e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },
-  b = { "<cmd>Neotree buffers<cr>", "Toggle Buffers" },
-  n = { "<cmd>Navbuddy<cr>", "Navbuddy" },
-  S = {
-    name = "Session",
-    s = {
-      function ()
-        local session_name = vim.fn.input("Session Name: ")
-        MiniSessions.write(session_name)
-      end, "Save Session"
-    },
-    r = {
-      function ()
-        MiniSessions.select("read")
-      end, "Load Session"
-    },
-  },
-  g = {
-    name = "Git",
-    f = {
-      name = "Find",
-      b = { function() call_if_git("Telescope git_branches") end, "Git Branches" },
-      s = { function() call_if_git("Telescope git_status") end, "Git Status" },
-      t = { function() call_if_git("Telescope git_stash") end, "Git Stashes" },
-      c = { function() call_if_git("Telescope git_commits") end, "Git Commits" },
-      f = { function() call_if_git("Telescope git_files") end, "Git Files" },
-    },
-    d = { "<cmd>Gitsigns diffthis<cr>", "Git Diff"},
-    r = {
-      name = "Reset",
-      H = {"<cmd>Gitsigns reset_hunk<cr>", "Reset Hunk"},
-      B = {"<cmd>Gitsigns reset_buffer<cr>", "Reset Buffer"},
-    },
-    s = {
-      name = "Stage",
-      h = { "<cmd>Gitsigns stage_hunk<cr>", "Stage Hunk"},
-      b = { "<cmd>Gitsigns stage_buffer<cr>", "Stage Buffer"},
-    },
-    b = { "<cmd>Gitsigns blame_line<cr>", "Blame Line"},
-    t = { "<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle Current Line Blame"},
-  }
+	f = {
+		name = "Find",
+		g = {
+			function()
+				-- We want to just call the normal find files command if the current dir is not a git directory
+				local status_ok, _ = pcall(vim.cmd, "Telescope git_files")
+				if not status_ok then
+					vim.cmd("Telescope find_files")
+				end
+			end,
+			"Git Files",
+		},
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		b = { "<cmd>Telescope buffers<cr>", "Search Buffers" },
+		p = { "<cmd>Telescope projects theme=dropdown<cr>", "Projects" },
+		l = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
+		n = { "<cmd>Telescope notify<cr>", "Search Notifications" },
+		h = { "<cmd>Telescope help_tags<cr>", "Search Notifications" },
+		t = { "<cmd>TodoTelescope<cr>", "Todos" },
+	},
+	L = { "<cmd>Lazy<cr>", "Open Lazy" },
+	M = { "<cmd>Mason<cr>", "Open Mason" },
+	e = { "<cmd>Neotree toggle<cr>", "Toggle File Tree" },
+	b = { "<cmd>Neotree buffers<cr>", "Toggle Buffers" },
+	n = { "<cmd>Navbuddy<cr>", "Navbuddy" },
+	S = {
+		name = "Session",
+		s = {
+			function()
+				local session_name = vim.fn.input("Session Name: ")
+				MiniSessions.write(session_name)
+			end,
+			"Save Session",
+		},
+		r = {
+			function()
+				MiniSessions.select("read")
+			end,
+			"Load Session",
+		},
+	},
+	g = {
+		name = "Git",
+		b = {
+			function()
+				call_if_git("Telescope git_branches")
+			end,
+			"Git Branches",
+		},
+		s = {
+			function()
+				call_if_git("Telescope git_status")
+			end,
+			"Git Status",
+		},
+		t = {
+			function()
+				call_if_git("Telescope git_stash")
+			end,
+			"Git Stashes",
+		},
+		c = {
+			function()
+				call_if_git("Telescope git_commits")
+			end,
+			"Git Commits",
+		},
+		f = {
+			function()
+				call_if_git("Telescope git_files")
+			end,
+			"Git Files",
+		},
+	},
 }, wk_opts)
 
 -- Insert --

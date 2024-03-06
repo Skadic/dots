@@ -66,7 +66,7 @@ local function ft_icon()
 	return icon
 end
 
-require("gitsigns")
+local status_ok, gitsigns = pcall(require, "gitsigns")
 local navic = require("nvim-navic")
 
 local comps = {
@@ -152,7 +152,10 @@ local comps = {
 	},
 	git = {
 		branch = {
-			provider = "git_branch",
+		  provider = function ()
+        return "WIP"
+		    --return vim.fn.system("git rev-parse --abbrev-ref HEAD")
+		  end,
 			left_sep = "block",
 			hl = {
 				fg = theme.yellow,
