@@ -1,6 +1,6 @@
 # Sway Configuration
 
-My sway config. Please see http://i3wm.org/docs/userguide.html for a complete reference!
+My sway config. Pmease see http://i3wm.org/docs/userguide.html for a complete reference!
 This is intended to be compiled with [lmt](https://github.com/driusan/lmt).
 
 ## Setup
@@ -17,8 +17,8 @@ set $mod Mod4
 
 The default terminal and a keybind to start it. In my case I like using kitty.
 ```swayconfig config +=
-#set $terminal kitty
-set $terminal foot
+set $terminal kitty
+#set $terminal foot
 ```
 ### Font
 
@@ -214,7 +214,7 @@ bindsym $mod+Shift+r restart
 
 This opens the terminal [set before](#terminal).
 ```swayconfig config +=
-bindsym $mod+Return exec $terminal
+bindsym $mod+Return exec $terminal --session sessions/zellij.conf
 ```
 ### Launch and Run
 
@@ -340,6 +340,10 @@ These are just keybinds to change window borders.
 bindsym $mod+u border none
 bindsym $mod+y border pixel 2
 bindsym $mod+n border normal
+```
+### Screen Lock
+```swayconfig config +=
+bindsym $mod+Shift+p exec swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bac2de --key-hl-color a6e3a1 --text-color cdd6f4 --line-color 00000000 --inside-color 181825 --separator-color 11111b --grace 2 --fade-in 0.2 --inside-wrong-color f38ba8 --inside-ver-color 74c7ec --ring-ver-color 74c7ec
 ```
 ### Layout
 
@@ -550,7 +554,8 @@ exec sway_update workspace shutdown
 
 This starts the wallpaper.
 ```swayconfig config +=
-exec hyprpaper
+#exec hyprpaper
+exec swww-daemon
 ```
 
 Start mako, the notification daemon I use.
