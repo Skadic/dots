@@ -1,83 +1,7 @@
-(defvar wm "sway")
-(defvar scripts `./$scripts/sway`)
 (defvar revealer_duration "500ms")
-
-(defwindow topbar 
-  :monitor 0
-  :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "100%"
-                      :height "2%"
-                      :anchor "top center")
-  :stacking "bottom"
-  :reserve (struts :distance "2%" :side "top")
-  ;:windowtype "dock"
-  ;:wm-ignore false
-  :exclusive true
-  :focusable false
-  (centerbox :orientation "h"
-       :class "topbar"
-    (left)
-    (middle)
-    (right)))
 
 (defwidget spacer [] (box :class "text-comment" "|"))
 (defwidget spacer_invis [] (box :class "text-comment" " "))
-
-(defwidget right []
-  (box :orientation "h"
-       :halign "end"
-       :width "0"
-       :hexpand true
-       :space-evenly false
-       :spacing "5"
-       :class "bar bar-right"
-    (active_wifi)
-    (spacer)
-    (active_eth)
-    (spacer)
-    (cputemp)
-    (spacer)
-    (battery)
-    (spacer)
-    (brightness)
-    (spacer)
-    (volume)
-    (spacer)
-    (systray :class "framed")
-    (spacer)
-    (date)
-    ))
-
-
-(defwidget middle []
-  (revealer :reveal "${player_status != "Stopped"}"
-            :transition "crossfade"
-            :duration "${revealer_duration}"
-    (box :orientation "h"
-         :halign "start"
-         :width "0"
-         :hexpand true
-         :space-evenly false
-         :spacing "5"
-         :class "bar bar-middle"
-        (player))))
-
-(defwidget left []
-  (box :orientation "h"
-       :halign "start"
-       :width "0"
-       :hexpand true
-       :space-evenly false
-       :spacing "5"
-       :class "bar bar-left"
-    (workspaces)
-    (revealer :reveal "${binding_active}"
-              :transition "slideright"
-              :duration "${revealer_duration}"
-        (binding_mode))
-    (spacer)
-    (active_window)))
 
 (defwidget date [] 
   (box :orientation "h" 
@@ -85,7 +9,6 @@
        :space-evenly true
        :class "framed"
       "${v_hour}:${v_minute}"))
-
 
 ; ------------------------------ Volume Slider ------------------------------
 (defvar vol_enable false)
