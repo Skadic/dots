@@ -53,16 +53,32 @@ return {
 			-- see below for full list of optional dependencies 👇
 		},
 		opts = {
+			note_id_func = function(title)
+				local id = os.date("%Y%m%d%H%M") .. "-"
+				if title ~= nil then
+					-- If title is given, transform it into valid file name.
+					id = id .. title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+				else
+					-- If title is nil, just add 4 random uppercase letters to the suffix.
+					for _ = 1, 4 do
+						id = id .. string.char(math.random(65, 90))
+					end
+				end
+				return id
+			end,
+			disable_frontmatter = false,
 			workspaces = {
 				{
 					name = "Noumiso",
 					path = "~/Nextcloud/Noumiso",
 				},
 			},
-      templates = {
-        subdir = "_templates"
-      }
-			-- see below for full list of options 👇
+			templates = {
+				subdir = "_templates",
+			},
+			attachments = {
+				img_folder = "gfx",
+			},
 		},
 	},
 }
